@@ -14,6 +14,11 @@ export class LevelPage extends Component {
         const levelId = parseInt(props.match.params.level);
         props.retrieveLevel(levelId);
     }
+
+    onPublish = () => {
+        // TODO: Publish
+        console.log("publish");
+    }
     
     render() {
         const {
@@ -32,11 +37,17 @@ export class LevelPage extends Component {
 
         return (
           <div className="container">
-            <h1>{level.title}</h1>
+            <h1>{level.title} <span className="badge badge-secondary">{level.isPublished ? 'Published' : 'Unpublished'}</span></h1>
             <div className="mb-4">
-                <Link className="btn btn-primary" to={`${url}/student-reports`}>
-                    View Student Reports
-                </Link>
+                {
+                    level.isPublished
+                        ? <Link className="btn btn-primary" to={`${url}/student-reports`}>
+                            View Student Reports
+                        </Link>
+                        : <button className="btn btn-primary" onClick={this.onPublish}>
+                            Publish Level
+                        </button>
+                }
             </div>
             <h2>Learning Material</h2>
             <LearningMaterial level={level.id} />

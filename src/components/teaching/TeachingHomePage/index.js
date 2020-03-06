@@ -110,13 +110,11 @@ class TeachingHomePage extends Component {
         return (
             <div className="container">
                 <h1>Welcome {user.name}!</h1>
-                <div className="d-sm-flex w-100 justify-content-between">
-                    <h2>Topics</h2>
-                    <div className="mb-4">
-                        <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>
-                            <FontAwesomeIcon icon={faPlus} className="mr-2" />Create a Topic
-                        </button>
-                    </div>
+                <h2>Topics</h2>
+                <div className="mb-4">
+                    <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>
+                        <FontAwesomeIcon icon={faPlus} className="mr-2" />Create a Topic
+                    </button>
                 </div>
                 {
                     topics.length !== 0
