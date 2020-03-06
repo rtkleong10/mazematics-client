@@ -4,7 +4,7 @@ import { USER_TYPES } from "../../utils/constants";
 const initialState = {
     user: {
         name: 'Bob',
-        type: USER_TYPES.TEACHER,
+        type: USER_TYPES.STUDENT,
     },
 };
 

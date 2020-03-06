@@ -89,3 +89,5 @@ export const selectLevelsListed = (state) => state.levelsReducer.isLoading[METHO
 export const selectLevelRetrieved = (state) => state.levelsReducer.isLoading[METHODS.RETRIEVE] === false;
 export const selectLevels = (state, topicId) => state.levelsReducer.items.filter(item => item.topic === topicId);
 export const selectLevel = (state, levelId) => state.levelsReducer.items.find(item => item.id === levelId);
+export const selectPublishedLevels = (state, topicId) => state.levelsReducer.items.filter(item => item.topic === topicId && item.isPublished);
+export const selectPublishedLevel = (state, levelId) => state.levelsReducer.items.find(item => item.id === levelId && item.isPublished);

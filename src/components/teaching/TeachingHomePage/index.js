@@ -136,7 +136,7 @@ class TeachingHomePage extends Component {
                                 </div>
                             </div>
                         ))
-                        : <p>No teaching topics found.</p>
+                        : <p>No topics found.</p>
                 }
                 {modalFormComponent}
             </div>
@@ -144,12 +144,11 @@ class TeachingHomePage extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return({
+const mapStateToProps = (state) => ({
     user: state.authReducer.user,
     topicsListed: selectTopicsListed(state),
     topics: selectTopics(state),
-})};
+});
 
 const dispatchers = {
     createTopic,
