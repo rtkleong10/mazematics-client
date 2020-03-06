@@ -5,28 +5,29 @@ import { connect } from 'react-redux';
 import Loader from '../../common/Loader';
 import LearningMaterial from '../LearningMaterial';
 import QuestionsList from '../QuestionsList';
-import { retrieveLevels } from '../../../redux/ducks/levels';
+import { retrieveLevel, selectLevel, selectLevelRetrieved } from '../../../redux/ducks/levels';
 
 export class LevelPage extends Component {
     constructor(props) {
         super(props);
 
-        props.retrieveLevels();
+        const levelId = parseInt(props.match.params.level);
+        props.retrieveLevel(levelId);
     }
     
     render() {
         const {
-            levelsRetrieved,
+            levelRetrieved,
             level,
             match: {
                 url
             }
         } = this.props;
 
-        if (!levelsRetrieved)
+        if (!levelRetrieved)
             return <Loader />;
 
-        if (levelsRetrieved && !level)
+        if (levelRetrieved && !level)
             return <Redirect to="/not-found" />;
 
         return (
@@ -51,13 +52,13 @@ const mapStateToProps = (state, ownProps) => {
     const levelId = parseInt(ownProps.match.params.level);
 
     return {
-        levelsRetrieved: state.levelsReducer.levelsRetrieved,
-        level: state.levelsReducer.levels.find(level => level.id === levelId),
+        levelRetrieved: selectLevelRetrieved(state),
+        level: selectLevel(state, levelId),
     }
 };
 
 const dispatchers = {
-    retrieveLevels,
+    retrieveLevel,
 };
 
 export default connect(mapStateToProps, dispatchers)(LevelPage);

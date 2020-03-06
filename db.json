@@ -9,11 +9,6 @@
       "title": "Subtraction",
       "description": "Removing one thing from another. We'll also learn about negative numbers in this topic.",
       "id": 2
-    },
-    {
-      "title": "jjj",
-      "description": "",
-      "id": 3
     }
   ],
   "levels": [
@@ -78,7 +73,7 @@
       "id": 10
     }
   ],
-  "learning-materials": [
+  "learningMaterials": [
     {
       "id": 1,
       "level": 1,

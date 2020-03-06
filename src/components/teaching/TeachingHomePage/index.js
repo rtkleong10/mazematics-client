@@ -8,14 +8,14 @@ import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
 import SimpleForm from '../SimpleForm';
 import DeleteForm from '../DeleteForm';
-import { createTopic, retrieveTopics, updateTopic, deleteTopic } from '../../../redux/ducks/topics';
+import { createTopic, updateTopic, deleteTopic, listTopics, selectTopicsListed, selectTopics } from '../../../redux/ducks/topics';
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
 
 class TeachingHomePage extends Component {
     constructor(props) {
         super(props);
 
-        props.retrieveTopics();
+        props.listTopics();
 
         this.state = {
             modalForm: {
@@ -97,12 +97,12 @@ class TeachingHomePage extends Component {
 
     render() {
         const {
-            topicsRetrieved,
+            topicsListed,
             topics,
             user
         } = this.props;
 
-        if (!topicsRetrieved)
+        if (!topicsListed)
             return <Loader />
 
         const modalFormComponent = this.getModalFormComponent();
@@ -146,17 +146,18 @@ class TeachingHomePage extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => {
+    return({
     user: state.authReducer.user,
-    topicsRetrieved: state.topicsReducer.topicsRetrieved,
-    topics: state.topicsReducer.topics,
-});
+    topicsListed: selectTopicsListed(state),
+    topics: selectTopics(state),
+})};
 
 const dispatchers = {
     createTopic,
-    retrieveTopics,
     updateTopic,
-    deleteTopic
+    deleteTopic,
+    listTopics,
 };
 
 export default connect(mapStateToProps, dispatchers)(TeachingHomePage);

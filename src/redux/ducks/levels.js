@@ -1,132 +1,91 @@
 import axios from 'axios';
-import { API_URL } from '../../utils/constants';
 
-// ACTION TYPES
-const CREATE_LEVEL = 'app/levels/CREATE_LEVEL';
-const RETRIEVE_LEVELS_SUCCESS = 'app/levels/RETRIEVE_LEVELS_SUCCESS';
-const RETRIEVE_LEVELS_ERROR = 'app/levels/RETRIEVE_LEVELS_ERROR';
-const UPDATE_LEVEL = 'app/levels/UPDATE_LEVEL';
-const DELETE_LEVEL = 'app/levels/DELETE_LEVEL';
+import { createApiReducer, createApiAction, STATUSES, METHODS } from './apiHelper';
+import { API_URL } from '../../utils/constants';
+import { displayErrorAction } from './errors';
+
+const ENTITY_NAME = 'levels';
 
 // REDUCER
-const initialState = {
-    levelsRetrieved: false,
-    levels: []
-};
-
-export default function(state = initialState, action) {
-    switch (action.type) {
-        case CREATE_LEVEL:
-            return {
-                ...state,
-                levels: [...state.levels, action.payload]
-            }
-
-        case RETRIEVE_LEVELS_SUCCESS:
-            return {
-                ...state,
-                levelsRetrieved: true,
-                levels: action.payload
-            }
-
-        case RETRIEVE_LEVELS_ERROR:
-            return {
-                ...state,
-                levelsRetrieved: true
-            }
-
-        case UPDATE_LEVEL:
-            return {
-                ...state,
-                levels: state.levels.map(level => (level.id === action.payload.id) ? action.payload : level)
-            }
-
-        case DELETE_LEVEL:
-            return {
-                ...state,
-                levels: state.levels.filter(level => level.id !== action.payload)
-            }
-
-        default:
-            return state;
-    }
-};
-
-// ACTION CREATORS
-export function createLevelAction(level) {
-    return {
-        type: CREATE_LEVEL,
-        payload: level
-    }
-}
-
-export function retrieveLevelsSuccessAction(levels) {
-    return {
-        type: RETRIEVE_LEVELS_SUCCESS,
-        payload: levels
-    }
-}
-
-export function retrieveLevelsErrorAction(levels) {
-    return {
-        type: RETRIEVE_LEVELS_ERROR
-    }
-}
-
-export function updateLevelAction(level) {
-    return {
-        type: UPDATE_LEVEL,
-        payload: level
-    }
-}
-
-export function deleteLevelAction(id) {
-    return {
-        type: DELETE_LEVEL,
-        payload: id
-    }
-}
+const levelsReducer = createApiReducer(ENTITY_NAME);
+export default levelsReducer;
 
 // OPERATIONS
 export const createLevel = level => dispatch => {
+    dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.CREATE));
+
     axios
-        .post(`${API_URL}/levels/`, level)
+        .post(`${API_URL}/${ENTITY_NAME}/`, level)
         .then(res => {
-            dispatch(createLevelAction(res.data));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.CREATE, res.data));
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            dispatch(displayErrorAction("Unable to create level"));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.CREATE));
+        });
     ;
 };
 
-export const retrieveLevels = () => (dispatch) => {
+export const retrieveLevel = (id) => (dispatch) => {
+    dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.RETRIEVE));
+
     axios
-        .get(`${API_URL}/levels/`)
+        .get(`${API_URL}/${ENTITY_NAME}/${id}/`)
         .then(res => {
-            dispatch(retrieveLevelsSuccessAction(res.data));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.RETRIEVE, res.data));
         })
         .catch(err => {
-            console.log(err);
-            dispatch(retrieveLevelsErrorAction());
+            dispatch(displayErrorAction("Unable to retrieve level"));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.RETRIEVE));
         });
     ;
 };
 
 export const updateLevel = level => (dispatch) => {
+    dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.UPDATE));
+
     axios
-        .patch(`${API_URL}/levels/${level.id}/`, level)
+        .patch(`${API_URL}/${ENTITY_NAME}/${level.id}/`, level)
         .then(res => {
-            dispatch(updateLevelAction(res.data));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.UPDATE, res.data));
         })
-        .catch(err => console.log(err));
-    ;
+        .catch(err => {
+            dispatch(displayErrorAction("Unable to update level"));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.UPDATE));
+        });
 };
 
 export const deleteLevel = id => (dispatch) => {
+    dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.DELETE));
+
     axios
-        .delete(`${API_URL}/levels/${id}/`)
+        .delete(`${API_URL}/${ENTITY_NAME}/${id}/`)
         .then(res => {
-            dispatch(deleteLevelAction(id));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, id));
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            dispatch(displayErrorAction("Unable to delete level"));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.DELETE));
+        });
+};
+
+export const listLevels = () => (dispatch) => {
+    dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.LIST));
+
+    axios
+        .get(`${API_URL}/${ENTITY_NAME}/`)
+        .then(res => {
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.LIST, res.data));
+        })
+        .catch(err => {
+            dispatch(displayErrorAction("Unable to retrieve levels"));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.LIST));
+        });
     ;
 };
+
+// SELECTORS
+export const selectLevelsListed = (state) => state.levelsReducer.isLoading[METHODS.LIST] === false;
+export const selectLevelRetrieved = (state) => state.levelsReducer.isLoading[METHODS.RETRIEVE] === false;
+export const selectLevels = (state, topicId) => state.levelsReducer.items.filter(item => item.topic === topicId);
+export const selectLevel = (state, levelId) => state.levelsReducer.items.find(item => item.id === levelId);

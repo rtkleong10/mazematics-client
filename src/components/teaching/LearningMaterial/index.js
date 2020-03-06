@@ -4,23 +4,23 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 
 import Loader from '../../common/Loader';
-import { createLearningMaterial, retrieveLearningMaterials, updateLearningMaterial, deleteLearningMaterial } from '../../../redux/ducks/learningMaterials';
+import { createLearningMaterial, listLearningMaterials, updateLearningMaterial, deleteLearningMaterial, selectLearningMaterialsListed, selectLearningMaterial } from '../../../redux/ducks/learningMaterials';
 import './styles.css';
 
 export class LearningMaterial extends Component {
     constructor(props) {
         super(props);
 
-        props.retrieveLearningMaterials();
+        props.listLearningMaterials();
     }
 
     render() {
         const {
-            learningMaterialsRetrieved,
+            learningMaterialsListed,
             learningMaterial
         } = this.props;
 
-        if (!learningMaterialsRetrieved)
+        if (!learningMaterialsListed)
             return <Loader />;
 
         return (
@@ -60,14 +60,14 @@ const mapStateToProps = (state, ownProps) => {
     const levelId = ownProps.level;
 
     return {
-        learningMaterialsRetrieved: state.learningMaterialsReducer.learningMaterialsRetrieved,
-        learningMaterial: state.learningMaterialsReducer.learningMaterials.find(learningMaterial => learningMaterial.level === levelId)
+        learningMaterialsListed: selectLearningMaterialsListed(state),
+        learningMaterial: selectLearningMaterial(state, levelId),
     }
 };
 
 const dispatchers = {
     createLearningMaterial,
-    retrieveLearningMaterials,
+    listLearningMaterials,
     updateLearningMaterial,
     deleteLearningMaterial
 };

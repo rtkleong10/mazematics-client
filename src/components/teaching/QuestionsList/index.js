@@ -4,22 +4,22 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 
 import Loader from '../../common/Loader';
-import { createQuestion, retrieveQuestions, updateQuestion, deleteQuestion } from '../../../redux/ducks/questions';
+import { createQuestion, listQuestions, updateQuestion, deleteQuestion, selectQuestionsListed, selectQuestions } from '../../../redux/ducks/questions';
 
 export class QuestionsList extends Component {
     constructor(props) {
         super(props);
 
-        props.retrieveQuestions();
+        props.listQuestions();
     }
 
     render() {
         const {
-            questionsRetrieved,
+            questionsListed,
             questions
         } = this.props;
 
-        if (!questionsRetrieved)
+        if (!questionsListed)
             return <Loader />;
 
         return (
@@ -52,14 +52,14 @@ const mapStateToProps = (state, ownProps) => {
     const levelId = ownProps.level;
 
     return {
-        questionsRetrieved: state.questionsReducer.questionsRetrieved,
-        questions: state.questionsReducer.questions.filter(question => question.level === levelId)
+        questionsListed: selectQuestionsListed(state),
+        questions: selectQuestions(state)
     }
 };
 
 const dispatchers = {
     createQuestion,
-    retrieveQuestions,
+    listQuestions,
     updateQuestion,
     deleteQuestion
 };

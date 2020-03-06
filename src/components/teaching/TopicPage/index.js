@@ -8,16 +8,17 @@ import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
 import SimpleForm from '../SimpleForm';
 import DeleteForm from '../DeleteForm';
-import { retrieveTopics } from '../../../redux/ducks/topics';
-import { createLevel, retrieveLevels, updateLevel, deleteLevel } from '../../../redux/ducks/levels';
+import { retrieveTopic, selectTopicRetrieved, selectTopic } from '../../../redux/ducks/topics';
+import { createLevel, updateLevel, deleteLevel, listLevels, selectLevelsListed, selectLevels } from '../../../redux/ducks/levels';
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
 
 class TopicPage extends Component {
     constructor(props) {
         super(props);
 
-        props.retrieveTopics();
-        props.retrieveLevels();
+        const topicId = parseInt(props.match.params.topic);
+        props.retrieveTopic(topicId);
+        props.listLevels();
 
         this.state = {
             modalForm: {
@@ -103,7 +104,7 @@ class TopicPage extends Component {
 
     render() {
         const {
-            topicsRetrieved,
+            topicRetrieved,
             topic,
             levelsRetrieved,
             levels,
@@ -111,11 +112,11 @@ class TopicPage extends Component {
                 url
             }
         } = this.props;
-
-        if (!topicsRetrieved || !levelsRetrieved)
+        
+        if (!topicRetrieved || !levelsRetrieved)
             return <Loader />;
 
-        if (topicsRetrieved && !topic)
+        if (topicRetrieved && !topic)
             return <Redirect to="/not-found" />;
 
         const modalFormComponent = this.getModalFormComponent();
@@ -161,19 +162,19 @@ const mapStateToProps = (state, ownProps) => {
     const topicId = parseInt(ownProps.match.params.topic);
 
     return {
-        topicsRetrieved: state.topicsReducer.topicsRetrieved,
-        topic: state.topicsReducer.topics.find(topic => topic.id === topicId),
-        levelsRetrieved: state.levelsReducer.levelsRetrieved,
-        levels: state.levelsReducer.levels.filter(level => level.topic === topicId),
+        topicRetrieved: selectTopicRetrieved(state),
+        topic: selectTopic(state, topicId),
+        levelsRetrieved: selectLevelsListed(state),
+        levels: selectLevels(state, topicId),
     }
 };
 
 const dispatchers = {
-    retrieveTopics,
+    retrieveTopic,
     createLevel,
-    retrieveLevels,
     updateLevel,
-    deleteLevel
+    deleteLevel,
+    listLevels
 };
 
 export default connect(mapStateToProps, dispatchers)(TopicPage);

@@ -6,6 +6,7 @@ import store from '../../../redux/store';
 import { USER_TYPES } from '../../../utils/constants';
 
 import Header from '../Header';
+import Alert from '../Alert';
 import Footer from '../Footer';
 import Login from '../../accounts/Login';
 import TeachingRouter from '../../teaching/TeachingRouter';
@@ -34,6 +35,7 @@ function App() {
     return (
         <Provider store={store}>
             <BrowserRouter>
+                <Alert />
                 <Header />
                 {rootComponent}
                 <Footer />
