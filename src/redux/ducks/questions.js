@@ -86,6 +86,4 @@ export const listQuestions = () => (dispatch) => {
 
 // SELECTORS
 export const selectQuestionsListed = (state) => state.questionsReducer.isLoading[METHODS.LIST] === false;
-export const selectQuestionRetrieved = (state) => state.questionsReducer.isLoading[METHODS.RETRIEVE] === false;
-export const selectQuestions = (state) => state.questionsReducer.items;
-export const selectQuestion = (state, id) => state.questionsReducer.items.find(item => item.id === id);
+export const selectQuestions = (state, levelId) => state.questionsReducer.items.filter(item => item.level === levelId);

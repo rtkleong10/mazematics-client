@@ -53,7 +53,7 @@ const mapStateToProps = (state, ownProps) => {
 
     return {
         questionsListed: selectQuestionsListed(state),
-        questions: selectQuestions(state)
+        questions: selectQuestions(state, levelId)
     }
 };
 
