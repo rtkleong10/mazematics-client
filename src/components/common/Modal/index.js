@@ -4,7 +4,7 @@ import $ from 'jquery';
 export class Modal extends Component {
     componentDidMount() {
         this.updateModal();
-        $(this.modal).on('hide.bs.modal', e => this.props.onClose());
+        $(this.modal).on('hidden.bs.modal', e => this.props.onClose());
     }
     
     componentDidUpdate(prevProps) {
@@ -29,7 +29,7 @@ export class Modal extends Component {
         } = this.props;
 
         return (
-            <div className="modal fade" ref={modal=> this.modal = modal} tabIndex="-1">
+            <div className="modal fade" ref={modal => this.modal = modal} tabIndex="-1">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">

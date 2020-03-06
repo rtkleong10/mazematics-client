@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import TeachingHomePage from '../TeachingHomePage';
+import LearningHomePage from '../LearningHomePage';
 import TopicPage from '../TopicPage';
 import LevelPage from '../LevelPage';
-import StudentReportsPage from '../StudentReportsPage';
 import Logout from '../../accounts/Logout';
+import LeaderboardPage from '../LeaderboardPage';
+import GamePage from '../../game/GamePage';
 import NotFoundPage from '../../common/NotFoundPage';
 
-export class TeachingRouter extends Component {
+export class LearningRouter extends Component {
     render() {
         return (
             <Switch>
@@ -24,7 +25,7 @@ export class TeachingRouter extends Component {
                 <Route
                     path="/"
                     exact
-                    component={TeachingHomePage}
+                    component={LearningHomePage}
                     />
                 <Route
                     path="/:topic"
@@ -37,9 +38,14 @@ export class TeachingRouter extends Component {
                     component={LevelPage}
                     />
                 <Route
-                    path="/:topic/:level/student-reports"
+                    path="/:topic/:level/leaderboard"
                     exact
-                    component={StudentReportsPage}
+                    component={LeaderboardPage}
+                    />
+                <Route
+                    path="/:topic/:level/game"
+                    exact
+                    component={GamePage}
                     />
                 <Redirect
                     to="/not-found"
@@ -49,4 +55,4 @@ export class TeachingRouter extends Component {
     }
 }
 
-export default TeachingRouter
+export default LearningRouter

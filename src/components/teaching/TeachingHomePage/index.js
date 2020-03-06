@@ -8,14 +8,14 @@ import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
 import SimpleForm from '../SimpleForm';
 import DeleteForm from '../DeleteForm';
-import { createTopic, retrieveTopics, updateTopic, deleteTopic } from '../../../redux/ducks/topics';
+import { createTopic, updateTopic, deleteTopic, listTopics, selectTopicsListed, selectTopics } from '../../../redux/ducks/topics';
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
 
 class TeachingHomePage extends Component {
     constructor(props) {
         super(props);
 
-        props.retrieveTopics();
+        props.listTopics();
 
         this.state = {
             modalForm: {
@@ -97,12 +97,12 @@ class TeachingHomePage extends Component {
 
     render() {
         const {
-            topicsRetrieved,
+            topicsListed,
             topics,
             user
         } = this.props;
 
-        if (!topicsRetrieved)
+        if (!topicsListed)
             return <Loader />
 
         const modalFormComponent = this.getModalFormComponent();
@@ -110,13 +110,11 @@ class TeachingHomePage extends Component {
         return (
             <div className="container">
                 <h1>Welcome {user.name}!</h1>
-                <div className="d-sm-flex w-100 justify-content-between">
-                    <h2>Topics</h2>
-                    <div className="mb-4">
-                        <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>
-                            <FontAwesomeIcon icon={faPlus} className="mr-2" />Create a Topic
-                        </button>
-                    </div>
+                <h2>Topics</h2>
+                <div className="mb-4">
+                    <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>
+                        <FontAwesomeIcon icon={faPlus} className="mr-2" />Create a Topic
+                    </button>
                 </div>
                 {
                     topics.length !== 0
@@ -138,7 +136,7 @@ class TeachingHomePage extends Component {
                                 </div>
                             </div>
                         ))
-                        : <p>No teaching topics found.</p>
+                        : <p>No topics found.</p>
                 }
                 {modalFormComponent}
             </div>
@@ -148,15 +146,15 @@ class TeachingHomePage extends Component {
 
 const mapStateToProps = (state) => ({
     user: state.authReducer.user,
-    topicsRetrieved: state.topicsReducer.topicsRetrieved,
-    topics: state.topicsReducer.topics,
+    topicsListed: selectTopicsListed(state),
+    topics: selectTopics(state),
 });
 
 const dispatchers = {
     createTopic,
-    retrieveTopics,
     updateTopic,
-    deleteTopic
+    deleteTopic,
+    listTopics,
 };
 
 export default connect(mapStateToProps, dispatchers)(TeachingHomePage);

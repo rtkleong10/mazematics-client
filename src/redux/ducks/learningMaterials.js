@@ -1,132 +1,89 @@
 import axios from 'axios';
-import { API_URL } from '../../utils/constants';
 
-// ACTION TYPES
-const CREATE_LEARNING_MATERIAL = 'app/learningMaterials/CREATE_LEARNING_MATERIAL';
-const RETRIEVE_LEARNING_MATERIALS_SUCCESS = 'app/learningMaterials/RETRIEVE_LEARNING_MATERIALS_SUCCESS';
-const RETRIEVE_LEARNING_MATERIALS_ERROR = 'app/learningMaterials/RETRIEVE_LEARNING_MATERIALS_ERROR';
-const UPDATE_LEARNING_MATERIAL = 'app/learningMaterials/UPDATE_LEARNING_MATERIAL';
-const DELETE_LEARNING_MATERIAL = 'app/learningMaterials/DELETE_LEARNING_MATERIAL';
+import { createApiReducer, createApiAction, STATUSES, METHODS } from './apiHelper';
+import { API_URL } from '../../utils/constants';
+import { displayErrorAction } from './errors';
+
+const ENTITY_NAME = 'learningMaterials';
 
 // REDUCER
-const initialState = {
-    learningMaterialsRetrieved: false,
-    learningMaterials: []
-};
-
-export default function(state = initialState, action) {
-    switch (action.type) {
-        case CREATE_LEARNING_MATERIAL:
-            return {
-                ...state,
-                learningMaterials: [...state.learningMaterials, action.payload]
-            }
-
-        case RETRIEVE_LEARNING_MATERIALS_SUCCESS:
-            return {
-                ...state,
-                learningMaterialsRetrieved: true,
-                learningMaterials: action.payload
-            }
-
-        case RETRIEVE_LEARNING_MATERIALS_ERROR:
-            return {
-                ...state,
-                learningMaterialsRetrieved: true
-            }
-
-        case UPDATE_LEARNING_MATERIAL:
-            return {
-                ...state,
-                learningMaterials: state.learningMaterials.map(learningMaterial => (learningMaterial.id === action.payload.id) ? action.payload : learningMaterial)
-            }
-
-        case DELETE_LEARNING_MATERIAL:
-            return {
-                ...state,
-                learningMaterials: state.learningMaterials.filter(learningMaterial => learningMaterial.id !== action.payload)
-            }
-
-        default:
-            return state;
-    }
-};
-
-// ACTION CREATORS
-export function createLearningMaterialAction(learningMaterial) {
-    return {
-        type: CREATE_LEARNING_MATERIAL,
-        payload: learningMaterial
-    }
-}
-
-export function retrieveLearningMaterialsSuccessAction(learningMaterials) {
-    return {
-        type: RETRIEVE_LEARNING_MATERIALS_SUCCESS,
-        payload: learningMaterials
-    }
-}
-
-export function retrieveLearningMaterialsErrorAction(learningMaterials) {
-    return {
-        type: RETRIEVE_LEARNING_MATERIALS_ERROR
-    }
-}
-
-export function updateLearningMaterialAction(learningMaterial) {
-    return {
-        type: UPDATE_LEARNING_MATERIAL,
-        payload: learningMaterial
-    }
-}
-
-export function deleteLearningMaterialAction(id) {
-    return {
-        type: DELETE_LEARNING_MATERIAL,
-        payload: id
-    }
-}
+const topicsReducer = createApiReducer(ENTITY_NAME);
+export default topicsReducer;
 
 // OPERATIONS
-export const createLearningMaterial = learningMaterial => dispatch => {
-    axios
-        .post(`${API_URL}/learning-materials/`, learningMaterial)
-        .then(res => {
-            dispatch(createLearningMaterialAction(res.data));
-        })
-        .catch(err => console.log(err));
-    ;
-};
+export const createLearningMaterial = topic => dispatch => {
+    dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.CREATE));
 
-export const retrieveLearningMaterials = () => (dispatch) => {
     axios
-        .get(`${API_URL}/learning-materials/`)
+        .post(`${API_URL}/${ENTITY_NAME}/`, topic)
         .then(res => {
-            dispatch(retrieveLearningMaterialsSuccessAction(res.data));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.CREATE, res.data));
         })
         .catch(err => {
-            console.log(err);
-            dispatch(retrieveLearningMaterialsErrorAction());
+            dispatch(displayErrorAction("Unable to create learning material"));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.CREATE));
         });
     ;
 };
 
-export const updateLearningMaterial = learningMaterial => (dispatch) => {
+export const retrieveLearningMaterial = (id) => (dispatch) => {
+    dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.RETRIEVE));
+
     axios
-        .patch(`${API_URL}/learning-materials/${learningMaterial.id}/`, learningMaterial)
+        .get(`${API_URL}/${ENTITY_NAME}/${id}/`)
         .then(res => {
-            dispatch(updateLearningMaterialAction(res.data));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.RETRIEVE, res.data));
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            dispatch(displayErrorAction("Unable to retrieve learning material"));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.RETRIEVE));
+        });
     ;
 };
 
-export const deleteLearningMaterial = id => (dispatch) => {
+export const updateLearningMaterial = topic => (dispatch) => {
+    dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.UPDATE));
+
     axios
-        .delete(`${API_URL}/learning-materials/${id}/`)
+        .patch(`${API_URL}/${ENTITY_NAME}/${topic.id}/`, topic)
         .then(res => {
-            dispatch(deleteLearningMaterialAction(id));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.UPDATE, res.data));
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            dispatch(displayErrorAction("Unable to update learning material"));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.UPDATE));
+        });
+};
+
+export const deleteLearningMaterial = id => (dispatch) => {
+    dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.DELETE));
+
+    axios
+        .delete(`${API_URL}/${ENTITY_NAME}/${id}/`)
+        .then(res => {
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, id));
+        })
+        .catch(err => {
+            dispatch(displayErrorAction("Unable to delete learning material"));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.DELETE));
+        });
+};
+
+export const listLearningMaterials = () => (dispatch) => {
+    dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.LIST));
+
+    axios
+        .get(`${API_URL}/${ENTITY_NAME}/`)
+        .then(res => {
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.LIST, res.data));
+        })
+        .catch(err => {
+            dispatch(displayErrorAction("Unable to retrieve learning materials"));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.LIST));
+        });
     ;
 };
+
+// SELECTORS
+export const selectLearningMaterialsListed = (state) => state.learningMaterialsReducer.isLoading[METHODS.LIST] === false;
+export const selectLearningMaterial = (state, levelId) => state.learningMaterialsReducer.items.find(item => item.level === levelId);

@@ -6,10 +6,12 @@ import store from '../../../redux/store';
 import { USER_TYPES } from '../../../utils/constants';
 
 import Header from '../Header';
+import Alert from '../Alert';
 import Footer from '../Footer';
 import Login from '../../accounts/Login';
 import TeachingRouter from '../../teaching/TeachingRouter';
 import AccountsRouter from '../../accounts/AccountsRouter';
+import LearningRouter from '../../learning/LearningRouter';
 
 function App() {
 	let rootComponent = <Login />;
@@ -18,6 +20,9 @@ function App() {
 	if (user) {
         switch (user.type) {
             case USER_TYPES.STUDENT:
+                rootComponent = <LearningRouter />;
+                break;
+
             case USER_TYPES.TEACHER:
                 rootComponent = <TeachingRouter />;
                 break;
@@ -34,6 +39,7 @@ function App() {
     return (
         <Provider store={store}>
             <BrowserRouter>
+                <Alert />
                 <Header />
                 {rootComponent}
                 <Footer />
