@@ -6,6 +6,7 @@ import TopicPage from '../TopicPage';
 import LevelPage from '../LevelPage';
 import StudentReportsPage from '../StudentReportsPage';
 import Logout from '../../accounts/Logout';
+import NotFoundPage from '../../common/NotFoundPage';
 
 export class TeachingRouter extends Component {
     render() {
@@ -13,7 +14,7 @@ export class TeachingRouter extends Component {
             <Switch>
                 <Route
                     path="/not-found"
-                    component={() => <div>404 Not found</div>}
+                    component={NotFoundPage}
                     />
                 <Route
                     path="/logout"

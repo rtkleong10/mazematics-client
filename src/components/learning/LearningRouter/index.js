@@ -7,6 +7,7 @@ import LevelPage from '../LevelPage';
 import Logout from '../../accounts/Logout';
 import LeaderboardPage from '../LeaderboardPage';
 import GamePage from '../../game/GamePage';
+import NotFoundPage from '../../common/NotFoundPage';
 
 export class LearningRouter extends Component {
     render() {
@@ -14,7 +15,7 @@ export class LearningRouter extends Component {
             <Switch>
                 <Route
                     path="/not-found"
-                    component={() => <div>404 Not found</div>}
+                    component={NotFoundPage}
                     />
                 <Route
                     path="/logout"
