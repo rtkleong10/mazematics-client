@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import Loader from '../../common/Loader';
 import LearningMaterial from '../LearningMaterial';
-import QuestionsList from '../QuestionsList';
 import { retrieveLevel, selectPublishedLevel, selectLevelRetrieved } from '../../../redux/ducks/levels';
 
 export class LevelPage extends Component {
