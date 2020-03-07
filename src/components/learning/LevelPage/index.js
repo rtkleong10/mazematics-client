@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 import Loader from '../../common/Loader';
 import LearningMaterial from '../LearningMaterial';
@@ -31,6 +33,9 @@ export class LevelPage extends Component {
 
         return (
             <div className="container">
+                <Link className="btn btn-light mb-2" to={`/topics/${level.topic}/`}>
+                    <FontAwesomeIcon icon={faChevronLeft}/> Back to Topic Page
+                </Link>
                 <h1>{level.title}</h1>
                 <div className="mb-4">
                     <Link className="btn btn-primary" to={`/levels/${level.id}/leaderboard`}>

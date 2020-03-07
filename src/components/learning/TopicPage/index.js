@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 import Loader from '../../common/Loader';
 import { retrieveTopic, selectTopicRetrieved, selectTopic } from '../../../redux/ducks/topics';
@@ -31,6 +33,9 @@ class TopicPage extends Component {
         
         return (
             <div className="container">
+                <Link className="btn btn-light mb-2" to="/">
+                    <FontAwesomeIcon icon={faChevronLeft}/> Back to Home
+                </Link>
                 <h1>{topic.title}</h1>
                 <h2>Levels</h2>
                 {

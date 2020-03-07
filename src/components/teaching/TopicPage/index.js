@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash, faPlus, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
@@ -120,6 +120,9 @@ class TopicPage extends Component {
         
         return (
             <div className="container">
+                <Link className="btn btn-light mb-2" to="/">
+                    <FontAwesomeIcon icon={faChevronLeft}/> Back to Home
+                </Link>
                 <h1>{topic.title}</h1>
                 <h2>Levels</h2>
                 <div className="mb-4">

@@ -1,7 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 export class LeaderboardPage extends Component {
     render() {
+        const {
+            match
+        } = this.props;
+
+        const levelID = parseInt(match.params.levelID);
+
         let leaderboardData = [
             {
                 "name": "Bob",
@@ -47,6 +56,9 @@ export class LeaderboardPage extends Component {
 
         return (
             <div className="container">
+                <Link className="btn btn-light mb-2" to={`/levels/${levelID}/`}>
+                    <FontAwesomeIcon icon={faChevronLeft}/> Back to Level Page
+                </Link>
                 <h1>Leaderboard</h1>
                 <table className="table">
                     <thead className="thead-light">
