@@ -4,23 +4,20 @@ import { connect } from 'react-redux';
 
 import Loader from '../../common/Loader';
 import LearningMaterial from '../LearningMaterial';
-import { retrieveLevel, selectPublishedLevel, selectLevelRetrieved } from '../../../redux/ducks/levels';
+import { retrieveLevel, selectPlayableLevel, selectLevelRetrieved } from '../../../redux/ducks/levels';
 
 export class LevelPage extends Component {
     constructor(props) {
         super(props);
 
-        const levelId = parseInt(props.match.params.level);
-        props.retrieveLevel(levelId);
+        const levelID = parseInt(props.match.params.levelID);
+        props.retrieveLevel(levelID);
     }
     
     render() {
         const {
             levelRetrieved,
             level,
-            match: {
-                url
-            }
         } = this.props;
 
         // TODO: Fetch this from API
@@ -36,7 +33,7 @@ export class LevelPage extends Component {
             <div className="container">
                 <h1>{level.title}</h1>
                 <div className="mb-4">
-                    <Link className="btn btn-primary" to={`${url}/leaderboard`}>
+                    <Link className="btn btn-primary" to={`/levels/${level.id}/leaderboard`}>
                         View Leaderboard
                     </Link>
                 </div>
@@ -47,15 +44,15 @@ export class LevelPage extends Component {
                                 View Learning Material
                             </button>
                             <div className="collapse mb-4" id="learningMaterialCollapse">
-                                <LearningMaterial level={level.id} />
+                                <LearningMaterial levelID={level.id} />
                             </div>
                         </div>
                         : <div className="mb-4">
                             <h2>Learning Material</h2>
-                            <LearningMaterial level={level.id} />
+                            <LearningMaterial levelID={level.id} />
                         </div>
                 }
-                <Link className="btn btn-primary mb-4" to={`${url}/game`}>
+                <Link className="btn btn-primary mb-4" to={`/levels/${level.id}/game`}>
                     Play Game
                 </Link>
             </div>
@@ -64,11 +61,11 @@ export class LevelPage extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const levelId = parseInt(ownProps.match.params.level);
+    const levelID = parseInt(ownProps.match.params.levelID);
 
     return {
         levelRetrieved: selectLevelRetrieved(state),
-        level: selectPublishedLevel(state, levelId),
+        level: selectPlayableLevel(state, levelID),
     }
 };
 

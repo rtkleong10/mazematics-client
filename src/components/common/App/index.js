@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import store from '../../../redux/store';
-import { USER_TYPES } from '../../../utils/constants';
+import { USER_ROLES } from '../../../utils/constants';
 
 import Header from '../Header';
 import Alert from '../Alert';
@@ -18,16 +18,16 @@ function App() {
 
 	const user = store.getState().authReducer.user;
 	if (user) {
-        switch (user.type) {
-            case USER_TYPES.STUDENT:
+        switch (user.role) {
+            case USER_ROLES.STUDENT:
                 rootComponent = <LearningRouter />;
                 break;
 
-            case USER_TYPES.TEACHER:
+            case USER_ROLES.TEACHER:
                 rootComponent = <TeachingRouter />;
                 break;
 
-            case USER_TYPES.ADMIN:
+            case USER_ROLES.ADMIN:
                 rootComponent = <AccountsRouter />;
                 break;
 

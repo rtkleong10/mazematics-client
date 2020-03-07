@@ -12,7 +12,7 @@
 
 ## How to Change the Account Type
 1. Go to `src/redux/ducks/auth.js`
-2. Change the user type in the `initialState` constant
+2. Change the user role in the `initialState` constant
 
 ## Fake Backend
 - To test the API calls with a fake backend

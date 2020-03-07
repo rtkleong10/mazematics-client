@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
-import SimpleForm from '../SimpleForm';
+import LearningMaterialForm from '../LearningMaterialForm';
 import DeleteForm from '../DeleteForm';
 import { createLearningMaterial, listLearningMaterials, updateLearningMaterial, deleteLearningMaterial, selectLearningMaterialsListed, selectLearningMaterial } from '../../../redux/ducks/learningMaterials';
 import './styles.css';
@@ -55,7 +55,7 @@ export class LearningMaterial extends Component {
         } = this.state;
 
         const {
-            level
+            levelID
         } = this.props;
 
         switch (type) {
@@ -65,9 +65,9 @@ export class LearningMaterial extends Component {
                         title="Create a Learning Material"
                         isVisible={isVisible}
                         onClose={this.handleModalClose}
-                        FormComponent={SimpleForm}
+                        FormComponent={LearningMaterialForm}
                         initialState={EMPTY}
-                        onSubmit={question => this.props.createLearningMaterial({...question, level: level})}
+                        onSubmit={question => this.props.createLearningMaterial({...question, level: levelID})}
                         />
                 );
 
@@ -77,7 +77,7 @@ export class LearningMaterial extends Component {
                         title="Edit Learning Material"
                         isVisible={isVisible}
                         onClose={this.handleModalClose}
-                        FormComponent={SimpleForm}
+                        FormComponent={LearningMaterialForm}
                         initialState={selectedLearningMaterial}
                         onSubmit={question => this.props.updateLearningMaterial({...question, id: selectedLearningMaterial.id})}
                         />
@@ -103,7 +103,7 @@ export class LearningMaterial extends Component {
         const {
             learningMaterialsListed,
             learningMaterial,
-            isPublished,
+            isPlayable,
         } = this.props;
 
         if (!learningMaterialsListed)
@@ -114,7 +114,7 @@ export class LearningMaterial extends Component {
         return (
             <Fragment>
                 {
-                    !isPublished &&
+                    (!learningMaterial && !isPlayable) &&
                         <div className="mb-4">
                             <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>
                                 <FontAwesomeIcon icon={faPlus} className="mr-2" />Create a Learning Material
@@ -138,7 +138,7 @@ export class LearningMaterial extends Component {
                                 <h3 className="card-title">{learningMaterial.title}</h3>
                                 <p className="card-text">{learningMaterial.description}</p>
                                 {
-                                    !isPublished &&
+                                    !isPlayable &&
                                         <div>
                                             <button href="#" className="btn btn-success mr-2" onClick={() => this.openModalForm(UPDATE, learningMaterial)}>
                                                 <FontAwesomeIcon icon={faEdit} />
@@ -159,11 +159,11 @@ export class LearningMaterial extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const levelId = ownProps.level;
+    const levelID = ownProps.levelID;
 
     return {
         learningMaterialsListed: selectLearningMaterialsListed(state),
-        learningMaterial: selectLearningMaterial(state, levelId),
+        learningMaterial: selectLearningMaterial(state, levelID),
     }
 };
 

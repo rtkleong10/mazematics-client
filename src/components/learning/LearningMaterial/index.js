@@ -49,11 +49,11 @@ export class LearningMaterial extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const levelId = ownProps.level;
+    const levelID = ownProps.level;
 
     return {
         learningMaterialsListed: selectLearningMaterialsListed(state),
-        learningMaterial: selectLearningMaterial(state, levelId),
+        learningMaterial: selectLearningMaterial(state, levelID),
     }
 };
 

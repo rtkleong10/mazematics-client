@@ -121,7 +121,7 @@ class TeachingHomePage extends Component {
                         ? topics.map((topic) => (
                             <div href="#" className="card mb-4" key={topic.id}>
                                 <div className="card-body">
-                                    <Link to={`/${topic.id}`}>
+                                    <Link to={`/topics/${topic.id}`}>
                                         <h3 className="card-title">{topic.title}</h3>
                                     </Link>
                                     <p className="card-text">{topic.description}</p>

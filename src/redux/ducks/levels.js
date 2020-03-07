@@ -26,11 +26,11 @@ export const createLevel = level => dispatch => {
     ;
 };
 
-export const retrieveLevel = (id) => (dispatch) => {
+export const retrieveLevel = levelID => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.RETRIEVE));
 
     axios
-        .get(`${API_URL}/${ENTITY_NAME}/${id}/`)
+        .get(`${API_URL}/${ENTITY_NAME}/${levelID}/`)
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.RETRIEVE, res.data));
         })
@@ -41,7 +41,7 @@ export const retrieveLevel = (id) => (dispatch) => {
     ;
 };
 
-export const updateLevel = level => (dispatch) => {
+export const updateLevel = level => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.UPDATE));
 
     axios
@@ -55,13 +55,13 @@ export const updateLevel = level => (dispatch) => {
         });
 };
 
-export const deleteLevel = id => (dispatch) => {
+export const deleteLevel = levelID => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.DELETE));
 
     axios
-        .delete(`${API_URL}/${ENTITY_NAME}/${id}/`)
+        .delete(`${API_URL}/${ENTITY_NAME}/${levelID}/`)
         .then(res => {
-            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, id));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, levelID));
         })
         .catch(err => {
             dispatch(displayErrorAction("Unable to delete level"));
@@ -69,7 +69,7 @@ export const deleteLevel = id => (dispatch) => {
         });
 };
 
-export const listLevels = () => (dispatch) => {
+export const listLevels = () => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.LIST));
 
     axios
@@ -85,9 +85,9 @@ export const listLevels = () => (dispatch) => {
 };
 
 // SELECTORS
-export const selectLevelsListed = (state) => state.levelsReducer.isLoading[METHODS.LIST] === false;
-export const selectLevelRetrieved = (state) => state.levelsReducer.isLoading[METHODS.RETRIEVE] === false;
-export const selectLevels = (state, topicId) => state.levelsReducer.items.filter(item => item.topic === topicId);
-export const selectLevel = (state, levelId) => state.levelsReducer.items.find(item => item.id === levelId);
-export const selectPublishedLevels = (state, topicId) => state.levelsReducer.items.filter(item => item.topic === topicId && item.isPublished);
-export const selectPublishedLevel = (state, levelId) => state.levelsReducer.items.find(item => item.id === levelId && item.isPublished);
+export const selectLevelsListed = state => state.levelsReducer.isLoading[METHODS.LIST] === false;
+export const selectLevelRetrieved = state => state.levelsReducer.isLoading[METHODS.RETRIEVE] === false;
+export const selectLevels = (state, topicID) => state.levelsReducer.items.filter(item => item.topic === topicID);
+export const selectLevel = (state, levelID) => state.levelsReducer.items.find(item => item.id === levelID);
+export const selectPlayableLevels = (state, topicID) => state.levelsReducer.items.filter(item => item.topic === topicID && item.isPlayable);
+export const selectPlayableLevel = (state, levelID) => state.levelsReducer.items.find(item => item.id === levelID && item.isPlayable);

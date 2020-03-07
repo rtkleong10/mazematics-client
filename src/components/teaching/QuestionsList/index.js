@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
-import SimpleForm from '../SimpleForm';
+import QuestionForm from '../QuestionForm';
 import DeleteForm from '../DeleteForm';
 import { createQuestion, listQuestions, updateQuestion, deleteQuestion, selectQuestionsListed, selectQuestions } from '../../../redux/ducks/questions';
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
@@ -54,7 +54,7 @@ export class QuestionsList extends Component {
         } = this.state;
 
         const {
-            level
+            levelID
         } = this.props;
 
         switch (type) {
@@ -64,9 +64,9 @@ export class QuestionsList extends Component {
                         title="Create a Question"
                         isVisible={isVisible}
                         onClose={this.handleModalClose}
-                        FormComponent={SimpleForm}
+                        FormComponent={QuestionForm}
                         initialState={EMPTY}
-                        onSubmit={question => this.props.createQuestion({...question, level: level})}
+                        onSubmit={question => this.props.createQuestion({...question, level: levelID})}
                         />
                 );
 
@@ -76,7 +76,7 @@ export class QuestionsList extends Component {
                         title="Edit Question"
                         isVisible={isVisible}
                         onClose={this.handleModalClose}
-                        FormComponent={SimpleForm}
+                        FormComponent={QuestionForm}
                         initialState={selectedQuestion}
                         onSubmit={question => this.props.updateQuestion({...question, id: selectedQuestion.id})}
                         />
@@ -102,7 +102,7 @@ export class QuestionsList extends Component {
         const {
             questionsListed,
             questions,
-            isPublished,
+            isPlayable,
         } = this.props;
 
         if (!questionsListed)
@@ -113,7 +113,7 @@ export class QuestionsList extends Component {
         return (
             <Fragment>
                 {
-                    !isPublished &&
+                    !isPlayable &&
                         <div className="mb-4">
                             <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>
                                 <FontAwesomeIcon icon={faPlus} className="mr-2" />Create a Question
@@ -125,9 +125,9 @@ export class QuestionsList extends Component {
                         questions.length !== 0
                             ? questions.map((question) => (
                                 <li key={question.id} className="list-group-item d-flex justify-content-between align-items-center">
-                                    <span>{question.title}</span>
+                                    <span>{question.questionText}</span>
                                     {
-                                        !isPublished &&
+                                        !isPlayable &&
                                             <div>
                                                 <button href="#" className="btn btn-success mr-2" onClick={() => this.openModalForm(UPDATE, question)}>
                                                     <FontAwesomeIcon icon={faEdit} />
@@ -149,11 +149,11 @@ export class QuestionsList extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const levelId = ownProps.level;
+    const levelID = ownProps.levelID;
 
     return {
         questionsListed: selectQuestionsListed(state),
-        questions: selectQuestions(state, levelId)
+        questions: selectQuestions(state, levelID)
     }
 };
 

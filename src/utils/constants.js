@@ -1,9 +1,9 @@
 export const API_URL = 'http://localhost:3007';
 
-export const USER_TYPES = {
-    STUDENT: 'STUDENT',
-    TEACHER: 'TEACHER',
-    ADMIN: 'ADMIN',
+export const USER_ROLES = {
+    STUDENT: 'ROLE_STUDENT',
+    TEACHER: 'ROLE_TEACHER',
+    ADMIN: 'ROLE_ADMIN',
 };
 
 export const CREATE = 'CREATE';

@@ -1,10 +1,11 @@
-import { USER_TYPES } from "../../utils/constants";
+import { USER_ROLES } from "../../utils/constants";
 
 // REDUCER
 const initialState = {
     user: {
         name: 'Bob',
-        type: USER_TYPES.STUDENT,
+        role: USER_ROLES.TEACHER,
+        email: 'bob@e.ntu.edu.sg'
     },
 };
 

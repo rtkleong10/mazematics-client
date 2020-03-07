@@ -16,8 +16,8 @@ class TopicPage extends Component {
     constructor(props) {
         super(props);
 
-        const topicId = parseInt(props.match.params.topic);
-        props.retrieveTopic(topicId);
+        const topicID = parseInt(props.match.params.topicID);
+        props.retrieveTopic(topicID);
         props.listLevels();
 
         this.state = {
@@ -108,9 +108,6 @@ class TopicPage extends Component {
             topic,
             levelsRetrieved,
             levels,
-            match: {
-                url
-            }
         } = this.props;
         
         if (!topicRetrieved || !levelsRetrieved)
@@ -135,7 +132,7 @@ class TopicPage extends Component {
                         ? levels.map((level) => (
                             <div href="#" className="card mb-4" key={level.id}>
                                 <div className="card-body">
-                                    <Link to={`${url}/${level.id}`}>
+                                    <Link to={`/levels/${level.id}`}>
                                         <h3 className="card-title">{level.title}</h3>
                                     </Link>
                                     <p className="card-text">{level.description}</p>
@@ -159,13 +156,13 @@ class TopicPage extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const topicId = parseInt(ownProps.match.params.topic);
+    const topicID = parseInt(ownProps.match.params.topicID);
 
     return {
         topicRetrieved: selectTopicRetrieved(state),
-        topic: selectTopic(state, topicId),
+        topic: selectTopic(state, topicID),
         levelsRetrieved: selectLevelsListed(state),
-        levels: selectLevels(state, topicId),
+        levels: selectLevels(state, topicID),
     }
 };
 
