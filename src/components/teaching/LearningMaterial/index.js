@@ -102,7 +102,8 @@ export class LearningMaterial extends Component {
     render() {
         const {
             learningMaterialsListed,
-            learningMaterial
+            learningMaterial,
+            isPublished,
         } = this.props;
 
         if (!learningMaterialsListed)
@@ -112,6 +113,14 @@ export class LearningMaterial extends Component {
 
         return (
             <Fragment>
+                {
+                    !isPublished &&
+                        <div className="mb-4">
+                            <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>
+                                <FontAwesomeIcon icon={faPlus} className="mr-2" />Create a Learning Material
+                            </button>
+                        </div>
+                }
                 {
                     learningMaterial
                         ? <div className="card">
@@ -128,19 +137,20 @@ export class LearningMaterial extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">{learningMaterial.title}</h3>
                                 <p className="card-text">{learningMaterial.description}</p>
-                                <button href="#" className="btn btn-success mr-2" onClick={() => this.openModalForm(UPDATE, learningMaterial)}>
-                                    <FontAwesomeIcon icon={faEdit} />
-                                </button>
-                                <button href="#" className="btn btn-danger" onClick={() => this.openModalForm(DELETE, learningMaterial)}>
-                                    <FontAwesomeIcon icon={faTrash} />
-                                </button>
+                                {
+                                    !isPublished &&
+                                        <div>
+                                            <button href="#" className="btn btn-success mr-2" onClick={() => this.openModalForm(UPDATE, learningMaterial)}>
+                                                <FontAwesomeIcon icon={faEdit} />
+                                            </button>
+                                            <button href="#" className="btn btn-danger" onClick={() => this.openModalForm(DELETE, learningMaterial)}>
+                                                <FontAwesomeIcon icon={faTrash} />
+                                            </button>
+                                        </div>
+                                }
                             </div>
                         </div>
-                        : <div>
-                            <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>
-                                <FontAwesomeIcon icon={faPlus} className="mr-2" />Create a Learning Material
-                            </button>
-                        </div>
+                        : <p>No learning material found.</p>
                 }
                 {modalFormComponent}
             </Fragment>

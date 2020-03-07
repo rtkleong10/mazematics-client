@@ -50,10 +50,10 @@ export class LevelPage extends Component {
                 }
             </div>
             <h2>Learning Material</h2>
-            <LearningMaterial level={level.id} />
+            <LearningMaterial level={level.id} isPublished={level.isPublished} />
             <br />
             <h2>Questions</h2>
-            <QuestionsList level={level.id} />
+            <QuestionsList level={level.id} isPublished={level.isPublished} />
           </div>
         );
     }

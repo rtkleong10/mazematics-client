@@ -101,7 +101,8 @@ export class QuestionsList extends Component {
     render() {
         const {
             questionsListed,
-            questions
+            questions,
+            isPublished,
         } = this.props;
 
         if (!questionsListed)
@@ -111,25 +112,31 @@ export class QuestionsList extends Component {
 
         return (
             <Fragment>
-                <div className="mb-4">
-                    <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>
-                        <FontAwesomeIcon icon={faPlus} className="mr-2" />Create a Question
-                    </button>
-                </div>
+                {
+                    !isPublished &&
+                        <div className="mb-4">
+                            <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>
+                                <FontAwesomeIcon icon={faPlus} className="mr-2" />Create a Question
+                            </button>
+                        </div>
+                }
                 <ul className="list-group">
                     {
                         questions.length !== 0
                             ? questions.map((question) => (
                                 <li key={question.id} className="list-group-item d-flex justify-content-between align-items-center">
                                     <span>{question.title}</span>
-                                    <div>
-                                        <button href="#" className="btn btn-success mr-2" onClick={() => this.openModalForm(UPDATE, question)}>
-                                            <FontAwesomeIcon icon={faEdit} />
-                                        </button>
-                                        <button href="#" className="btn btn-danger" onClick={() => this.openModalForm(DELETE, question)}>
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </button>
-                                    </div>
+                                    {
+                                        !isPublished &&
+                                            <div>
+                                                <button href="#" className="btn btn-success mr-2" onClick={() => this.openModalForm(UPDATE, question)}>
+                                                    <FontAwesomeIcon icon={faEdit} />
+                                                </button>
+                                                <button href="#" className="btn btn-danger" onClick={() => this.openModalForm(DELETE, question)}>
+                                                    <FontAwesomeIcon icon={faTrash} />
+                                                </button>
+                                            </div>
+                                    }
                                 </li>
                             ))
                             : <p>No questions found.</p>
