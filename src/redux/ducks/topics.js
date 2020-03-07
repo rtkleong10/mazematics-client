@@ -26,11 +26,11 @@ export const createTopic = topic => dispatch => {
     ;
 };
 
-export const retrieveTopic = (id) => (dispatch) => {
+export const retrieveTopic = topicID => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.RETRIEVE));
 
     axios
-        .get(`${API_URL}/${ENTITY_NAME}/${id}/`)
+        .get(`${API_URL}/${ENTITY_NAME}/${topicID}/`)
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.RETRIEVE, res.data));
         })
@@ -41,7 +41,7 @@ export const retrieveTopic = (id) => (dispatch) => {
     ;
 };
 
-export const updateTopic = topic => (dispatch) => {
+export const updateTopic = topic => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.UPDATE));
 
     axios
@@ -55,13 +55,13 @@ export const updateTopic = topic => (dispatch) => {
         });
 };
 
-export const deleteTopic = id => (dispatch) => {
+export const deleteTopic = topicID => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.DELETE));
 
     axios
-        .delete(`${API_URL}/${ENTITY_NAME}/${id}/`)
+        .delete(`${API_URL}/${ENTITY_NAME}/${topicID}/`)
         .then(res => {
-            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, id));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, topicID));
         })
         .catch(err => {
             dispatch(displayErrorAction("Unable to delete topic"));
@@ -69,7 +69,7 @@ export const deleteTopic = id => (dispatch) => {
         });
 };
 
-export const listTopics = () => (dispatch) => {
+export const listTopics = () => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.LIST));
 
     axios
@@ -85,7 +85,7 @@ export const listTopics = () => (dispatch) => {
 };
 
 // SELECTORS
-export const selectTopicsListed = (state) => state.topicsReducer.isLoading[METHODS.LIST] === false;
-export const selectTopicRetrieved = (state) => state.topicsReducer.isLoading[METHODS.RETRIEVE] === false;
-export const selectTopics = (state) => state.topicsReducer.items;
-export const selectTopic = (state, id) => state.topicsReducer.items.find(item => item.id === id);
+export const selectTopicsListed = state => state.topicsReducer.isLoading[METHODS.LIST] === false;
+export const selectTopicRetrieved = state => state.topicsReducer.isLoading[METHODS.RETRIEVE] === false;
+export const selectTopics = state => state.topicsReducer.items;
+export const selectTopic = (state, topicID) => state.topicsReducer.items.find(item => item.id === topicID);

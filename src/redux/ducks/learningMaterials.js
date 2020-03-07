@@ -7,15 +7,15 @@ import { displayErrorAction } from './errors';
 const ENTITY_NAME = 'learningMaterials';
 
 // REDUCER
-const topicsReducer = createApiReducer(ENTITY_NAME);
-export default topicsReducer;
+const learningMaterialsReducer = createApiReducer(ENTITY_NAME);
+export default learningMaterialsReducer;
 
 // OPERATIONS
-export const createLearningMaterial = topic => dispatch => {
+export const createLearningMaterial = learningMaterial => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.CREATE));
 
     axios
-        .post(`${API_URL}/${ENTITY_NAME}/`, topic)
+        .post(`${API_URL}/${ENTITY_NAME}/`, learningMaterial)
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.CREATE, res.data));
         })
@@ -26,11 +26,11 @@ export const createLearningMaterial = topic => dispatch => {
     ;
 };
 
-export const retrieveLearningMaterial = (id) => (dispatch) => {
+export const retrieveLearningMaterial = learningMaterialID => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.RETRIEVE));
 
     axios
-        .get(`${API_URL}/${ENTITY_NAME}/${id}/`)
+        .get(`${API_URL}/${ENTITY_NAME}/${learningMaterialID}/`)
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.RETRIEVE, res.data));
         })
@@ -41,11 +41,11 @@ export const retrieveLearningMaterial = (id) => (dispatch) => {
     ;
 };
 
-export const updateLearningMaterial = topic => (dispatch) => {
+export const updateLearningMaterial = learningMaterial => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.UPDATE));
 
     axios
-        .patch(`${API_URL}/${ENTITY_NAME}/${topic.id}/`, topic)
+        .patch(`${API_URL}/${ENTITY_NAME}/${learningMaterial.id}/`, learningMaterial)
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.UPDATE, res.data));
         })
@@ -55,13 +55,13 @@ export const updateLearningMaterial = topic => (dispatch) => {
         });
 };
 
-export const deleteLearningMaterial = id => (dispatch) => {
+export const deleteLearningMaterial = learningMaterialID => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.DELETE));
 
     axios
-        .delete(`${API_URL}/${ENTITY_NAME}/${id}/`)
+        .delete(`${API_URL}/${ENTITY_NAME}/${learningMaterialID}/`)
         .then(res => {
-            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, id));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, learningMaterialID));
         })
         .catch(err => {
             dispatch(displayErrorAction("Unable to delete learning material"));
@@ -69,7 +69,7 @@ export const deleteLearningMaterial = id => (dispatch) => {
         });
 };
 
-export const listLearningMaterials = () => (dispatch) => {
+export const listLearningMaterials = () => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.LIST));
 
     axios
@@ -85,5 +85,5 @@ export const listLearningMaterials = () => (dispatch) => {
 };
 
 // SELECTORS
-export const selectLearningMaterialsListed = (state) => state.learningMaterialsReducer.isLoading[METHODS.LIST] === false;
-export const selectLearningMaterial = (state, levelId) => state.learningMaterialsReducer.items.find(item => item.level === levelId);
+export const selectLearningMaterialsListed = state => state.learningMaterialsReducer.isLoading[METHODS.LIST] === false;
+export const selectLearningMaterial = (state, levelID) => state.learningMaterialsReducer.items.find(item => item.level === levelID);

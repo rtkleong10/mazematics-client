@@ -28,22 +28,22 @@ export class LearningRouter extends Component {
                     component={LearningHomePage}
                     />
                 <Route
-                    path="/:topic"
+                    path="/topics/:topicID"
                     exact
                     component={TopicPage}
                     />
                 <Route
-                    path="/:topic/:level"
+                    path="/levels/:levelID"
                     exact
                     component={LevelPage}
                     />
                 <Route
-                    path="/:topic/:level/leaderboard"
+                    path="/levels/:levelID/leaderboard"
                     exact
                     component={LeaderboardPage}
                     />
                 <Route
-                    path="/:topic/:level/game"
+                    path="/levels/:levelID/game"
                     exact
                     component={GamePage}
                     />

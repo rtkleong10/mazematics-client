@@ -11,11 +11,11 @@ const questionsReducer = createApiReducer(ENTITY_NAME);
 export default questionsReducer;
 
 // OPERATIONS
-export const createQuestion = topic => dispatch => {
+export const createQuestion = question => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.CREATE));
 
     axios
-        .post(`${API_URL}/${ENTITY_NAME}/`, topic)
+        .post(`${API_URL}/${ENTITY_NAME}/`, question)
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.CREATE, res.data));
         })
@@ -26,11 +26,11 @@ export const createQuestion = topic => dispatch => {
     ;
 };
 
-export const retrieveQuestion = (id) => (dispatch) => {
+export const retrieveQuestion = questionID => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.RETRIEVE));
 
     axios
-        .get(`${API_URL}/${ENTITY_NAME}/${id}/`)
+        .get(`${API_URL}/${ENTITY_NAME}/${questionID}/`)
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.RETRIEVE, res.data));
         })
@@ -41,11 +41,11 @@ export const retrieveQuestion = (id) => (dispatch) => {
     ;
 };
 
-export const updateQuestion = topic => (dispatch) => {
+export const updateQuestion = question => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.UPDATE));
 
     axios
-        .patch(`${API_URL}/${ENTITY_NAME}/${topic.id}/`, topic)
+        .patch(`${API_URL}/${ENTITY_NAME}/${question.id}/`, question)
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.UPDATE, res.data));
         })
@@ -55,13 +55,13 @@ export const updateQuestion = topic => (dispatch) => {
         });
 };
 
-export const deleteQuestion = id => (dispatch) => {
+export const deleteQuestion = questionID => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.DELETE));
 
     axios
-        .delete(`${API_URL}/${ENTITY_NAME}/${id}/`)
+        .delete(`${API_URL}/${ENTITY_NAME}/${questionID}/`)
         .then(res => {
-            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, id));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, questionID));
         })
         .catch(err => {
             dispatch(displayErrorAction("Unable to delete question"));
@@ -69,7 +69,7 @@ export const deleteQuestion = id => (dispatch) => {
         });
 };
 
-export const listQuestions = () => (dispatch) => {
+export const listQuestions = () => dispatch => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.LIST));
 
     axios
@@ -85,5 +85,5 @@ export const listQuestions = () => (dispatch) => {
 };
 
 // SELECTORS
-export const selectQuestionsListed = (state) => state.questionsReducer.isLoading[METHODS.LIST] === false;
-export const selectQuestions = (state, levelId) => state.questionsReducer.items.filter(item => item.level === levelId);
+export const selectQuestionsListed = state => state.questionsReducer.isLoading[METHODS.LIST] === false;
+export const selectQuestions = (state, levelID) => state.questionsReducer.items.filter(item => item.level === levelID);

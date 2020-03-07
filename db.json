@@ -1,4 +1,21 @@
 {
+  "users": [
+    {
+      "email": "bob@e.ntu.edu.sg",
+      "role": "ROLE_STUDENT",
+      "name": "Bob"
+    },
+    {
+      "email": "prof_lee@ntu.edu.sg",
+      "role": "ROLE_TEACHER",
+      "name": "Prof Lee"
+    },
+    {
+      "email": "mr_tan@ntu.edu.sg",
+      "role": "ROLE_ADMIN",
+      "name": "Mr Tan"
+    }
+  ],
   "topics": [
     {
       "title": "Addition",
@@ -17,70 +34,70 @@
       "description": "This is a module where we talk about how to combine numbers of small sizes.",
       "id": 1,
       "topic": 1,
-      "isPublished": true
+      "isPlayable": true
     },
     {
       "title": "Adding Numbers from 1 to 1,000,000",
       "description": "We're going to move on to numbers of larger sizes!",
       "id": 2,
       "topic": 1,
-      "isPublished": false
+      "isPlayable": false
     },
     {
       "title": "Multiplication Table",
       "description": "",
       "topic": 3,
       "id": 3,
-      "isPublished": false
+      "isPlayable": false
     },
     {
       "title": "Multiplying 2 Digit Numbers",
       "description": "",
       "topic": 3,
       "id": 4,
-      "isPublished": false
+      "isPlayable": false
     },
     {
       "title": "Subtracting Numbers from 1 to 100",
       "description": "Smol numbers",
       "id": 5,
       "topic": 2,
-      "isPublished": false
+      "isPlayable": false
     },
     {
       "title": "Subtracting Numbers 1 to 1,000",
       "description": "Big big numbers",
       "id": 6,
       "topic": 2,
-      "isPublished": false
+      "isPlayable": false
     },
     {
       "title": "Proper Fractions",
       "description": "",
       "topic": 4,
       "id": 7,
-      "isPublished": false
+      "isPlayable": false
     },
     {
       "title": "Improper Fractions",
       "description": "",
       "topic": 4,
       "id": 8,
-      "isPublished": false
+      "isPlayable": false
     },
     {
       "title": "Adding Fractions",
       "description": "",
       "topic": 4,
       "id": 9,
-      "isPublished": false
+      "isPlayable": false
     },
     {
       "title": "Subtracting Fractions",
       "description": "",
       "topic": 4,
       "id": 10,
-      "isPublished": false
+      "isPlayable": false
     }
   ],
   "learningMaterials": [
@@ -96,17 +113,37 @@
     {
       "id": 1,
       "level": 1,
-      "title": "1 + 2"
+      "questionText": "1 + 2",
+      "answer": 1,
+      "options": {
+        "1": "3",
+        "2": "4",
+        "3": "5",
+        "4": "1"
+      }
     },
     {
       "id": 2,
       "level": 1,
-      "title": "2 + 2"
+      "questionText": "2 + 2",
+      "answer": 3,
+      "options": {
+        "1": "2",
+        "2": "3",
+        "3": "4"
+      }
     },
     {
       "id": 3,
       "level": 1,
-      "title": "1 + 3"
+      "questionText": "1 + 3",
+      "answer": 2,
+      "options": {
+        "1": "2",
+        "2": "4",
+        "3": "5",
+        "4": "1"
+      }
     }
   ]
 }
