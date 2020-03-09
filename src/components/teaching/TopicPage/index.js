@@ -136,7 +136,7 @@ class TopicPage extends Component {
                             <div href="#" className="card mb-4" key={level.id}>
                                 <div className="card-body">
                                     <Link to={`/levels/${level.id}`}>
-                                        <h3 className="card-title">{level.title}</h3>
+                                        <h3 className="card-title">{level.title} {level.isPlayable ?  <span className="badge badge-success">Playable</span> : <span className="badge badge-secondary">Unplayable</span>}</h3>
                                     </Link>
                                     <p className="card-text">{level.description}</p>
                                     <div>
