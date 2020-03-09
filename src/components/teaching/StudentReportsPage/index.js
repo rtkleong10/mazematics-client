@@ -61,7 +61,7 @@ export class StudentReportsPage extends Component {
                                 }
 
                                 return (
-                                    <tr>
+                                    <tr key={question}>
                                         <th scope="row">{question}</th>
                                         <td>{(sum / counter).toFixed(2)}</td>
                                     </tr>
