@@ -137,9 +137,7 @@ class TopicPage extends Component {
                         ? levels.map((level) => (
                             <div href="#" className="card mb-4" key={level.id}>
                                 <div className="card-body">
-                                    <Link to={`/levels/${level.id}`}>
-                                        <h3 className="card-title">{level.title} {level.isPlayable ?  <span className="badge badge-success">Playable</span> : <span className="badge badge-secondary">Unplayable</span>}</h3>
-                                    </Link>
+                                    <h3 className="card-title"><Link to={`/levels/${level.id}`}>{level.title}</Link> {level.isPlayable ?  <span className="badge badge-success">Playable</span> : <span className="badge badge-secondary">Unplayable</span>}</h3>
                                     <p className="card-text">{level.description}</p>
                                     <div>
                                         <button className="ml-auto btn btn-success mr-2" onClick={() => this.openModalForm(UPDATE, level)}>
