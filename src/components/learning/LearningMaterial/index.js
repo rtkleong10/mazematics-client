@@ -50,7 +50,7 @@ export class LearningMaterial extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const levelID = ownProps.level;
+    const levelID = ownProps.levelID;
 
     return {
         learningMaterialsLoading: selectLearningMaterialsLoading(state),
