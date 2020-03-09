@@ -7,7 +7,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../../common/Loader';
 import LearningMaterial from '../LearningMaterial';
 import QuestionsList from '../QuestionsList';
-import { retrieveLevel, selectLevel, selectLevelRetrieved } from '../../../redux/ducks/levels';
+import { retrieveLevel, selectLevel, selectLevelLoading, selectLevelFailed } from '../../../redux/ducks/levels';
 
 export class LevelPage extends Component {
     constructor(props) {
@@ -24,22 +24,23 @@ export class LevelPage extends Component {
     
     render() {
         const {
-            levelRetrieved,
+            levelLoading,
+            levelFailed,
             level,
         } = this.props;
 
-        if (!levelRetrieved)
+        if (levelLoading)
             return <Loader />;
 
-        if (levelRetrieved && !level)
+        if (levelFailed || !level)
             return <Redirect to="/not-found" />;
-
+        
         return (
             <div className="container">
                 <Link className="btn btn-light mb-2" to={`/topics/${level.topic}/`}>
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Topic Page
                 </Link>
-                <h1>{level.title} <span className="badge badge-secondary">{level.isPlayable ? 'Playable' : 'Unplayable'}</span></h1>
+                <h1>{level.title} {level.isPlayable ?  <span className="badge badge-success">Playable</span> : <span className="badge badge-secondary">Unplayable</span>}</h1>
                 <div className="mb-4">
                     {
                         level.isPlayable
@@ -65,7 +66,8 @@ const mapStateToProps = (state, ownProps) => {
     const levelID = parseInt(ownProps.match.params.levelID);
 
     return {
-        levelRetrieved: selectLevelRetrieved(state),
+        levelLoading: selectLevelLoading(state),
+        levelFailed: selectLevelFailed(state),
         level: selectLevel(state, levelID),
     }
 };

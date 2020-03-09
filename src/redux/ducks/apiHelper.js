@@ -23,7 +23,14 @@ export function createApiAction(entityName, status, method, payload) {
 // REDUCER
 export function createApiReducer(entityName) {
     const initialState = {
-        isLoading: {},
+        isLoading: {
+            CREATE: true,
+            RETRIEVE: true,
+            UPDATE: true,
+            DELETE: true,
+            LIST: true,
+        },
+        hasFailed: {},
         items: []
     };
 
@@ -48,6 +55,10 @@ export function createApiReducer(entityName) {
                     isLoading: {
                         ...state.isLoading,
                         [actionMethod]: true
+                    },
+                    hasFailed: {
+                        ...state.isLoading,
+                        [actionMethod]: false
                     },
                 };
 
@@ -128,6 +139,10 @@ export function createApiReducer(entityName) {
                     isLoading: {
                         ...state.isLoading,
                         [actionMethod]: false
+                    },
+                    hasFailed: {
+                        ...state.isLoading,
+                        [actionMethod]: true
                     },
                 };
 

@@ -52,13 +52,11 @@ export class LearningMaterialForm extends Component {
             description,
             link,
         } = this.state;
-        
-        let embededLink = link;
 
         this.props.onSubmit({
             title,
             description,
-            embededLink,
+            link,
         });
 
         this.setState({

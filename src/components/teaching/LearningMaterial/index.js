@@ -7,9 +7,10 @@ import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
 import LearningMaterialForm from '../LearningMaterialForm';
 import DeleteForm from '../DeleteForm';
-import { createLearningMaterial, listLearningMaterials, updateLearningMaterial, deleteLearningMaterial, selectLearningMaterialsListed, selectLearningMaterial } from '../../../redux/ducks/learningMaterials';
+import { createLearningMaterial, listLearningMaterials, updateLearningMaterial, deleteLearningMaterial, selectLearningMaterial, selectLearningMaterialsLoading } from '../../../redux/ducks/learningMaterials';
 import './styles.css';
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
+import { selectIsVisible } from '../../../redux/ducks/errors';
 
 export class LearningMaterial extends Component {
     constructor(props) {
@@ -101,12 +102,13 @@ export class LearningMaterial extends Component {
 
     render() {
         const {
-            learningMaterialsListed,
+            learningMaterialsLoading,
+            learningMaterialsFailed,
             learningMaterial,
             isPlayable,
         } = this.props;
 
-        if (!learningMaterialsListed)
+        if (learningMaterialsLoading)
             return <Loader />;
 
         const modalFormComponent = this.getModalFormComponent();
@@ -122,7 +124,7 @@ export class LearningMaterial extends Component {
                         </div>
                 }
                 {
-                    learningMaterial
+                    learningMaterial && !learningMaterialsFailed
                         ? <div className="card">
                             <div className="video-box card-img-top">
                                 <div>
@@ -162,7 +164,8 @@ const mapStateToProps = (state, ownProps) => {
     const levelID = ownProps.levelID;
 
     return {
-        learningMaterialsListed: selectLearningMaterialsListed(state),
+        learningMaterialsLoading: selectLearningMaterialsLoading(state),
+        learningMaterialsFailed: selectIsVisible(state),
         learningMaterial: selectLearningMaterial(state, levelID),
     }
 };

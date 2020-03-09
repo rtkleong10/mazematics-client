@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 import Loader from '../../common/Loader';
-import { retrieveTopic, selectTopicRetrieved, selectTopic } from '../../../redux/ducks/topics';
-import { listLevels, selectLevelsListed, selectPlayableLevels } from '../../../redux/ducks/levels';
+import { retrieveTopic, selectTopic, selectTopicLoading, selectTopicFailed } from '../../../redux/ducks/topics';
+import { listLevels, selectLevelsLoading, selectLevelsFailed, selectPlayableLevels } from '../../../redux/ducks/levels';
 
 class TopicPage extends Component {
     constructor(props) {
@@ -19,16 +19,18 @@ class TopicPage extends Component {
 
     render() {
         const {
-            topicRetrieved,
+            topicLoading,
+            topicFailed,
             topic,
-            levelsRetrieved,
+            levelsLoading,
+            levelsFailed,
             levels,
         } = this.props;
         
-        if (!topicRetrieved || !levelsRetrieved)
+        if (topicLoading || levelsLoading)
             return <Loader />;
 
-        if (topicRetrieved && !topic)
+        if (topicFailed || !topic)
             return <Redirect to="/not-found" />;
         
         return (
@@ -39,7 +41,7 @@ class TopicPage extends Component {
                 <h1>{topic.title}</h1>
                 <h2>Levels</h2>
                 {
-                    levels.length !== 0
+                    levels.length !== 0 && !levelsFailed
                         ? levels.map((level) => (
                             <div href="#" className="card mb-4" key={level.id}>
                                 <div className="card-body">
@@ -61,9 +63,11 @@ const mapStateToProps = (state, ownProps) => {
     const topicID = parseInt(ownProps.match.params.topicID);
 
     return {
-        topicRetrieved: selectTopicRetrieved(state),
+        topicLoading: selectTopicLoading(state),
+        topicFailed: selectTopicFailed(state),
         topic: selectTopic(state, topicID),
-        levelsRetrieved: selectLevelsListed(state),
+        levelsLoading: selectLevelsLoading(state),
+        levelsFailed: selectLevelsFailed(state),
         levels: selectPlayableLevels(state, topicID),
     }
 };

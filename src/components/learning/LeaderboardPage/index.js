@@ -70,7 +70,7 @@ export class LeaderboardPage extends Component {
                     <tbody>
                         {
                             leaderboardData.map(row =>
-                                <tr>
+                                <tr key={row.name}>
                                     <th scope="row">{row.name}</th>
                                     <td>{row.timing.toFixed(2)}</td>
                                 </tr>

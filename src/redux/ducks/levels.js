@@ -85,9 +85,13 @@ export const listLevels = () => dispatch => {
 };
 
 // SELECTORS
-export const selectLevelsListed = state => state.levelsReducer.isLoading[METHODS.LIST] === false;
-export const selectLevelRetrieved = state => state.levelsReducer.isLoading[METHODS.RETRIEVE] === false;
+export const selectLevelsLoading = state => state.levelsReducer.isLoading[METHODS.LIST] === true;
+export const selectLevelsFailed = state => state.levelsReducer.isLoading[METHODS.LIST] === false && state.levelsReducer.hasFailed[METHODS.LIST] === true;
 export const selectLevels = (state, topicID) => state.levelsReducer.items.filter(item => item.topic === topicID);
+
+export const selectLevelLoading = state => state.levelsReducer.isLoading[METHODS.RETRIEVE] === true;
+export const selectLevelFailed = state => state.levelsReducer.isLoading[METHODS.RETRIEVE] === false && state.levelsReducer.hasFailed[METHODS.RETRIEVE] === true;
 export const selectLevel = (state, levelID) => state.levelsReducer.items.find(item => item.id === levelID);
+
 export const selectPlayableLevels = (state, topicID) => state.levelsReducer.items.filter(item => item.topic === topicID && item.isPlayable);
 export const selectPlayableLevel = (state, levelID) => state.levelsReducer.items.find(item => item.id === levelID && item.isPlayable);

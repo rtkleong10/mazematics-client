@@ -8,8 +8,8 @@ import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
 import SimpleForm from '../SimpleForm';
 import DeleteForm from '../DeleteForm';
-import { retrieveTopic, selectTopicRetrieved, selectTopic } from '../../../redux/ducks/topics';
-import { createLevel, updateLevel, deleteLevel, listLevels, selectLevelsListed, selectLevels } from '../../../redux/ducks/levels';
+import { retrieveTopic, selectTopic, selectTopicLoading, selectTopicFailed } from '../../../redux/ducks/topics';
+import { createLevel, updateLevel, deleteLevel, listLevels, selectLevelsLoading, selectLevelsFailed, selectLevels } from '../../../redux/ducks/levels';
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
 
 class TopicPage extends Component {
@@ -104,16 +104,18 @@ class TopicPage extends Component {
 
     render() {
         const {
-            topicRetrieved,
+            topicLoading,
+            topicFailed,
             topic,
-            levelsRetrieved,
+            levelsLoading,
+            levelsFailed,
             levels,
         } = this.props;
         
-        if (!topicRetrieved || !levelsRetrieved)
+        if (topicLoading || levelsLoading)
             return <Loader />;
 
-        if (topicRetrieved && !topic)
+        if (topicFailed || !topic)
             return <Redirect to="/not-found" />;
 
         const modalFormComponent = this.getModalFormComponent();
@@ -131,13 +133,11 @@ class TopicPage extends Component {
                     </button>
                 </div>
                 {
-                    levels.length !== 0
+                    levels.length !== 0 && !levelsFailed
                         ? levels.map((level) => (
                             <div href="#" className="card mb-4" key={level.id}>
                                 <div className="card-body">
-                                    <Link to={`/levels/${level.id}`}>
-                                        <h3 className="card-title">{level.title}</h3>
-                                    </Link>
+                                    <h3 className="card-title"><Link to={`/levels/${level.id}`}>{level.title}</Link> {level.isPlayable ?  <span className="badge badge-success">Playable</span> : <span className="badge badge-secondary">Unplayable</span>}</h3>
                                     <p className="card-text">{level.description}</p>
                                     <div>
                                         <button className="ml-auto btn btn-success mr-2" onClick={() => this.openModalForm(UPDATE, level)}>
@@ -162,9 +162,11 @@ const mapStateToProps = (state, ownProps) => {
     const topicID = parseInt(ownProps.match.params.topicID);
 
     return {
-        topicRetrieved: selectTopicRetrieved(state),
+        topicLoading: selectTopicLoading(state),
+        topicFailed: selectTopicFailed(state),
         topic: selectTopic(state, topicID),
-        levelsRetrieved: selectLevelsListed(state),
+        levelsLoading: selectLevelsLoading(state),
+        levelsFailed: selectLevelsFailed(state),
         levels: selectLevels(state, topicID),
     }
 };
