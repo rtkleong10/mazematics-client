@@ -7,7 +7,7 @@ import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
 import QuestionForm from '../QuestionForm';
 import DeleteForm from '../DeleteForm';
-import { createQuestion, listQuestions, updateQuestion, deleteQuestion, selectQuestionsListed, selectQuestions } from '../../../redux/ducks/questions';
+import { createQuestion, listQuestions, updateQuestion, deleteQuestion, selectQuestions, selectQuestionsFailed, selectQuestionsLoading } from '../../../redux/ducks/questions';
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
 
 export class QuestionsList extends Component {
@@ -100,12 +100,13 @@ export class QuestionsList extends Component {
 
     render() {
         const {
-            questionsListed,
+            questionsLoading,
+            questionsFailed,
             questions,
             isPlayable,
         } = this.props;
 
-        if (!questionsListed)
+        if (questionsLoading)
             return <Loader />;
 
         const modalFormComponent = this.getModalFormComponent();
@@ -122,7 +123,7 @@ export class QuestionsList extends Component {
                 }
                 <ul className="list-group">
                     {
-                        questions.length !== 0
+                        questions.length !== 0 && !questionsFailed
                             ? questions.map((question) => (
                                 <li key={question.id} className="list-group-item d-flex justify-content-between align-items-center">
                                     <span>{question.questionText}</span>
@@ -152,7 +153,8 @@ const mapStateToProps = (state, ownProps) => {
     const levelID = ownProps.levelID;
 
     return {
-        questionsListed: selectQuestionsListed(state),
+        questionsLoading: selectQuestionsLoading(state),
+        questionsFailed: selectQuestionsFailed(state),
         questions: selectQuestions(state, levelID)
     }
 };

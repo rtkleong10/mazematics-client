@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Loader from '../../common/Loader';
-import { listTopics, selectTopicsListed, selectTopics } from '../../../redux/ducks/topics';
+import { listTopics, selectTopics, selectTopicsLoading, selectTopicsFailed } from '../../../redux/ducks/topics';
 
 class LearningHomePage extends Component {
     constructor(props) {
@@ -14,12 +14,13 @@ class LearningHomePage extends Component {
 
     render() {
         const {
-            topicsListed,
+            topicsLoading,
+            topicsFailed,
             topics,
             user
         } = this.props;
 
-        if (!topicsListed)
+        if (topicsLoading)
             return <Loader />
         
         return (
@@ -27,7 +28,7 @@ class LearningHomePage extends Component {
                 <h1>Welcome {user.name}!</h1>
                 <h2>Topics</h2>
                 {
-                    topics.length !== 0
+                    topics.length !== 0 && !topicsFailed
                         ? topics.map((topic) => (
                             <div href="#" className="card mb-4" key={topic.id}>
                                 <div className="card-body">
@@ -47,7 +48,8 @@ class LearningHomePage extends Component {
 
 const mapStateToProps = (state) => ({
     user: state.authReducer.user,
-    topicsListed: selectTopicsListed(state),
+    topicsLoading: selectTopicsLoading(state),
+    topicsFailed: selectTopicsFailed(state),
     topics: selectTopics(state),
 });
 

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import Loader from '../../common/Loader';
-import { listLearningMaterials, selectLearningMaterialsListed, selectLearningMaterial } from '../../../redux/ducks/learningMaterials';
+import { listLearningMaterials, selectLearningMaterialsLoading, selectLearningMaterial, selectLearningMaterialsFailed } from '../../../redux/ducks/learningMaterials';
 import './styles.css';
 
 export class LearningMaterial extends Component {
@@ -14,17 +14,18 @@ export class LearningMaterial extends Component {
 
     render() {
         const {
-            learningMaterialsListed,
+            learningMaterialsLoading,
+            learningMaterialsFailed,
             learningMaterial
         } = this.props;
 
-        if (!learningMaterialsListed)
+        if (learningMaterialsLoading)
             return <Loader />;
 
         return (
             <Fragment>
                 {
-                    learningMaterial
+                    learningMaterial && !learningMaterialsFailed
                         ? <div className="card">
                             <div className="video-box card-img-top">
                                 <div>
@@ -52,7 +53,8 @@ const mapStateToProps = (state, ownProps) => {
     const levelID = ownProps.level;
 
     return {
-        learningMaterialsListed: selectLearningMaterialsListed(state),
+        learningMaterialsLoading: selectLearningMaterialsLoading(state),
+        learningMaterialsFailed: selectLearningMaterialsFailed(state),
         learningMaterial: selectLearningMaterial(state, levelID),
     }
 };

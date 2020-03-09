@@ -85,5 +85,6 @@ export const listQuestions = () => dispatch => {
 };
 
 // SELECTORS
-export const selectQuestionsListed = state => state.questionsReducer.isLoading[METHODS.LIST] === false;
+export const selectQuestionsLoading = state => state.questionsReducer.isLoading[METHODS.LIST] === true;
+export const selectQuestionsFailed = state => state.questionsReducer.isLoading[METHODS.LIST] === false && state.questionsReducer.hasFailed[METHODS.LIST] === true;
 export const selectQuestions = (state, levelID) => state.questionsReducer.items.filter(item => item.level === levelID);

@@ -85,7 +85,10 @@ export const listTopics = () => dispatch => {
 };
 
 // SELECTORS
-export const selectTopicsListed = state => state.topicsReducer.isLoading[METHODS.LIST] === false;
-export const selectTopicRetrieved = state => state.topicsReducer.isLoading[METHODS.RETRIEVE] === false;
+export const selectTopicsLoading = state => state.topicsReducer.isLoading[METHODS.LIST] === true;
+export const selectTopicsFailed = state => state.topicsReducer.isLoading[METHODS.LIST] === false && state.topicsReducer.hasFailed[METHODS.LIST] === true;
 export const selectTopics = state => state.topicsReducer.items;
+
+export const selectTopicLoading = state => state.topicsReducer.isLoading[METHODS.RETRIEVE] === true;
+export const selectTopicFailed = state => state.topicsReducer.isLoading[METHODS.RETRIEVE] === false && state.topicsReducer.hasFailed[METHODS.RETRIEVE] === true;
 export const selectTopic = (state, topicID) => state.topicsReducer.items.find(item => item.id === topicID);

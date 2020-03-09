@@ -6,7 +6,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 import Loader from '../../common/Loader';
 import LearningMaterial from '../LearningMaterial';
-import { retrieveLevel, selectPlayableLevel, selectLevelRetrieved } from '../../../redux/ducks/levels';
+import { retrieveLevel, selectPlayableLevel, selectLevelLoading, selectLevelFailed } from '../../../redux/ducks/levels';
 
 export class LevelPage extends Component {
     constructor(props) {
@@ -18,17 +18,18 @@ export class LevelPage extends Component {
     
     render() {
         const {
-            levelRetrieved,
+            levelLoading,
+            levelFailed,
             level,
         } = this.props;
 
         // TODO: Fetch this from API
         const viewedBefore = true;
 
-        if (!levelRetrieved)
+        if (levelLoading)
             return <Loader />;
 
-        if (levelRetrieved && !level)
+        if (levelFailed || !level)
             return <Redirect to="/not-found" />;
 
         return (
@@ -69,7 +70,8 @@ const mapStateToProps = (state, ownProps) => {
     const levelID = parseInt(ownProps.match.params.levelID);
 
     return {
-        levelRetrieved: selectLevelRetrieved(state),
+        levelLoading: selectLevelLoading(state),
+        levelFailed: selectLevelFailed(state),
         level: selectPlayableLevel(state, levelID),
     }
 };

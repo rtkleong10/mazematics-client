@@ -8,7 +8,7 @@ import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
 import SimpleForm from '../SimpleForm';
 import DeleteForm from '../DeleteForm';
-import { createTopic, updateTopic, deleteTopic, listTopics, selectTopicsListed, selectTopics } from '../../../redux/ducks/topics';
+import { createTopic, updateTopic, deleteTopic, listTopics, selectTopicsLoading, selectTopics, selectTopicFailed } from '../../../redux/ducks/topics';
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
 
 class TeachingHomePage extends Component {
@@ -97,13 +97,14 @@ class TeachingHomePage extends Component {
 
     render() {
         const {
-            topicsListed,
+            topicsLoading,
+            topicsFailed,
             topics,
             user
         } = this.props;
 
-        if (!topicsListed)
-            return <Loader />
+        if (topicsLoading)
+            return <Loader />;
 
         const modalFormComponent = this.getModalFormComponent();
         
@@ -117,7 +118,7 @@ class TeachingHomePage extends Component {
                     </button>
                 </div>
                 {
-                    topics.length !== 0
+                    topics.length !== 0 && !topicsFailed
                         ? topics.map((topic) => (
                             <div href="#" className="card mb-4" key={topic.id}>
                                 <div className="card-body">
@@ -146,7 +147,8 @@ class TeachingHomePage extends Component {
 
 const mapStateToProps = (state) => ({
     user: state.authReducer.user,
-    topicsListed: selectTopicsListed(state),
+    topicsLoading: selectTopicsLoading(state),
+    topicsFailed: selectTopicFailed(state),
     topics: selectTopics(state),
 });
 
