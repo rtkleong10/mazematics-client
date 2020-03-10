@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { EMPTY } from '../../../utils/constants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export class QuestionForm extends Component {
     state = {
         questionText: '',
+        options: [],
+        answer: null,
     };
 
     componentDidMount() {
@@ -15,6 +19,8 @@ export class QuestionForm extends Component {
             if (initialState === EMPTY)
                 this.setState({
                     questionText: '',
+                    options: [],
+                    answer: null,
                 });
 
             else
@@ -31,6 +37,8 @@ export class QuestionForm extends Component {
             if (initialState === EMPTY)
                 this.setState({
                     questionText: '',
+                    options: [],
+                    answer: null,
                 });
                 
             else
@@ -43,14 +51,20 @@ export class QuestionForm extends Component {
 
         const {
             questionText,
+            options,
+            answer,
         } = this.state;
 
         this.props.onSubmit({
             questionText,
+            options,
+            answer,
         });
 
         this.setState({
             questionText: '',
+            options: [],
+            answer: null,
         });
     }
 
@@ -60,9 +74,35 @@ export class QuestionForm extends Component {
         });
     }
 
+    onChangeOption = (selectedIndex, value) => {
+        this.setState({
+            options: this.state.options.map((option, i) => i === selectedIndex ? value : option),
+        });
+    }
+
+    onChangeAnswer = answer => {
+        this.setState({
+            answer: answer
+        });
+    }
+
+    onCreateOption = () => {
+        this.setState({
+            options: [...this.state.options, ""]
+        });
+    }
+
+    onDeleteOption = selectedIndex => {
+        this.setState({
+            options: this.state.options.filter((option, i) => i !== selectedIndex),
+        });
+    }
+
     render() {
         const {
             questionText,
+            options,
+            answer,
         } = this.state;
 
         return (
@@ -77,6 +117,35 @@ export class QuestionForm extends Component {
                         value={questionText}
                         />
                 </div>
+                <p><strong>Options (Select the Correct Option)</strong></p>
+                {
+                    options.map((option, i) => 
+                        <div className="form-group d-flex" key={i}>
+                            <div className="form-check">
+                                <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    name="radio"
+                                    onChange={e => this.onChangeAnswer(e.target.checked ? i : null)}
+                                    checked={answer === parseInt(i)}
+                                    />
+                            </div>
+                            <input
+                                className="form-control w-100 mr-2"
+                                type="text"
+                                name="questionText"
+                                onChange={e => this.onChangeOption(i, e.target.value)}
+                                value={option}
+                                />
+                            <button className="btn btn-danger btn-sm" type="button" onClick={() => this.onDeleteOption(i)}>
+                                <FontAwesomeIcon icon={faTrash}/>
+                            </button>
+                        </div>
+                    )
+                }
+                <button className="btn btn-primary" type="button" onClick={() => this.onCreateOption()}>
+                    <FontAwesomeIcon icon={faPlus} className="mr-2" />Add Option
+                </button>
                 <div className="form-group mt-4">
                     <button className="btn btn-primary" type="submit">Submit</button>
                 </div>
