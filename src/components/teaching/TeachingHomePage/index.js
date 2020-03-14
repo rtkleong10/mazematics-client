@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 
 import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
@@ -11,6 +12,9 @@ import DeleteForm from '../DeleteForm';
 import { createTopic, updateTopic, deleteTopic, listTopics, selectTopicsLoading, selectTopics, selectTopicFailed } from '../../../redux/ducks/topics';
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
 
+/**
+ * This component displays the homepage for a teacher. It contains a welcome greeting and list of topics.
+ */
 class TeachingHomePage extends Component {
     constructor(props) {
         super(props);
@@ -144,6 +148,27 @@ class TeachingHomePage extends Component {
         );
     }
 }
+
+TeachingHomePage.propTypes = {
+    /** The currently logged in user */
+    user: PropTypes.object.isRequired,
+
+    /** A boolean to determine if the topics are still being loaded by the `listTopics` action creator (true: still loading, false: fully loaded) */
+    topicsLoading: PropTypes.bool.isRequired,
+    /** A boolean to determine if the topics failed to be loaded by the `listTopics` action creator (true: still loading or failed to load, false: successful load) */
+    topicsFailed: PropTypes.bool.isRequired,
+    /** An array of topic objects loaded by the `listTopics` action creaor */
+    topics: PropTypes.array.isRequired,
+
+    /** An action creator for creating a topic */
+    createTopic: PropTypes.func.isRequired,
+    /** An action creator for updating a topic */
+    updateTopic: PropTypes.func.isRequired,
+    /** An action creator for deleting a topic */
+    deleteTopic: PropTypes.func.isRequired,
+    /** An action creator for listing topics */
+    listTopics: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
     user: state.authReducer.user,

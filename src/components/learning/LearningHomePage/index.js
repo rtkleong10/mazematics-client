@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Loader from '../../common/Loader';
 import { listTopics, selectTopics, selectTopicsLoading, selectTopicsFailed } from '../../../redux/ducks/topics';
@@ -45,6 +46,20 @@ class LearningHomePage extends Component {
         );
     }
 }
+
+LearningHomePage.propTypes = {
+    match: PropTypes.object.isRequired,
+
+    user: PropTypes.object.isRequired,
+    topicsLoading: PropTypes.bool.isRequired,
+    topicsFailed: PropTypes.bool.isRequired,
+    topics: PropTypes.array.isRequired,
+
+    createTopic: PropTypes.func.isRequired,
+    updateTopic: PropTypes.func.isRequired,
+    deleteTopic: PropTypes.func.isRequired,
+    listTopics: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
     user: state.authReducer.user,

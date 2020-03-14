@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -157,6 +158,23 @@ class TopicPage extends Component {
         );
     }
 }
+
+TopicPage.propTypes = {
+    match: PropTypes.object.isRequired,
+
+    topicLoading: PropTypes.bool.isRequired,
+    topicFailed: PropTypes.bool.isRequired,
+    topic: PropTypes.object,
+    levelsLoading: PropTypes.bool.isRequired,
+    levelsFailed: PropTypes.bool.isRequired,
+    levels: PropTypes.array.isRequired,
+
+    retrieveTopic: PropTypes.func.isRequired,
+    createLevel: PropTypes.func.isRequired,
+    updateLevel: PropTypes.func.isRequired,
+    deleteLevel: PropTypes.func.isRequired,
+    listLevels: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state, ownProps) => {
     const topicID = parseInt(ownProps.match.params.topicID);
