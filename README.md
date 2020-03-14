@@ -10,6 +10,9 @@
 1. `npm install` (only need to run once to download packages or when the `package.json` is updated)
 2. `npm start`
 
+## How to Run Docs
+1. `npm run docs-dev`
+
 ## How to Change the Account Type
 1. Go to `src/redux/ducks/auth.js`
 2. Change the user role in the `initialState` constant
