@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 
 import Loader from '../../common/Loader';
 import { retrieveTopic, selectTopic, selectTopicLoading, selectTopicFailed } from '../../../redux/ducks/topics';
@@ -58,6 +59,20 @@ class TopicPage extends Component {
         );
     }
 }
+
+TopicPage.propTypes = {
+    match: PropTypes.object.isRequired,
+
+    topicLoading: PropTypes.bool.isRequired,
+    topicFailed: PropTypes.bool.isRequired,
+    topic: PropTypes.object,
+    levelsLoading: PropTypes.bool.isRequired,
+    levelsFailed: PropTypes.bool.isRequired,
+    levels: PropTypes.array.isRequired,
+
+    retrieveTopic: PropTypes.func.isRequired,
+    listLevels: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state, ownProps) => {
     const topicID = parseInt(ownProps.match.params.topicID);

@@ -3,6 +3,7 @@ import { CSVLink } from 'react-csv';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 
 export class StudentReportsPage extends Component {
     render() {
@@ -74,5 +75,9 @@ export class StudentReportsPage extends Component {
         )
     }
 }
+
+StudentReportsPage.propTypes = {
+    match: PropTypes.object.isRequired,
+};
 
 export default StudentReportsPage

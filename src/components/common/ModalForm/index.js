@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Modal from '../Modal';
 
@@ -27,5 +28,13 @@ export class ModalForm extends Component {
         )
     }
 }
+
+ModalForm.propTypes = {
+    title: PropTypes.string,
+    isVisible: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    initialState: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    FormComponent: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired, // React Component
+};
 
 export default ModalForm;
