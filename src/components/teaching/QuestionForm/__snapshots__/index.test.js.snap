@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should take a snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class="form"
+  >
+    <div
+      class="form-group"
+    >
+      <label>
+        Question Text
+      </label>
+      <input
+        class="form-control"
+        name="questionText"
+        type="text"
+        value=""
+      />
+    </div>
+    <p>
+      <strong>
+        Options (Select the Correct Option)
+      </strong>
+    </p>
+    <button
+      class="btn btn-primary"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="svg-inline--fa fa-plus fa-w-14 mr-2"
+        data-icon="plus"
+        data-prefix="fas"
+        focusable="false"
+        role="img"
+        viewBox="0 0 448 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+          fill="currentColor"
+        />
+      </svg>
+      Add Option
+    </button>
+    <div
+      class="form-group mt-4"
+    >
+      <button
+        class="btn btn-primary"
+        type="submit"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</DocumentFragment>
+`;
