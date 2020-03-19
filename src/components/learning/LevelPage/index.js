@@ -26,12 +26,13 @@ export class LevelPage extends Component {
 
         // TODO: Fetch this from API
         const viewedBefore = true;
-
+        
         if (levelLoading)
             return <Loader />;
 
-        if (levelFailed || !level)
+        if (levelFailed || !level) {
             return <Redirect to="/not-found" />;
+        }
 
         return (
             <div className="container">

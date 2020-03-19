@@ -32,9 +32,29 @@ exports[`should take a snapshot 1`] = `
     <h2>
       Levels
     </h2>
-    <p>
-      No levels found.
-    </p>
+    <div
+      class="card mb-4"
+      href="#"
+    >
+      <div
+        class="card-body"
+      >
+        <a
+          href="/topics/1/levels/1"
+        >
+          <h3
+            class="card-title"
+          >
+            Adding 1 to 100
+          </h3>
+        </a>
+        <p
+          class="card-text"
+        >
+          Smol numbers.
+        </p>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;

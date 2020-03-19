@@ -45,20 +45,32 @@ const matchObject = {
     }
 }
 
+it('should take a snapshot', async () => {
+    const { asFragment, getByText } = renderWithReduxRouter(<TopicPage match={matchObject} />);
+    await waitForElement(() => getByText('Levels'));
+    expect(asFragment()).toMatchSnapshot();
+})
+
 it('should load levels', () => {
-    const { getByTestId } = render(renderWithReduxRouter(<TopicPage match={matchObject} />)); 
+    const { getByTestId } = renderWithReduxRouter(<TopicPage match={matchObject} />); 
     expect(getByTestId('loader')).toBeTruthy();
 });
 
 it('should load and display the levels', async () => {
-    const { getByText } = render(renderWithReduxRouter(<TopicPage match={matchObject} />));
+    const { getByText } = renderWithReduxRouter(<TopicPage match={matchObject} />);
     const levels = await waitForElement(() => getByText('Levels'));
     expect(axiosMock.get).toHaveBeenCalledTimes(2);
     expect(levels).toBeTruthy();
 })
 
-it('should take a snapshot', async () => {
-    const { asFragment, getByText } = render(renderWithReduxRouter(<TopicPage match={matchObject} />));
+it('should display edit or delete buttons', async () => {
+    const { getByText, container } = renderWithReduxRouter(<TopicPage match={matchObject} />);
+    
     await waitForElement(() => getByText('Levels'));
-    expect(asFragment()).toMatchSnapshot();
-})
+    
+    const editButton = await waitForElement(() => container.querySelector('[data-icon="edit"]'));
+    expect(editButton).toBeTruthy();
+
+    const deleteButton = await waitForElement(() => container.querySelector('[data-icon="trash"]'));
+    expect(deleteButton).toBeTruthy();
+});

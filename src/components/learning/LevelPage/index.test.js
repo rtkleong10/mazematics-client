@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup, waitForElement } from '@testing-library/react'
+import { render, cleanup, waitForElement, wait } from '@testing-library/react'
 import axiosMock from 'axios'
 
 import { renderWithReduxRouter } from '../../../utils/tests.js';
@@ -54,20 +54,50 @@ const matchObject = {
     }
 }
 
+it('should take a snapshot', async () => {
+    const { asFragment, getByText } = renderWithReduxRouter(<LevelPage match={matchObject} />);
+    await waitForElement(() => getByText('Back to Topic Page'));
+    expect(asFragment()).toMatchSnapshot();
+})
+
 it('should load learning material', () => {
-    const { getByTestId } = render(renderWithReduxRouter(<LevelPage match={matchObject} />)); 
+    const { getByTestId } = renderWithReduxRouter(<LevelPage match={matchObject} />); 
     expect(getByTestId('loader')).toBeTruthy();
 });
 
 it('should load and display the learning material', async () => {
-    const { getByText } = render(renderWithReduxRouter(<LevelPage match={matchObject} />));
+    const { getByText } = renderWithReduxRouter(<LevelPage match={matchObject} />);
     const learningMaterial = await waitForElement(() => getByText('Learning Material'));
     expect(axiosMock.get).toHaveBeenCalledTimes(2);
     expect(learningMaterial).toBeTruthy();
 })
 
-it('should take a snapshot', async () => {
-    const { asFragment, getByText } = render(renderWithReduxRouter(<LevelPage match={matchObject} />));
-    await waitForElement(() => getByText('Back to Topic Page'));
-    expect(asFragment()).toMatchSnapshot();
+it('should not display a unplayable level', async () => {
+    axiosMock.get.mockResolvedValue({
+        data: {
+            id: 1,
+            title: "Adding 1 to 100",
+            description: "Smol numbers.",
+            topic: {
+                id: 1
+            },
+            playable: false
+        }
+    });
+
+    const { history } = renderWithReduxRouter(<LevelPage match={matchObject} />);
+    await wait(() => expect(axiosMock.get).toHaveBeenCalled());
+    expect(history.location.pathname).toEqual('/not-found');
 })
+
+it('should not display edit or delete buttons', async () => {
+    const { getByText, container } = renderWithReduxRouter(<LevelPage match={matchObject} />);
+    
+    await waitForElement(() => getByText('Learning Material'));
+    
+    const editButton = container.querySelector('[data-icon="edit"]');
+    expect(editButton).toBeFalsy();
+
+    const deleteButton = container.querySelector('[data-icon="trash"]');
+    expect(deleteButton).toBeFalsy();
+});
