@@ -29,7 +29,7 @@ export class Modal extends Component {
         } = this.props;
 
         return (
-            <div className="modal fade" ref={modal => this.modal = modal} tabIndex="-1">
+            <div className="modal fade" ref={modal => this.modal = modal} tabIndex="-1" data-testid="modal">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">

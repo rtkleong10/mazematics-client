@@ -4,6 +4,7 @@ exports[`should take a snapshot 1`] = `
 <DocumentFragment>
   <div
     class="modal fade"
+    data-testid="modal"
     style="padding-right: 0px;"
     tabindex="-1"
   >
@@ -36,7 +37,7 @@ exports[`should take a snapshot 1`] = `
           class="modal-body"
         >
           <p>
-            Modal form
+            Modal body
           </p>
         </div>
       </div>
