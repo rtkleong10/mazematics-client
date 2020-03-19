@@ -76,7 +76,11 @@ export const deleteLearningMaterial = (levelId, learningMaterialId) => (dispatch
             getTokenConfig(getState),
         )
         .then(res => {
-            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, learningMaterialId));
+            if (res.data === true) {
+                dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, learningMaterialId));
+            } else {
+                throw new Error("Unable to delete learning material");
+            }
         })
         .catch(err => {
             dispatch(displayErrorAction("Unable to delete learning material"));

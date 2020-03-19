@@ -78,7 +78,11 @@ export const deleteLevel = (topicId, levelId) => (dispatch, getState) => {
             getTokenConfig(getState),
         )
         .then(res => {
-            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, levelId));
+            if (res.data === true) {
+                dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, levelId));
+            } else {
+                throw new Error("Unable to delete level");
+            }
         })
         .catch(err => {
             dispatch(displayErrorAction("Unable to delete level"));
