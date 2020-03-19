@@ -55,13 +55,10 @@ LearningHomePage.propTypes = {
     topicsFailed: PropTypes.bool.isRequired,
     topics: PropTypes.array.isRequired,
 
-    createTopic: PropTypes.func.isRequired,
-    updateTopic: PropTypes.func.isRequired,
-    deleteTopic: PropTypes.func.isRequired,
     listTopics: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     user: state.authReducer.user,
     topicsLoading: selectTopicsLoading(state),
     topicsFailed: selectTopicsFailed(state),

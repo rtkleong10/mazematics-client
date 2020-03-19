@@ -27,17 +27,17 @@ export class TeachingRouter extends Component {
                     component={TeachingHomePage}
                     />
                 <Route
-                    path="/topics/:topicID"
+                    path="/topics/:topicId"
                     exact
                     component={TopicPage}
                     />
                 <Route
-                    path="/levels/:levelID"
+                    path="/topics/:topicId/levels/:levelId"
                     exact
                     component={LevelPage}
                     />
                 <Route
-                    path="/levels/:levelID/student-reports"
+                    path="/topics/:topicId/levels/:levelId/student-reports"
                     exact
                     component={StudentReportsPage}
                     />

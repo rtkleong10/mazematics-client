@@ -17,9 +17,9 @@ class TopicPage extends Component {
     constructor(props) {
         super(props);
 
-        const topicID = parseInt(props.match.params.topicID);
-        props.retrieveTopic(topicID);
-        props.listLevels();
+        const topicId = parseInt(props.match.params.topicId);
+        props.retrieveTopic(topicId);
+        props.listLevels(topicId);
 
         this.state = {
             modalForm: {
@@ -71,7 +71,7 @@ class TopicPage extends Component {
                         onClose={this.handleModalClose}
                         FormComponent={SimpleForm}
                         initialState={EMPTY}
-                        onSubmit={level => this.props.createLevel({...level, topic: topic.id})}
+                        onSubmit={level => this.props.createLevel(topic.id, level)}
                         />
                 );
 
@@ -83,7 +83,7 @@ class TopicPage extends Component {
                         onClose={this.handleModalClose}
                         FormComponent={SimpleForm}
                         initialState={selectedLevel}
-                        onSubmit={level => this.props.updateLevel({...level, id: selectedLevel.id})}
+                        onSubmit={level => this.props.updateLevel(topic.id, {...level, id: selectedLevel.id})}
                         />
                 );
 
@@ -94,7 +94,7 @@ class TopicPage extends Component {
                         isVisible={isVisible}
                         onClose={this.handleModalClose}
                         FormComponent={DeleteForm}
-                        onSubmit={isConfirm => isConfirm && this.props.deleteLevel(selectedLevel.id)}
+                        onSubmit={isConfirm => isConfirm && this.props.deleteLevel(topic.id, selectedLevel.id)}
                         />
                 );
 
@@ -138,7 +138,7 @@ class TopicPage extends Component {
                         ? levels.map((level) => (
                             <div href="#" className="card mb-4" key={level.id}>
                                 <div className="card-body">
-                                    <h3 className="card-title"><Link to={`/levels/${level.id}`}>{level.title}</Link> {level.isPlayable ?  <span className="badge badge-success">Playable</span> : <span className="badge badge-secondary">Unplayable</span>}</h3>
+                                    <h3 className="card-title"><Link to={`/topics/${topic.id}/levels/${level.id}`}>{level.title}</Link> {level.playable ?  <span className="badge badge-success">Playable</span> : <span className="badge badge-secondary">Unplayable</span>}</h3>
                                     <p className="card-text">{level.description}</p>
                                     <div>
                                         <button className="ml-auto btn btn-success mr-2" onClick={() => this.openModalForm(UPDATE, level)}>
@@ -176,18 +176,14 @@ TopicPage.propTypes = {
     listLevels: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => {
-    const topicID = parseInt(ownProps.match.params.topicID);
-
-    return {
-        topicLoading: selectTopicLoading(state),
-        topicFailed: selectTopicFailed(state),
-        topic: selectTopic(state, topicID),
-        levelsLoading: selectLevelsLoading(state),
-        levelsFailed: selectLevelsFailed(state),
-        levels: selectLevels(state, topicID),
-    }
-};
+const mapStateToProps = state => ({
+    topicLoading: selectTopicLoading(state),
+    topicFailed: selectTopicFailed(state),
+    topic: selectTopic(state),
+    levelsLoading: selectLevelsLoading(state),
+    levelsFailed: selectLevelsFailed(state),
+    levels: selectLevels(state),
+});
 
 const dispatchers = {
     retrieveTopic,

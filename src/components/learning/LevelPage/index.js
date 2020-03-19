@@ -12,8 +12,9 @@ export class LevelPage extends Component {
     constructor(props) {
         super(props);
 
-        const levelID = parseInt(props.match.params.levelID);
-        props.retrieveLevel(levelID);
+        const topicId = parseInt(props.match.params.topicId);
+        const levelId = parseInt(props.match.params.levelId);
+        props.retrieveLevel(topicId, levelId);
     }
     
     render() {
@@ -34,12 +35,12 @@ export class LevelPage extends Component {
 
         return (
             <div className="container">
-                <Link className="btn btn-light mb-2" to={`/topics/${level.topic}/`}>
+                <Link className="btn btn-light mb-2" to={`/topics/${level.topic.id}/`}>
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Topic Page
                 </Link>
                 <h1>{level.title}</h1>
                 <div className="mb-4">
-                    <Link className="btn btn-primary" to={`/levels/${level.id}/leaderboard`}>
+                    <Link className="btn btn-primary" to={`/topics/${level.topic.id}/levels/${level.id}/leaderboard`}>
                         View Leaderboard
                     </Link>
                 </div>
@@ -50,15 +51,15 @@ export class LevelPage extends Component {
                                 View Learning Material
                             </button>
                             <div className="collapse mb-4" id="learningMaterialCollapse">
-                                <LearningMaterial levelID={level.id} />
+                                <LearningMaterial levelId={level.id} />
                             </div>
                         </div>
                         : <div className="mb-4">
                             <h2>Learning Material</h2>
-                            <LearningMaterial levelID={level.id} />
+                            <LearningMaterial levelId={level.id} />
                         </div>
                 }
-                <Link className="btn btn-primary mb-4" to={`/levels/${level.id}/game`}>
+                <Link className="btn btn-primary mb-4" to={`/topics/${level.topic.id}/levels/${level.id}/game`}>
                     Play Game
                 </Link>
             </div>
@@ -66,15 +67,11 @@ export class LevelPage extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    const levelID = parseInt(ownProps.match.params.levelID);
-
-    return {
-        levelLoading: selectLevelLoading(state),
-        levelFailed: selectLevelFailed(state),
-        level: selectPlayableLevel(state, levelID),
-    }
-};
+const mapStateToProps = state => ({
+    levelLoading: selectLevelLoading(state),
+    levelFailed: selectLevelFailed(state),
+    level: selectPlayableLevel(state),
+});
 
 const dispatchers = {
     retrieveLevel,
