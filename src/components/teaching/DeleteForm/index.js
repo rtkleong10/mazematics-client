@@ -1,18 +1,14 @@
-import React, { Component, Fragment } from 'react'
+import React from 'react'
 
-export class DeleteForm extends Component {
-    render() {
-        const {
-            onSubmit
-        } = this.props;
+export default function DeleteForm(props) {
+    const {
+        onSubmit
+    } = props;
 
-        return (
-            <Fragment>
-                <button className="btn btn-danger mr-2" onClick={() => onSubmit(true)}>Confirm</button>
-                <button className="btn btn-secondary" onClick={() => onSubmit(false)}>Cancel</button>
-            </Fragment>
-        )
-    }
+    return (
+        <>
+            <button className="btn btn-danger mr-2" onClick={() => onSubmit(true)}>Confirm</button>
+            <button className="btn btn-secondary" onClick={() => onSubmit(false)}>Cancel</button>
+        </>
+    )
 }
-
-export default DeleteForm

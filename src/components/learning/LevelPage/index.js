@@ -51,6 +51,7 @@ export class LevelPage extends Component {
                                 View Learning Material
                             </button>
                             <div className="collapse mb-4" id="learningMaterialCollapse">
+                                <h2>Learning Material</h2>
                                 <LearningMaterial levelId={level.id} />
                             </div>
                         </div>
