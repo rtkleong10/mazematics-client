@@ -24,6 +24,9 @@
 ### How to Run Docs Server
 1. `npm run docs-dev`
 
+### How to Run Tests
+1. `npm test`
+
 ## How to Run Production Server
 ### First Time
 1. Install docker
