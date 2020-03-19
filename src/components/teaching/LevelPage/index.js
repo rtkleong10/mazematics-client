@@ -7,19 +7,21 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../../common/Loader';
 import LearningMaterial from '../LearningMaterial';
 import QuestionsList from '../QuestionsList';
-import { retrieveLevel, selectLevel, selectLevelLoading, selectLevelFailed } from '../../../redux/ducks/levels';
+import { retrieveLevel, publishLevel, selectLevel, selectLevelLoading, selectLevelFailed } from '../../../redux/ducks/levels';
 
 export class LevelPage extends Component {
     constructor(props) {
         super(props);
 
-        const levelID = parseInt(props.match.params.levelID);
-        props.retrieveLevel(levelID);
+        const topicId = parseInt(props.match.params.topicId);
+        const levelId = parseInt(props.match.params.levelId);
+        props.retrieveLevel(topicId, levelId);
     }
 
     onPublish = () => {
-        // TODO: Publish
-        console.log("publish");
+        const topicId = parseInt(this.props.match.params.topicId);
+        const levelId = parseInt(this.props.match.params.levelId);
+        this.props.publishLevel(topicId, levelId);
     }
     
     render() {
@@ -37,14 +39,14 @@ export class LevelPage extends Component {
         
         return (
             <div className="container">
-                <Link className="btn btn-light mb-2" to={`/topics/${level.topic}/`}>
+                <Link className="btn btn-light mb-2" to={`/topics/${level.topic.id}/`}>
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Topic Page
                 </Link>
-                <h1>{level.title} {level.isPlayable ?  <span className="badge badge-success">Playable</span> : <span className="badge badge-secondary">Unplayable</span>}</h1>
+                <h1>{level.title} {level.playable ?  <span className="badge badge-success">Playable</span> : <span className="badge badge-secondary">Unplayable</span>}</h1>
                 <div className="mb-4">
                     {
-                        level.isPlayable
-                            ? <Link className="btn btn-primary" to={`/levels/${level.id}/student-reports`}>
+                        level.playable
+                            ? <Link className="btn btn-primary" to={`/topics/${level.topic.id}/levels/${level.id}/student-reports`}>
                                 View Student Reports
                             </Link>
                             : <button className="btn btn-primary" onClick={this.onPublish}>
@@ -53,27 +55,24 @@ export class LevelPage extends Component {
                     }
                 </div>
                 <h2>Learning Material</h2>
-                <LearningMaterial levelID={level.id} isPlayable={level.isPlayable} />
+                <LearningMaterial levelId={level.id} playable={level.playable} />
                 <br />
                 <h2>Questions</h2>
-                <QuestionsList levelID={level.id} isPlayable={level.isPlayable} />
+                <QuestionsList levelId={level.id} playable={level.playable} />
             </div>
         );
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    const levelID = parseInt(ownProps.match.params.levelID);
-
-    return {
-        levelLoading: selectLevelLoading(state),
-        levelFailed: selectLevelFailed(state),
-        level: selectLevel(state, levelID),
-    }
-};
+const mapStateToProps = state => ({
+    levelLoading: selectLevelLoading(state),
+    levelFailed: selectLevelFailed(state),
+    level: selectLevel(state),
+});
 
 const dispatchers = {
     retrieveLevel,
+    publishLevel,
 };
 
 export default connect(mapStateToProps, dispatchers)(LevelPage);

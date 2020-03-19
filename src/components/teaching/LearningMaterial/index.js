@@ -7,16 +7,16 @@ import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
 import LearningMaterialForm from '../LearningMaterialForm';
 import DeleteForm from '../DeleteForm';
-import { createLearningMaterial, listLearningMaterials, updateLearningMaterial, deleteLearningMaterial, selectLearningMaterial, selectLearningMaterialsLoading } from '../../../redux/ducks/learningMaterials';
+import { createLearningMaterial, listLearningMaterials, updateLearningMaterial, deleteLearningMaterial, selectLearningMaterial, selectLearningMaterialsLoading, selectLearningMaterialsFailed } from '../../../redux/ducks/learningMaterials';
 import './styles.css';
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
-import { selectIsVisible } from '../../../redux/ducks/errors';
 
 export class LearningMaterial extends Component {
     constructor(props) {
         super(props);
 
-        props.listLearningMaterials();
+        const levelId = props.levelId;
+        props.listLearningMaterials(levelId);
         
         this.state = {
             modalForm: {
@@ -56,7 +56,7 @@ export class LearningMaterial extends Component {
         } = this.state;
 
         const {
-            levelID
+            levelId
         } = this.props;
 
         switch (type) {
@@ -68,7 +68,7 @@ export class LearningMaterial extends Component {
                         onClose={this.handleModalClose}
                         FormComponent={LearningMaterialForm}
                         initialState={EMPTY}
-                        onSubmit={question => this.props.createLearningMaterial({...question, level: levelID})}
+                        onSubmit={question => this.props.createLearningMaterial(levelId, question)}
                         />
                 );
 
@@ -80,7 +80,7 @@ export class LearningMaterial extends Component {
                         onClose={this.handleModalClose}
                         FormComponent={LearningMaterialForm}
                         initialState={selectedLearningMaterial}
-                        onSubmit={question => this.props.updateLearningMaterial({...question, id: selectedLearningMaterial.id})}
+                        onSubmit={question => this.props.updateLearningMaterial(levelId, {...question, id: selectedLearningMaterial.id})}
                         />
                 );
 
@@ -91,7 +91,7 @@ export class LearningMaterial extends Component {
                         isVisible={isVisible}
                         onClose={this.handleModalClose}
                         FormComponent={DeleteForm}
-                        onSubmit={isConfirm => isConfirm && this.props.deleteLearningMaterial(selectedLearningMaterial.id)}
+                        onSubmit={isConfirm => isConfirm && this.props.deleteLearningMaterial(levelId, selectedLearningMaterial.id)}
                         />
                 );
 
@@ -105,7 +105,7 @@ export class LearningMaterial extends Component {
             learningMaterialsLoading,
             learningMaterialsFailed,
             learningMaterial,
-            isPlayable,
+            playable,
         } = this.props;
 
         if (learningMaterialsLoading)
@@ -116,7 +116,7 @@ export class LearningMaterial extends Component {
         return (
             <Fragment>
                 {
-                    (!learningMaterial && !isPlayable) &&
+                    (!learningMaterial && !playable) &&
                         <div className="mb-4">
                             <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>
                                 <FontAwesomeIcon icon={faPlus} className="mr-2" />Create a Learning Material
@@ -140,7 +140,7 @@ export class LearningMaterial extends Component {
                                 <h3 className="card-title">{learningMaterial.title}</h3>
                                 <p className="card-text">{learningMaterial.description}</p>
                                 {
-                                    !isPlayable &&
+                                    !playable &&
                                         <div>
                                             <button href="#" className="btn btn-success mr-2" onClick={() => this.openModalForm(UPDATE, learningMaterial)}>
                                                 <FontAwesomeIcon icon={faEdit} />
@@ -160,15 +160,11 @@ export class LearningMaterial extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    const levelID = ownProps.levelID;
-
-    return {
-        learningMaterialsLoading: selectLearningMaterialsLoading(state),
-        learningMaterialsFailed: selectIsVisible(state),
-        learningMaterial: selectLearningMaterial(state, levelID),
-    }
-};
+const mapStateToProps = state => ({
+    learningMaterialsLoading: selectLearningMaterialsLoading(state),
+    learningMaterialsFailed: selectLearningMaterialsFailed(state),
+    learningMaterial: selectLearningMaterial(state),
+});
 
 const dispatchers = {
     createLearningMaterial,

@@ -13,8 +13,9 @@ import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
 export class QuestionsList extends Component {
     constructor(props) {
         super(props);
-
-        props.listQuestions();
+        
+        const levelId = props.levelId
+        props.listQuestions(levelId);
         
         this.state = {
             modalForm: {
@@ -54,7 +55,7 @@ export class QuestionsList extends Component {
         } = this.state;
 
         const {
-            levelID
+            levelId
         } = this.props;
 
         switch (type) {
@@ -66,7 +67,7 @@ export class QuestionsList extends Component {
                         onClose={this.handleModalClose}
                         FormComponent={QuestionForm}
                         initialState={EMPTY}
-                        onSubmit={question => this.props.createQuestion({...question, level: levelID})}
+                        onSubmit={question => this.props.createQuestion(levelId, {...question})}
                         />
                 );
 
@@ -78,7 +79,7 @@ export class QuestionsList extends Component {
                         onClose={this.handleModalClose}
                         FormComponent={QuestionForm}
                         initialState={selectedQuestion}
-                        onSubmit={question => this.props.updateQuestion({...question, id: selectedQuestion.id})}
+                        onSubmit={question => this.props.updateQuestion(levelId, {...question, id: selectedQuestion.id})}
                         />
                 );
 
@@ -89,7 +90,7 @@ export class QuestionsList extends Component {
                         isVisible={isVisible}
                         onClose={this.handleModalClose}
                         FormComponent={DeleteForm}
-                        onSubmit={isConfirm => isConfirm && this.props.deleteQuestion(selectedQuestion.id)}
+                        onSubmit={isConfirm => isConfirm && this.props.deleteQuestion(levelId, selectedQuestion.id)}
                         />
                 );
 
@@ -103,7 +104,7 @@ export class QuestionsList extends Component {
             questionsLoading,
             questionsFailed,
             questions,
-            isPlayable,
+            playable,
         } = this.props;
 
         if (questionsLoading)
@@ -114,7 +115,7 @@ export class QuestionsList extends Component {
         return (
             <Fragment>
                 {
-                    !isPlayable &&
+                    !playable &&
                         <div className="mb-4">
                             <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>
                                 <FontAwesomeIcon icon={faPlus} className="mr-2" />Create a Question
@@ -128,7 +129,7 @@ export class QuestionsList extends Component {
                                 <li key={question.id} className="list-group-item d-flex justify-content-between align-items-center">
                                     <span>{question.questionText}</span>
                                     {
-                                        !isPlayable &&
+                                        !playable &&
                                             <div>
                                                 <button href="#" className="btn btn-success mr-2" onClick={() => this.openModalForm(UPDATE, question)}>
                                                     <FontAwesomeIcon icon={faEdit} />
@@ -149,15 +150,11 @@ export class QuestionsList extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    const levelID = ownProps.levelID;
-
-    return {
-        questionsLoading: selectQuestionsLoading(state),
-        questionsFailed: selectQuestionsFailed(state),
-        questions: selectQuestions(state, levelID)
-    }
-};
+const mapStateToProps = state => ({
+    questionsLoading: selectQuestionsLoading(state),
+    questionsFailed: selectQuestionsFailed(state),
+    questions: selectQuestions(state)
+});
 
 const dispatchers = {
     createQuestion,

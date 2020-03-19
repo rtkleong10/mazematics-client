@@ -9,7 +9,8 @@ export class LearningMaterial extends Component {
     constructor(props) {
         super(props);
 
-        props.listLearningMaterials();
+        const levelId = props.levelId;
+        props.listLearningMaterials(levelId);
     }
 
     render() {
@@ -49,15 +50,11 @@ export class LearningMaterial extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    const levelID = ownProps.levelID;
-
-    return {
-        learningMaterialsLoading: selectLearningMaterialsLoading(state),
-        learningMaterialsFailed: selectLearningMaterialsFailed(state),
-        learningMaterial: selectLearningMaterial(state, levelID),
-    }
-};
+const mapStateToProps = state => ({
+    learningMaterialsLoading: selectLearningMaterialsLoading(state),
+    learningMaterialsFailed: selectLearningMaterialsFailed(state),
+    learningMaterial: selectLearningMaterial(state),  
+});
 
 const dispatchers = {
     listLearningMaterials,

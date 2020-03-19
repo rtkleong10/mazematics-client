@@ -11,7 +11,8 @@ export class StudentReportsPage extends Component {
             match
         } = this.props;
 
-        const levelID = parseInt(match.params.levelID);
+        const topicId = parseInt(match.params.topicId);
+        const levelId = parseInt(match.params.levelId);
 
         let csvData = [
             {
@@ -30,12 +31,12 @@ export class StudentReportsPage extends Component {
 
         return (
             <div className="container">
-                <Link className="btn btn-light mb-2" to={`/levels/${levelID}/`}>
+                <Link className="btn btn-light mb-2" to={`/topics/${topicId}/levels/${levelId}/`}>
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Level Page
                 </Link>
                 <h1>Student Reports</h1>
                 <div className="mb-4">
-                    <CSVLink data={csvData} filename={`student-reports-${levelID}.csv`} className="btn btn-primary">
+                    <CSVLink data={csvData} filename={`student-reports-${levelId}.csv`} className="btn btn-primary">
                         Download CSV
                     </CSVLink>
                 </div>

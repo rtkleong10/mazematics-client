@@ -3,6 +3,7 @@ import axios from 'axios';
 import { createApiReducer, createApiAction, STATUSES, METHODS } from './apiHelper';
 import { API_URL } from '../../utils/constants';
 import { displayErrorAction } from './errors';
+import { getTokenConfig } from './authHelper';
 
 const ENTITY_NAME = 'questions';
 
@@ -10,12 +11,45 @@ const ENTITY_NAME = 'questions';
 const questionsReducer = createApiReducer(ENTITY_NAME);
 export default questionsReducer;
 
+const questionAdapter = question => {
+    let optionsObj = {};
+
+    for (let i = 0; i < question.options.length; i++)
+        optionsObj[i] = question.options[i];
+
+    question.options = optionsObj;
+
+    return {...question, coordinates: {
+        x: 0,
+        y: 0,
+    }};
+}
+
+const questionReader = question => {
+    const optionKeys = Object.keys(question.options);
+    let optionArr = [];
+
+    for (const key of optionKeys)
+        optionArr[parseInt(key)] = question.options[key];
+
+    question.options = optionArr;
+
+    return {...question, coordinates: {
+        x: 0,
+        y: 0,
+    }};
+}
+
 // OPERATIONS
-export const createQuestion = question => dispatch => {
+export const createQuestion = (levelId, question) => (dispatch, getState) => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.CREATE));
 
     axios
-        .post(`${API_URL}/${ENTITY_NAME}/`, question)
+        .post(
+            `${API_URL}/gameMaps/${levelId}/${ENTITY_NAME}/create/`,
+            questionAdapter(question),
+            getTokenConfig(getState),
+        )
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.CREATE, res.data));
         })
@@ -26,11 +60,14 @@ export const createQuestion = question => dispatch => {
     ;
 };
 
-export const retrieveQuestion = questionID => dispatch => {
+export const retrieveQuestion = (levelId, questionId) => (dispatch, getState) => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.RETRIEVE));
 
     axios
-        .get(`${API_URL}/${ENTITY_NAME}/${questionID}/`)
+        .get(
+            `${API_URL}/gameMaps/${levelId}/${ENTITY_NAME}/${questionId}/`,
+            getTokenConfig(getState),
+        )
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.RETRIEVE, res.data));
         })
@@ -41,11 +78,15 @@ export const retrieveQuestion = questionID => dispatch => {
     ;
 };
 
-export const updateQuestion = question => dispatch => {
+export const updateQuestion = (levelId, question) => (dispatch, getState) => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.UPDATE));
 
     axios
-        .patch(`${API_URL}/${ENTITY_NAME}/${question.id}/`, question)
+        .patch(
+            `${API_URL}/gameMaps/${levelId}/${ENTITY_NAME}/${question.id}/`,
+            questionAdapter(question),
+            getTokenConfig(getState),
+        )
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.UPDATE, res.data));
         })
@@ -55,13 +96,16 @@ export const updateQuestion = question => dispatch => {
         });
 };
 
-export const deleteQuestion = questionID => dispatch => {
+export const deleteQuestion = (levelId, questionId) => (dispatch, getState) => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.DELETE));
 
     axios
-        .delete(`${API_URL}/${ENTITY_NAME}/${questionID}/`)
+        .delete(
+            `${API_URL}/gameMaps/${levelId}/${ENTITY_NAME}/${questionId}/`,
+            getTokenConfig(getState),
+        )
         .then(res => {
-            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, questionID));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, questionId));
         })
         .catch(err => {
             dispatch(displayErrorAction("Unable to delete question"));
@@ -69,16 +113,19 @@ export const deleteQuestion = questionID => dispatch => {
         });
 };
 
-export const listQuestions = () => dispatch => {
+export const listQuestions = (levelId) => (dispatch, getState) => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.LIST));
 
     axios
-        .get(`${API_URL}/${ENTITY_NAME}/`)
+        .get(
+            `${API_URL}/gameMaps/${levelId}/${ENTITY_NAME}/`,
+            getTokenConfig(getState),
+        )
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.LIST, res.data));
         })
         .catch(err => {
-            dispatch(displayErrorAction("Unable to obtain questions"));
+            dispatch(displayErrorAction("Unable to retrieve questions"));
             dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.LIST));
         });
     ;
@@ -87,4 +134,4 @@ export const listQuestions = () => dispatch => {
 // SELECTORS
 export const selectQuestionsLoading = state => state.questionsReducer.isLoading[METHODS.LIST] === true;
 export const selectQuestionsFailed = state => state.questionsReducer.isLoading[METHODS.LIST] === false && state.questionsReducer.hasFailed[METHODS.LIST] === true;
-export const selectQuestions = (state, levelID) => state.questionsReducer.items.filter(item => item.level === levelID);
+export const selectQuestions = state => state.questionsReducer.items.map(question => questionReader(question));

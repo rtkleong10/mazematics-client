@@ -13,9 +13,9 @@ class TopicPage extends Component {
     constructor(props) {
         super(props);
 
-        const topicID = parseInt(props.match.params.topicID);
-        props.retrieveTopic(topicID);
-        props.listLevels();
+        const topicId = parseInt(props.match.params.topicId);
+        props.retrieveTopic(topicId);
+        props.listLevels(topicId);
     }
 
     render() {
@@ -46,7 +46,7 @@ class TopicPage extends Component {
                         ? levels.map((level) => (
                             <div href="#" className="card mb-4" key={level.id}>
                                 <div className="card-body">
-                                    <Link to={`/levels/${level.id}`}>
+                                    <Link to={`/topics/${topic.id}/levels/${level.id}`}>
                                         <h3 className="card-title">{level.title}</h3>
                                     </Link>
                                     <p className="card-text">{level.description}</p>
@@ -74,18 +74,14 @@ TopicPage.propTypes = {
     listLevels: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => {
-    const topicID = parseInt(ownProps.match.params.topicID);
-
-    return {
-        topicLoading: selectTopicLoading(state),
-        topicFailed: selectTopicFailed(state),
-        topic: selectTopic(state, topicID),
-        levelsLoading: selectLevelsLoading(state),
-        levelsFailed: selectLevelsFailed(state),
-        levels: selectPlayableLevels(state, topicID),
-    }
-};
+const mapStateToProps = state => ({
+    topicLoading: selectTopicLoading(state),
+    topicFailed: selectTopicFailed(state),
+    topic: selectTopic(state),
+    levelsLoading: selectLevelsLoading(state),
+    levelsFailed: selectLevelsFailed(state),
+    levels: selectPlayableLevels(state),
+});
 
 const dispatchers = {
     retrieveTopic,

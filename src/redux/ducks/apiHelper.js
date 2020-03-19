@@ -31,7 +31,8 @@ export function createApiReducer(entityName) {
             LIST: true,
         },
         hasFailed: {},
-        items: []
+        items: [],
+        item: null,
     };
 
     return function reducer(state = initialState, action) {
@@ -75,28 +76,13 @@ export function createApiReducer(entityName) {
                         }
 
                     case METHODS.RETRIEVE:
-                        let found = false;
-                        let newItems = [];
-
-                        for (let i = 0; i < state.items.length; i++) {
-                            if (state.items[i].id === action.payload.id) {
-                                newItems[i] = action.payload
-                                found = true;
-                            } else {
-                                newItems[i] = state.items[i];
-                            }
-                        }
-
-                        if (!found)
-                            newItems.push(action.payload);
-
                         return {
                             ...state,
                             isLoading: {
                                 ...state.isLoading,
                                 [actionMethod]: false
                             },
-                            items: newItems,
+                            item: action.payload,
                         }
                         
                     case METHODS.UPDATE:
@@ -126,7 +112,7 @@ export function createApiReducer(entityName) {
                                 ...state.isLoading,
                                 [actionMethod]: false
                             },
-                            items: action.payload
+                            items: action.payload.content
                         }
 
                     default:

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { createApiReducer, createApiAction, STATUSES, METHODS } from './apiHelper';
 import { API_URL } from '../../utils/constants';
 import { displayErrorAction } from './errors';
+import { getTokenConfig } from './authHelper';
 
 const ENTITY_NAME = 'learningMaterials';
 
@@ -11,11 +12,15 @@ const learningMaterialsReducer = createApiReducer(ENTITY_NAME);
 export default learningMaterialsReducer;
 
 // OPERATIONS
-export const createLearningMaterial = learningMaterial => dispatch => {
+export const createLearningMaterial = (levelId, learningMaterial) => (dispatch, getState) => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.CREATE));
 
     axios
-        .post(`${API_URL}/${ENTITY_NAME}/`, learningMaterial)
+        .post(
+            `${API_URL}/gameMaps/${levelId}/${ENTITY_NAME}/create/`,
+            learningMaterial,
+            getTokenConfig(getState),
+        )
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.CREATE, res.data));
         })
@@ -26,11 +31,14 @@ export const createLearningMaterial = learningMaterial => dispatch => {
     ;
 };
 
-export const retrieveLearningMaterial = learningMaterialID => dispatch => {
+export const retrieveLearningMaterial = (levelId, learningMaterialId) => (dispatch, getState) => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.RETRIEVE));
 
     axios
-        .get(`${API_URL}/${ENTITY_NAME}/${learningMaterialID}/`)
+        .get(
+            `${API_URL}/gameMaps/${levelId}/${ENTITY_NAME}/${learningMaterialId}/`,
+            getTokenConfig(getState),
+        )
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.RETRIEVE, res.data));
         })
@@ -41,11 +49,15 @@ export const retrieveLearningMaterial = learningMaterialID => dispatch => {
     ;
 };
 
-export const updateLearningMaterial = learningMaterial => dispatch => {
+export const updateLearningMaterial = (levelId, learningMaterial) => (dispatch, getState) => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.UPDATE));
 
     axios
-        .patch(`${API_URL}/${ENTITY_NAME}/${learningMaterial.id}/`, learningMaterial)
+        .patch(
+            `${API_URL}/gameMaps/${levelId}/${ENTITY_NAME}/${learningMaterial.id}/`,
+            learningMaterial,
+            getTokenConfig(getState),
+        )
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.UPDATE, res.data));
         })
@@ -55,13 +67,16 @@ export const updateLearningMaterial = learningMaterial => dispatch => {
         });
 };
 
-export const deleteLearningMaterial = learningMaterialID => dispatch => {
+export const deleteLearningMaterial = (levelId, learningMaterialId) => (dispatch, getState) => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.DELETE));
 
     axios
-        .delete(`${API_URL}/${ENTITY_NAME}/${learningMaterialID}/`)
+        .delete(
+            `${API_URL}/gameMaps/${levelId}/${ENTITY_NAME}/${learningMaterialId}/`,
+            getTokenConfig(getState),
+        )
         .then(res => {
-            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, learningMaterialID));
+            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, learningMaterialId));
         })
         .catch(err => {
             dispatch(displayErrorAction("Unable to delete learning material"));
@@ -69,11 +84,14 @@ export const deleteLearningMaterial = learningMaterialID => dispatch => {
         });
 };
 
-export const listLearningMaterials = () => dispatch => {
+export const listLearningMaterials = (levelId) => (dispatch, getState) => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.LIST));
 
     axios
-        .get(`${API_URL}/${ENTITY_NAME}/`)
+        .get(
+            `${API_URL}/gameMaps/${levelId}/${ENTITY_NAME}/`,
+            getTokenConfig(getState),
+        )
         .then(res => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.LIST, res.data));
         })
@@ -87,4 +105,4 @@ export const listLearningMaterials = () => dispatch => {
 // SELECTORS
 export const selectLearningMaterialsLoading = state => state.learningMaterialsReducer.isLoading[METHODS.LIST] === true;
 export const selectLearningMaterialsFailed = state => state.learningMaterialsReducer.isLoading[METHODS.LIST] === false && state.learningMaterialsReducer.hasFailed[METHODS.LIST] === true;
-export const selectLearningMaterial = (state, levelID) => state.learningMaterialsReducer.items.find(item => item.level === levelID);
+export const selectLearningMaterial = state => state.learningMaterialsReducer.items.find(item => true);

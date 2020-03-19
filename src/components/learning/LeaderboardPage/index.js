@@ -9,7 +9,8 @@ export class LeaderboardPage extends Component {
             match
         } = this.props;
 
-        const levelID = parseInt(match.params.levelID);
+        const topicId = parseInt(match.params.topicId);
+        const levelId = parseInt(match.params.levelId);
 
         let leaderboardData = [
             {
@@ -56,7 +57,7 @@ export class LeaderboardPage extends Component {
 
         return (
             <div className="container">
-                <Link className="btn btn-light mb-2" to={`/levels/${levelID}/`}>
+                <Link className="btn btn-light mb-2" to={`/topics/${topicId}/levels/${levelId}/`}>
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Level Page
                 </Link>
                 <h1>Leaderboard</h1>
