@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { EMPTY } from '../../../utils/constants';
 
 export class SimpleForm extends Component {
-    state = {
+    emptyState = {
         title: '',
         description: ''
     };
+    state = this.emptyState;
 
     componentDidMount() {
         const {
@@ -14,10 +15,7 @@ export class SimpleForm extends Component {
 
         if (initialState) {
             if (initialState === EMPTY)
-                this.setState({
-                    title: '',
-                    description: ''
-                });
+                this.setState(this.emptyState);
 
             else
                 this.setState(initialState);
@@ -31,10 +29,7 @@ export class SimpleForm extends Component {
 
         if (initialState && initialState !== prevProps.initialState) {
             if (initialState === EMPTY)
-                this.setState({
-                    title: '',
-                    description: ''
-                });
+                this.setState(this.emptyState);
                 
             else
                 this.setState(initialState);
@@ -54,10 +49,7 @@ export class SimpleForm extends Component {
             description
         });
 
-        this.setState({
-            title: '',
-            description: ''
-        });
+        this.setState(this.emptyState);
     }
 
     onChange = e => {
