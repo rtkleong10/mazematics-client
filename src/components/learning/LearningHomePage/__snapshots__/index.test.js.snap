@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should take a snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="container"
+  >
+    <h1>
+      Welcome Bob!
+    </h1>
+    <h2>
+      Topics
+    </h2>
+    <div
+      class="card mb-4"
+      href="#"
+    >
+      <div
+        class="card-body"
+      >
+        <a
+          href="/topics/1"
+        >
+          <h3
+            class="card-title"
+          >
+            Addition
+          </h3>
+        </a>
+        <p
+          class="card-text"
+        >
+          Putting 2 and 2 together.
+        </p>
+      </div>
+    </div>
+    <div
+      class="card mb-4"
+      href="#"
+    >
+      <div
+        class="card-body"
+      >
+        <a
+          href="/topics/2"
+        >
+          <h3
+            class="card-title"
+          >
+            Subtraction
+          </h3>
+        </a>
+        <p
+          class="card-text"
+        >
+          Removing one from another.
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

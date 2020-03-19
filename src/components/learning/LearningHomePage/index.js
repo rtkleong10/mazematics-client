@@ -48,8 +48,6 @@ class LearningHomePage extends Component {
 }
 
 LearningHomePage.propTypes = {
-    match: PropTypes.object.isRequired,
-
     user: PropTypes.object.isRequired,
     topicsLoading: PropTypes.bool.isRequired,
     topicsFailed: PropTypes.bool.isRequired,

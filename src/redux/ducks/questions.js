@@ -105,7 +105,11 @@ export const deleteQuestion = (levelId, questionId) => (dispatch, getState) => {
             getTokenConfig(getState),
         )
         .then(res => {
-            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, questionId));
+            if (res.data === true) {
+                dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, questionId));
+            } else {
+                throw new Error("Unable to delete question");
+            }
         })
         .catch(err => {
             dispatch(displayErrorAction("Unable to delete question"));

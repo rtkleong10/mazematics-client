@@ -4,11 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export class QuestionForm extends Component {
-    state = {
+    emptyState = {
         questionText: '',
         options: [],
         answer: null,
     };
+    state = this.emptyState;
 
     componentDidMount() {
         const {
@@ -17,11 +18,7 @@ export class QuestionForm extends Component {
 
         if (initialState) {
             if (initialState === EMPTY)
-                this.setState({
-                    questionText: '',
-                    options: [],
-                    answer: null,
-                });
+                this.setState(this.emptyState);
 
             else
                 this.setState(initialState);
@@ -35,11 +32,7 @@ export class QuestionForm extends Component {
 
         if (initialState && initialState !== prevProps.initialState) {
             if (initialState === EMPTY)
-                this.setState({
-                    questionText: '',
-                    options: [],
-                    answer: null,
-                });
+                this.setState(this.emptyState);
                 
             else
                 this.setState(initialState);
@@ -61,11 +54,7 @@ export class QuestionForm extends Component {
             answer,
         });
 
-        this.setState({
-            questionText: '',
-            options: [],
-            answer: null,
-        });
+        this.setState(this.emptyState);
     }
 
     onChange = e => {
