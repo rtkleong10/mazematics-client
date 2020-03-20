@@ -132,7 +132,6 @@ export const listQuestions = (levelId) => (dispatch, getState) => {
             dispatch(displayErrorAction("Unable to retrieve questions"));
             dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.LIST));
         });
-    ;
 };
 
 // SELECTORS

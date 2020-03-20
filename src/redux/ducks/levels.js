@@ -4,6 +4,8 @@ import { createApiReducer, createApiAction, STATUSES, METHODS } from './apiHelpe
 import { API_URL } from '../../utils/constants';
 import { displayErrorAction } from './errors';
 import { getTokenConfig } from './authHelper';
+import generateMaze from '../../utils/generateMaze';
+import { updateQuestion } from './questions';
 
 const ENTITY_NAME = 'gameMaps';
 
@@ -18,7 +20,10 @@ export const createLevel = (topicId, level) => (dispatch, getState) => {
     axios
         .post(
             `${API_URL}/topics/${topicId}/${ENTITY_NAME}/create/`,
-            level,
+            {
+                ...level,
+                playable: false
+            },
             getTokenConfig(getState),
         )
         .then(res => {
@@ -55,7 +60,10 @@ export const updateLevel = (topicId, level) => (dispatch, getState) => {
     axios
         .patch(
             `${API_URL}/topics/${topicId}/${ENTITY_NAME}/${level.id}/`,
-            level,
+            {
+                ...level,
+                playable: false
+            },
             getTokenConfig(getState),
         )
         .then(res => {
@@ -67,7 +75,46 @@ export const updateLevel = (topicId, level) => (dispatch, getState) => {
         });
 };
 
-export const publishLevel = (topicId, levelId) => updateLevel(topicId, {id: levelId, playable: true});
+export const publishLevel = (topicId, levelId) => (dispatch, getState) => {    
+    dispatch(createApiAction('questions', STATUSES.REQUEST, METHODS.LIST));
+    
+    axios
+        .get(
+            `${API_URL}/gameMaps/${levelId}/questions/`,
+            getTokenConfig(getState),
+        )
+        .then(res => {
+            dispatch(createApiAction('questions', STATUSES.SUCCESS, METHODS.LIST, res.data));
+
+            const questions = res.data;
+
+            const {
+                mapDescriptor,
+                questionCoordinates
+            } = generateMaze(questions.length);
+            
+            for (let i = 0; i < questions.length; i++) {
+                updateQuestion(levelId, {
+                    ...questions[i],
+                    coordinate: {
+                        x: questionCoordinates[i][0],
+                        y: questionCoordinates[i][1],
+                    }
+                })(dispatch, getState);
+            }
+
+            updateLevel(topicId, {
+                id: levelId,
+                playable: true,
+                mapDescriptor: mapDescriptor
+            })(dispatch, getState);
+        })
+        .catch(err => {
+            dispatch(displayErrorAction("Unable to retrieve questions"));
+            dispatch(createApiAction('questions', STATUSES.FAILURE, METHODS.LIST));
+        });
+    
+};
 
 export const deleteLevel = (topicId, levelId) => (dispatch, getState) => {
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, METHODS.DELETE));
@@ -105,7 +152,6 @@ export const listLevels = (topicId) => (dispatch, getState) => {
             dispatch(displayErrorAction("Unable to retrieve levels"));
             dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.LIST));
         });
-    ;
 };
 
 // SELECTORS
