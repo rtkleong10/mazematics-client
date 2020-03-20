@@ -41,20 +41,20 @@ export default function generateMaze(numQuestions) {
             rowWithWalls.push(originalRow[j].right ? WALL : EMPTY);
         }
 
-        rowWithWalls.pop(0)
+        rowWithWalls.pop()
 
         for (let j = 0; j < originalRow.length; j++) {
             rowBeneath.push(originalRow[j].bottom ? WALL : EMPTY);
             rowBeneath.push(WALL);
         }
 
-        rowBeneath.pop(0)
+        rowBeneath.pop()
 
         mazeWithWalls.push(rowWithWalls);
         mazeWithWalls.push(rowBeneath);
     }
     
-    mazeWithWalls.pop(0);
+    mazeWithWalls.pop();
 
     let lastRow = mazeWithWalls[mazeWithWalls.length - 1];
     mazeWithWalls[mazeWithWalls.length - 1][lastRow.length - 1] = GOAL;
