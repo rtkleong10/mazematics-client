@@ -7,5 +7,5 @@ export default function Footer() {
         <footer className="container py-4 mt-4 text-muted text-right">
             Made with <FontAwesomeIcon icon={faHeart} className="text-danger" /> by ItWorksOnMyMachine
         </footer>
-    )
+    );
 }

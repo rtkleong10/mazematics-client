@@ -77,8 +77,9 @@ export const deleteTopic = topicId => (dispatch, getState) => {
         .then(res => {
             if (res.data === true) {
                 dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.DELETE, topicId));
-            } else
+            } else {
                 throw new Error("Unable to delete topic");
+            }
         })
         .catch(err => {
             dispatch(displayErrorAction("Unable to delete topic"));

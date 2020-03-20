@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { EMPTY } from '../../../utils/constants';
 
 export class LearningMaterialForm extends Component {
-    state = {
+    emptyState = {
         title: '',
         description: '',
         link: '',
     };
+    state = this.emptyState;
 
     componentDidMount() {
         const {
@@ -15,11 +16,7 @@ export class LearningMaterialForm extends Component {
 
         if (initialState) {
             if (initialState === EMPTY)
-                this.setState({
-                    title: '',
-                    description: '',
-                    link: '',
-                });
+                this.setState(this.emptyState);
 
             else
                 this.setState(initialState);
@@ -33,11 +30,7 @@ export class LearningMaterialForm extends Component {
 
         if (initialState && initialState !== prevProps.initialState) {
             if (initialState === EMPTY)
-                this.setState({
-                    title: '',
-                    description: '',
-                    link: '',
-                });
+                this.setState(this.emptyState);
                 
             else
                 this.setState(initialState);
@@ -59,11 +52,7 @@ export class LearningMaterialForm extends Component {
             link,
         });
 
-        this.setState({
-            title: '',
-            description: '',
-            link: '',
-        });
+        this.setState(this.emptyState);
     }
 
     onChange = e => {

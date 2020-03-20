@@ -32,6 +32,7 @@ export class ModalForm extends Component {
 ModalForm.propTypes = {
     title: PropTypes.string,
     isVisible: PropTypes.bool.isRequired,
+    onSubmit: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     initialState: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     FormComponent: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired, // React Component
