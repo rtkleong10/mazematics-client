@@ -6,7 +6,7 @@ const initialState = {
         name: 'Bob',
         role: USER_ROLES.STUDENT,
         email: 'bob@e.ntu.edu.sg',
-        accessToken: '24a2f73b-d2a2-49d8-8e69-6cfc9a2f19be',
+        accessToken: 'b1b1d2be-3377-4ad1-8603-38af829e3e32',
     },
 };
 
