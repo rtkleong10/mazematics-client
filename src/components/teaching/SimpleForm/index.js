@@ -78,9 +78,8 @@ export class SimpleForm extends Component {
                 </div>
                 <div className="form-group">
                     <label>Description</label>
-                    <input
+                    <textarea
                         className="form-control"
-                        type="text"
                         name="description"
                         onChange={this.onChange}
                         value={description}

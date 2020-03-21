@@ -24,11 +24,9 @@ exports[`should take a snapshot 1`] = `
       <label>
         Description
       </label>
-      <input
+      <textarea
         class="form-control"
         name="description"
-        type="text"
-        value=""
       />
     </div>
     <div
