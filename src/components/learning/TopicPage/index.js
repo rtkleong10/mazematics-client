@@ -40,6 +40,7 @@ class TopicPage extends Component {
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Home
                 </Link>
                 <h1>{topic.title}</h1>
+                <p>{topic.description}</p>
                 <h2>Levels</h2>
                 {
                     levels.length !== 0 && !levelsFailed

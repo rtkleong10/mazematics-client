@@ -40,6 +40,7 @@ export class LevelPage extends Component {
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Topic Page
                 </Link>
                 <h1>{level.title}</h1>
+                <p>{level.description}</p>
                 <div className="mb-4">
                     <Link className="btn btn-primary" to={`/topics/${level.topic.id}/levels/${level.id}/leaderboard`}>
                         View Leaderboard

@@ -127,6 +127,7 @@ class TopicPage extends Component {
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Home
                 </Link>
                 <h1>{topic.title}</h1>
+                <p>{topic.description}</p>
                 <h2>Levels</h2>
                 <div className="mb-4">
                     <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>

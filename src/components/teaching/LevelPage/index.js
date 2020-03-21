@@ -43,6 +43,7 @@ export class LevelPage extends Component {
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Topic Page
                 </Link>
                 <h1>{level.title} {level.playable ?  <span className="badge badge-success">Playable</span> : <span className="badge badge-secondary">Unplayable</span>}</h1>
+                <p>{level.description}</p>
                 <div className="mb-4">
                     {
                         level.playable
