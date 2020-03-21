@@ -11,33 +11,43 @@ const ENTITY_NAME = 'questions';
 const questionsReducer = createApiReducer(ENTITY_NAME);
 export default questionsReducer;
 
-const questionAdapter = question => {
+const questionReader = question => {
+    const optionKeys = Object.keys(question.options);
+    let optionArr = [];
+    let answerForArr = null;
+
+    for (const key of optionKeys) {
+        if (parseInt(key) == question.answer)   
+            answerForArr = optionArr.length;
+        
+        optionArr.push(question.options[key]);
+    }
+
+    return {
+        ...question,
+        options: optionArr,
+        answer: answerForArr,
+        coordinates: {
+            x: 0,
+            y: 0,
+        }
+    };
+}
+
+const questionWriter = question => {
     let optionsObj = {};
 
     for (let i = 0; i < question.options.length; i++)
         optionsObj[i] = question.options[i];
 
-    question.options = optionsObj;
-
-    return {...question, coordinates: {
-        x: 0,
-        y: 0,
-    }};
-}
-
-const questionReader = question => {
-    const optionKeys = Object.keys(question.options);
-    let optionArr = [];
-
-    for (const key of optionKeys)
-        optionArr[parseInt(key)] = question.options[key];
-
-    question.options = optionArr;
-
-    return {...question, coordinates: {
-        x: 0,
-        y: 0,
-    }};
+    return {
+        ...question,
+        options: optionsObj,
+        coordinates: {
+            x: 0,
+            y: 0,
+        }
+    };
 }
 
 // OPERATIONS
@@ -47,7 +57,7 @@ export const createQuestion = (levelId, question) => (dispatch, getState) => {
     axios
         .post(
             `${API_URL}/gameMaps/${levelId}/${ENTITY_NAME}/create/`,
-            questionAdapter(question),
+            questionWriter(question),
             getTokenConfig(getState),
         )
         .then(res => {
@@ -84,7 +94,7 @@ export const updateQuestion = (levelId, question) => (dispatch, getState) => {
     axios
         .patch(
             `${API_URL}/gameMaps/${levelId}/${ENTITY_NAME}/${question.id}/`,
-            questionAdapter(question),
+            questionWriter(question),
             getTokenConfig(getState),
         )
         .then(res => {
