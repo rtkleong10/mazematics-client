@@ -7,7 +7,7 @@ export const USER_ROLES = {
     ADMIN: 'ROLE_ADMIN',
 };
 
-export const YOUTUBE_LINK_PATTERN = /https:\/\/www.youtube.com\/embed\/[^\/]+\/?/;
+export const YOUTUBE_LINK_PATTERN = /^https:\/\/www.youtube.com\/embed\/[^/]+\/?$/;
 
 export const CREATE = 'CREATE';
 export const UPDATE = 'UPDATE';
