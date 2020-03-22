@@ -71,8 +71,9 @@ export class LearningMaterialForm extends Component {
         return (
             <form className="form" onSubmit={this.onSubmit}>
                 <div className="form-group">
-                    <label>Title</label>
+                    <label htmlFor="learningMaterial-title">Title</label>
                     <input
+                        id="learningMaterial-title"
                         className="form-control"
                         type="text"
                         name="title"
@@ -81,8 +82,9 @@ export class LearningMaterialForm extends Component {
                         />
                 </div>
                 <div className="form-group">
-                    <label>Description</label>
+                    <label htmlFor="learningMaterial-description">Description</label>
                     <textarea
+                        id="learningMaterial-description"
                         className="form-control"
                         name="description"
                         onChange={this.onChange}
@@ -90,9 +92,10 @@ export class LearningMaterialForm extends Component {
                         />
                 </div>
                 <div className="form-group">
-                    <label>Link</label>
+                    <label htmlFor="learningMaterial-link">Link</label>
                     <p className="small text-secondary">Must be a youtube embeded link (e.g. https://www.youtube.com/embed/AQ7THUKx6Es)</p>
                     <input
+                        id="learningMaterial-link"
                         className="form-control"
                         type="text"
                         name="link"
