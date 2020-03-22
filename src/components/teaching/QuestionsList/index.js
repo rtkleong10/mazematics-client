@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
 
 import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
@@ -9,6 +10,7 @@ import QuestionForm from '../QuestionForm';
 import DeleteForm from '../DeleteForm';
 import { createQuestion, listQuestions, updateQuestion, deleteQuestion, selectQuestions, selectQuestionsFailed, selectQuestionsLoading } from '../../../redux/ducks/questions';
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
+
 /**
  * This component displays the list of questions for a particular level. Teachers can add, update, and delete questions.
  */

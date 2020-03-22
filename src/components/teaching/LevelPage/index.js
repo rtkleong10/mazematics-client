@@ -3,11 +3,13 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types'
 
 import Loader from '../../common/Loader';
 import LearningMaterial from '../LearningMaterial';
 import QuestionsList from '../QuestionsList';
 import { retrieveLevel, publishLevel, selectLevel, selectLevelLoading, selectLevelFailed } from '../../../redux/ducks/levels';
+
 /**
  * This component displays the level page for a teacher. It contains the QuestionsList and LearningMaterial components.
  */

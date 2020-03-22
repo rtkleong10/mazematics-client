@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
 
 import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
