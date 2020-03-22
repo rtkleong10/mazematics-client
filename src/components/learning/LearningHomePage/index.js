@@ -9,10 +9,8 @@ import { listTopics, selectTopics, selectTopicsLoading, selectTopicsFailed } fro
  * This component displays the learning home page for a student. It contains a list of study topics to choose from
  */
 class LearningHomePage extends Component {
-    constructor(props) {
-        super(props);
-
-        props.listTopics();
+    componentDidMount() {
+        this.props.listTopics();
     }
 
     render() {

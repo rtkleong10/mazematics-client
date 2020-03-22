@@ -17,20 +17,18 @@ import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
  * This component displays a topic page for a teacher. It contains a list of levels for the topic. Teachers may add, update, or delete levels.
  */
 class TopicPage extends Component {
-    constructor(props) {
-        super(props);
+    state = {
+        modalForm: {
+            isVisible: false,
+            type: null,
+            selectedLevel: null,
+        },
+    }
 
-        const topicId = parseInt(props.match.params.topicId);
-        props.retrieveTopic(topicId);
-        props.listLevels(topicId);
-
-        this.state = {
-            modalForm: {
-                isVisible: false,
-                type: null,
-                selectedLevel: null,
-            },
-        }
+    componentDidMount() {
+        const topicId = parseInt(this.props.match.params.topicId);
+        this.props.retrieveTopic(topicId);
+        this.props.listLevels(topicId);
     }
 
     openModalForm = (type, selectedLevel) => {
@@ -130,6 +128,7 @@ class TopicPage extends Component {
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Home
                 </Link>
                 <h1>{topic.title}</h1>
+                <p>{topic.description}</p>
                 <h2>Levels</h2>
                 <div className="mb-4">
                     <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>

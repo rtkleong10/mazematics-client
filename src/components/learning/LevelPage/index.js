@@ -12,12 +12,10 @@ import { retrieveLevel, selectPlayableLevel, selectLevelLoading, selectLevelFail
  * This component displays the level page for a student. It contains the LearningMaterial component and an option to play the level and view leaderboard.
  */
 export class LevelPage extends Component {
-    constructor(props) {
-        super(props);
-
-        const topicId = parseInt(props.match.params.topicId);
-        const levelId = parseInt(props.match.params.levelId);
-        props.retrieveLevel(topicId, levelId);
+    componentDidMount() {
+        const topicId = parseInt(this.props.match.params.topicId);
+        const levelId = parseInt(this.props.match.params.levelId);
+        this.props.retrieveLevel(topicId, levelId);
     }
     
     render() {
@@ -39,12 +37,13 @@ export class LevelPage extends Component {
 
         return (
             <div className="container">
-                <Link className="btn btn-light mb-2" to={`/topics/${level.topic.id}/`}>
+                <Link className="btn btn-light mb-2" to={`/topics/${level.topic_id}/`}>
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Topic Page
                 </Link>
                 <h1>{level.title}</h1>
+                <p>{level.description}</p>
                 <div className="mb-4">
-                    <Link className="btn btn-primary" to={`/topics/${level.topic.id}/levels/${level.id}/leaderboard`}>
+                    <Link className="btn btn-primary" to={`/topics/${level.topic_id}/levels/${level.id}/leaderboard`}>
                         View Leaderboard
                     </Link>
                 </div>
@@ -64,7 +63,7 @@ export class LevelPage extends Component {
                             <LearningMaterial levelId={level.id} />
                         </div>
                 }
-                <Link className="btn btn-primary mb-4" to={`/topics/${level.topic.id}/levels/${level.id}/game`}>
+                <Link className="btn btn-primary mb-4" to={`/topics/${level.topic_id}/levels/${level.id}/game`}>
                     Play Game
                 </Link>
             </div>

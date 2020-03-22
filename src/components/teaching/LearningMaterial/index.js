@@ -9,25 +9,23 @@ import LearningMaterialForm from '../LearningMaterialForm';
 import DeleteForm from '../DeleteForm';
 import { createLearningMaterial, listLearningMaterials, updateLearningMaterial, deleteLearningMaterial, selectLearningMaterial, selectLearningMaterialsLoading, selectLearningMaterialsFailed } from '../../../redux/ducks/learningMaterials';
 import './styles.css';
-import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
+import { CREATE, UPDATE, DELETE, EMPTY, YOUTUBE_LINK_PATTERN } from '../../../utils/constants';
 
 /**
  * This component displays the learning materials in the level for a teacher. Teachers can add, update, and delete learning materials.
  */
 export class LearningMaterial extends Component {
-    constructor(props) {
-        super(props);
+    state = {
+        modalForm: {
+            isVisible: false,
+            type: null,
+            selectedLearningMaterial: null,
+        },
+    }
 
-        const levelId = props.levelId;
-        props.listLearningMaterials(levelId);
-        
-        this.state = {
-            modalForm: {
-                isVisible: false,
-                type: null,
-                selectedLearningMaterial: null,
-            },
-        }
+    componentDidMount() {
+        const levelId = this.props.levelId;
+        this.props.listLearningMaterials(levelId);
     }
 
     openModalForm = (type, selectedLearningMaterial) => {
@@ -129,16 +127,19 @@ export class LearningMaterial extends Component {
                 {
                     learningMaterial && !learningMaterialsFailed
                         ? <div className="card">
-                            <div className="video-box card-img-top">
-                                <div>
-                                    <iframe
-                                        title="Learning Material Video"
-                                        src={learningMaterial.link}
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen />
-                                </div>
-                            </div>
+                            {
+                                YOUTUBE_LINK_PATTERN.test(learningMaterial.link) &&
+                                    <div className="video-box card-img-top">
+                                        <div>
+                                            <iframe
+                                                title="Learning Material Video"
+                                                src={learningMaterial.link}
+                                                frameBorder="0"
+                                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                allowFullScreen />
+                                        </div>
+                                    </div>
+                            }
                             <div className="card-body">
                                 <h3 className="card-title">{learningMaterial.title}</h3>
                                 <p className="card-text">{learningMaterial.description}</p>

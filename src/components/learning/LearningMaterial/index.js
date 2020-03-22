@@ -4,15 +4,15 @@ import { connect } from 'react-redux';
 import Loader from '../../common/Loader';
 import { listLearningMaterials, selectLearningMaterialsLoading, selectLearningMaterial, selectLearningMaterialsFailed } from '../../../redux/ducks/learningMaterials';
 import './styles.css';
+import { YOUTUBE_LINK_PATTERN } from '../../../utils/constants';
+
 /**
  * This component displays the learning materials in the level for a student.
  */
 export class LearningMaterial extends Component {
-    constructor(props) {
-        super(props);
-
-        const levelId = props.levelId;
-        props.listLearningMaterials(levelId);
+    componentDidMount() {
+        const levelId = this.props.levelId;
+        this.props.listLearningMaterials(levelId);
     }
 
     render() {
@@ -30,16 +30,19 @@ export class LearningMaterial extends Component {
                 {
                     learningMaterial && !learningMaterialsFailed
                         ? <div className="card">
-                            <div className="video-box card-img-top">
-                                <div>
-                                    <iframe
-                                        title="Learning Material Video"
-                                        src={learningMaterial.link}
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen />
-                                </div>
-                            </div>
+                            {
+                                YOUTUBE_LINK_PATTERN.test(learningMaterial.link) &&
+                                    <div className="video-box card-img-top">
+                                        <div>
+                                            <iframe
+                                                title="Learning Material Video"
+                                                src={learningMaterial.link}
+                                                frameBorder="0"
+                                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                allowFullScreen />
+                                        </div>
+                                    </div>
+                            }
                             <div className="card-body">
                                 <h3 className="card-title">{learningMaterial.title}</h3>
                                 <p className="card-text">{learningMaterial.description}</p>
