@@ -84,14 +84,11 @@ class Login extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.loginSuccess && Object.keys(this.props.currentUser).length === 0){
+    if(nextProps.loginSuccess && Object.keys(this.props.user).length === 0){
       this.props.fetchMe(nextProps.access_token)
     }
-    if(nextProps.loginSuccess && nextProps.currentUser.email){  
+    if(nextProps.loginSuccess && nextProps.user.email){  
       this.props.history.push('/')
-    }
-    else if(!nextProps.loginSuccess){
-      alert('Login fail');
     }
 
   }
@@ -185,7 +182,7 @@ Login.propTypes = {
   /** An object used for styling */
   classes: PropTypes.object.isRequired,
   /** The currently logged in user */
-  currentUser:PropTypes.object,
+  user:PropTypes.object,
   /** Access token of the currently logged in user */
   access_token:PropTypes.string,
   /** Refresh token of the currently logged in user */
@@ -195,7 +192,7 @@ Login.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    currentUser: state.authReducer.currentUser,
+    user: state.authReducer.user,
     access_token: state.authReducer.access_token,
     refresh_token: state.authReducer.refresh_token,
     loginSuccess: state.authReducer.loginSuccess
