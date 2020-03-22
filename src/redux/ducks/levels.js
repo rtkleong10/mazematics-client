@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { createApiReducer, createApiAction, STATUSES, METHODS } from './apiHelper';
 import { API_URL } from '../../utils/constants';
-import { displayErrorAction } from './errors';
+import { displayError } from './errors';
 import { getTokenConfig } from './authHelper';
 import generateMaze from '../../utils/generateMaze';
 import { updateQuestion } from './questions';
@@ -30,7 +30,7 @@ export const createLevel = (topicId, level) => (dispatch, getState) => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.CREATE, res.data));
         })
         .catch(err => {
-            dispatch(displayErrorAction("Unable to create level"));
+            displayError("Unable to create level")(dispatch);
             dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.CREATE));
         });
     ;
@@ -48,7 +48,7 @@ export const retrieveLevel = (topicId, levelId) => (dispatch, getState) => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.RETRIEVE, res.data));
         })
         .catch(err => {
-            dispatch(displayErrorAction("Unable to retrieve level"));
+            displayError("Unable to retrieve level")(dispatch);
             dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.RETRIEVE));
         });
     ;
@@ -67,7 +67,7 @@ export const updateLevel = (topicId, level) => (dispatch, getState) => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.UPDATE, res.data));
         })
         .catch(err => {
-            dispatch(displayErrorAction("Unable to update level"));
+            displayError("Unable to update level")(dispatch);
             dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.UPDATE));
         });
 };
@@ -107,7 +107,7 @@ export const publishLevel = (topicId, levelId) => (dispatch, getState) => {
             })(dispatch, getState);
         })
         .catch(err => {
-            dispatch(displayErrorAction("Unable to retrieve questions"));
+            displayError("Unable to retrieve questions")(dispatch);
             dispatch(createApiAction('questions', STATUSES.FAILURE, METHODS.LIST));
         });
     
@@ -129,7 +129,7 @@ export const deleteLevel = (topicId, levelId) => (dispatch, getState) => {
             }
         })
         .catch(err => {
-            dispatch(displayErrorAction("Unable to delete level"));
+            displayError("Unable to delete level")(dispatch);
             dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.DELETE));
         });
 };
@@ -146,7 +146,7 @@ export const listLevels = (topicId) => (dispatch, getState) => {
             dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, METHODS.LIST, res.data));
         })
         .catch(err => {
-            dispatch(displayErrorAction("Unable to retrieve levels"));
+            displayError("Unable to retrieve levels")(dispatch);
             dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, METHODS.LIST));
         });
 };
