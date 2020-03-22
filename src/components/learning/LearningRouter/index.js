@@ -7,6 +7,9 @@ import LevelPage from '../LevelPage';
 import LeaderboardPage from '../LeaderboardPage';
 import GamePage from '../../game/GamePage';
 
+/**
+ * This component handles the routing for the learning platform based on the URL
+ */
 export class LearningRouter extends Component {
     render() {
         return (

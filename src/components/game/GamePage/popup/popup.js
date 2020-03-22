@@ -1,6 +1,9 @@
 import React from "react";
 import "./style.css";
-
+import { PropTypes } from 'prop-types';
+/**
+ * This component displays an in-game popup for user.
+ */
 class Popup extends React.Component {
   render() {
     return (
@@ -13,5 +16,10 @@ class Popup extends React.Component {
     );
   }
 }
-
+Popup.propTypes = {
+  /** A string containing the popup text */
+  text: PropTypes.string.isRequired,
+  /** An action creator for closing the popup */
+  closePopup: PropTypes.func.isRequired
+};
 export default Popup;

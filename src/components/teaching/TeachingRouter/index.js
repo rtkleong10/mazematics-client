@@ -6,6 +6,9 @@ import TopicPage from '../TopicPage';
 import LevelPage from '../LevelPage';
 import StudentReportsPage from '../StudentReportsPage';
 
+/**
+ * This component handles the routing for the teaching platform based on the URL
+ */
 export class TeachingRouter extends Component {
     render() {
         return (

@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import walkSprite from "./rsz_pokemonplayer.png";
 import { SPRITE_SIZE, MAP_WIDTH, MAP_HEIGHT } from "../../../../utils/constants";
-
+import { PropTypes } from 'prop-types';
+/**
+ * This component defines the player for the user.
+ */
 class Player extends React.Component {
   constructor(props) {
     super(props);

@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-
+/**
+ * This component displays the leaderboard for a level for a student. It is ranked based on completion time for a level.
+ */
 export class LeaderboardPage extends Component {
     render() {
         const {
@@ -84,4 +86,8 @@ export class LeaderboardPage extends Component {
     }
 }
 
+LeaderboardPage.propTypes = {
+    /** An object containing the topic ID and level ID based on which data is displayed */
+   match: PropTypes.object.isRequired,
+};
 export default LeaderboardPage

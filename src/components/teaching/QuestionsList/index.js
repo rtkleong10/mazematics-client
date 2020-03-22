@@ -9,7 +9,9 @@ import QuestionForm from '../QuestionForm';
 import DeleteForm from '../DeleteForm';
 import { createQuestion, listQuestions, updateQuestion, deleteQuestion, selectQuestions, selectQuestionsFailed, selectQuestionsLoading } from '../../../redux/ducks/questions';
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
-
+/**
+ * This component displays the list of questions for a particular level. Teachers can add, update, and delete questions.
+ */
 export class QuestionsList extends Component {
     state = {
         modalForm: {
@@ -147,6 +149,27 @@ export class QuestionsList extends Component {
         )
     }
 }
+
+QuestionsList.propTypes = {
+    /** A boolean to determine if the questions are still being loaded by the `listQuestions` action creator (true: still loading, false: fully loaded) */
+   questionsLoading: PropTypes.object.isRequired,
+
+  /** A boolean to determine if the questions failed to be loaded by the `listQuestions` action creator (true: still loading or failed to load, false: successful load) */
+   questionsFailed: PropTypes.bool.isRequired,
+   /** An array of question objects loaded by the `listQuestions` action creator */
+   questions: PropTypes.array.isRequired,
+   /** A boolean to determine if the game is playable or unplayable*/
+   playable: PropTypes.bool.isRequired,
+
+   /** An action creator for creating a question*/
+   createQuestion: PropTypes.func.isRequired,
+   /** An action creator for updating a question*/
+   updateQuestion: PropTypes.func.isRequired,
+   /** An action creator for deleting a question */
+   deleteQuestion: PropTypes.func.isRequired,
+   /** An action creator for listing questions */
+   listQuestions: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
     questionsLoading: selectQuestionsLoading(state),

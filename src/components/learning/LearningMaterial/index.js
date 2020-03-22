@@ -6,6 +6,9 @@ import { listLearningMaterials, selectLearningMaterialsLoading, selectLearningMa
 import './styles.css';
 import { YOUTUBE_LINK_PATTERN } from '../../../utils/constants';
 
+/**
+ * This component displays the learning materials in the level for a student.
+ */
 export class LearningMaterial extends Component {
     componentDidMount() {
         const levelId = this.props.levelId;
@@ -51,7 +54,20 @@ export class LearningMaterial extends Component {
         )
     }
 }
+LearningMaterial.propTypes = {
 
+    /** A string containing the level ID of the level*/
+    levelId:PropTypes.string.isRequired,
+    /** A boolean to determine if the learning materials are still being loaded by the `listLearningMaterials` action creator (true: still loading, false: fully loaded) */
+    learningMaterialsLoading: PropTypes.bool.isRequired,
+    /** A boolean to determine if the learning materials failed to be loaded by the `listLearningMaterials` action creator (true: still loading or failed to load, false: successful load) */
+    learningMaterialsFailed: PropTypes.bool.isRequired,
+    /** An array of learning material objects loaded by the `listLearningMaterials` action creator */
+    learningMaterial: PropTypes.array.isRequired,
+
+    /** An action creator for listing learning materials */
+    listLearningMaterials: PropTypes.func.isRequired,
+};
 const mapStateToProps = state => ({
     learningMaterialsLoading: selectLearningMaterialsLoading(state),
     learningMaterialsFailed: selectLearningMaterialsFailed(state),

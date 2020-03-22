@@ -8,7 +8,9 @@ import Loader from '../../common/Loader';
 import LearningMaterial from '../LearningMaterial';
 import QuestionsList from '../QuestionsList';
 import { retrieveLevel, publishLevel, selectLevel, selectLevelLoading, selectLevelFailed } from '../../../redux/ducks/levels';
-
+/**
+ * This component displays the level page for a teacher. It contains the QuestionsList and LearningMaterial components.
+ */
 export class LevelPage extends Component {
     componentDidMount() {
         const topicId = parseInt(this.props.match.params.topicId);
@@ -63,6 +65,22 @@ export class LevelPage extends Component {
     }
 }
 
+LevelPage.propTypes = {
+    /** An object containing the topic ID and level ID based on which data is displayed */
+    match: PropTypes.object.isRequired,
+
+    /** A boolean to determine if the level is still being loaded by the `retrieveLevel` action creator (true: still loading, false: fully loaded) */
+    levelLoading: PropTypes.bool.isRequired,
+    /** A boolean to determine if the level failed to be loaded by the `retrieveLevel` action creator (true: still loading or failed to load, false: successful load) */
+    levelFailed: PropTypes.bool.isRequired,
+    /** A level object loaded by the `retrieveLevel` action creator */
+    level: PropTypes.object.isRequired,
+
+    /** An action creator for retrieving level name */
+    retrieveLevel: PropTypes.func.isRequired,
+
+};
+
 const mapStateToProps = state => ({
     levelLoading: selectLevelLoading(state),
     levelFailed: selectLevelFailed(state),
@@ -73,5 +91,6 @@ const dispatchers = {
     retrieveLevel,
     publishLevel,
 };
+
 
 export default connect(mapStateToProps, dispatchers)(LevelPage);

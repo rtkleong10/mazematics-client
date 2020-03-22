@@ -8,7 +8,9 @@ import PropTypes from 'prop-types';
 import Loader from '../../common/Loader';
 import { retrieveTopic, selectTopic, selectTopicLoading, selectTopicFailed } from '../../../redux/ducks/topics';
 import { listLevels, selectLevelsLoading, selectLevelsFailed, selectPlayableLevels } from '../../../redux/ducks/levels';
-
+/**
+ * This component displays the topics page for a student. It contains a list of levels for the topic.
+ */
 class TopicPage extends Component {
     componentDidMount() {
         const topicId = parseInt(this.props.match.params.topicId);
@@ -60,16 +62,25 @@ class TopicPage extends Component {
 }
 
 TopicPage.propTypes = {
+    /** An object containing the topic ID and level ID based on which data is displayed */
     match: PropTypes.object.isRequired,
 
+    /** A boolean to determine if the topic is still being loaded by the `retrieveTopic` action creator (true: still loading, false: fully loaded) */
     topicLoading: PropTypes.bool.isRequired,
+    /** A boolean to determine if the topic failed to be loaded by the `retrieveTopic` action creator (true: still loading or failed to load, false: successful load) */
     topicFailed: PropTypes.bool.isRequired,
-    topic: PropTypes.object,
+    /** A topic object loaded by the `retrieveTopic` action creator */
+    topic: PropTypes.object.isRequired,
+    /** A boolean to determine if the levels are still being loaded by the `listLevels` action creator (true: still loading, false: fully loaded) */
     levelsLoading: PropTypes.bool.isRequired,
+    /** A boolean to determine if the topics failed to be loaded by the `listLevels` action creator (true: still loading or failed to load, false: successful load) */
     levelsFailed: PropTypes.bool.isRequired,
+    /** An array of topic objects loaded by the `listLevels` action creaor */
     levels: PropTypes.array.isRequired,
 
+    /** An action creator for retrieving topic name */
     retrieveTopic: PropTypes.func.isRequired,
+    /** An action creator for listing levels */
     listLevels: PropTypes.func.isRequired,
 };
 

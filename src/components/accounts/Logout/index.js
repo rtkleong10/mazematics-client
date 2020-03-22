@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 
 import {logout} from '../../../redux/ducks/auth';
 
+/**
+ * This component displays the logout page for user.
+ */
 export class Logout extends Component {
     componentDidMount() {
         this.props.logout();
