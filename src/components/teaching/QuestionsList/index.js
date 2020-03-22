@@ -11,19 +11,17 @@ import { createQuestion, listQuestions, updateQuestion, deleteQuestion, selectQu
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
 
 export class QuestionsList extends Component {
-    constructor(props) {
-        super(props);
-        
-        const levelId = props.levelId
-        props.listQuestions(levelId);
-        
-        this.state = {
-            modalForm: {
-                isVisible: false,
-                type: null,
-                selectedQuestion: null,
-            },
-        }
+    state = {
+        modalForm: {
+            isVisible: false,
+            type: null,
+            selectedQuestion: null,
+        },
+    }
+
+    componentDidMount() {
+        const levelId = this.props.levelId
+        this.props.listQuestions(levelId);
     }
 
     openModalForm = (type, selectedQuestion) => {
