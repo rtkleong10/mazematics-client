@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { EMPTY } from '../../../utils/constants';
-
+/**
+ * This component displays a form for teachers to add or update learning materials
+ */
 export class LearningMaterialForm extends Component {
     emptyState = {
         title: '',

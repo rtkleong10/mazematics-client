@@ -8,7 +8,9 @@ import Logout from '../../accounts/Logout';
 import LeaderboardPage from '../LeaderboardPage';
 import GamePage from '../../game/GamePage';
 import NotFoundPage from '../../common/NotFoundPage';
-
+/**
+ * This component handles the routing for the learning platform based on the URL
+ */
 export class LearningRouter extends Component {
     render() {
         return (

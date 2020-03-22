@@ -8,6 +8,9 @@ import StudentReportsPage from '../StudentReportsPage';
 import Logout from '../../accounts/Logout';
 import NotFoundPage from '../../common/NotFoundPage';
 
+/**
+ * This component handles the routing for the teaching platform based on the URL
+ */
 export class TeachingRouter extends Component {
     render() {
         return (

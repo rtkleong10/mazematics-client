@@ -11,6 +11,9 @@ import { createLearningMaterial, listLearningMaterials, updateLearningMaterial, 
 import './styles.css';
 import { CREATE, UPDATE, DELETE, EMPTY, YOUTUBE_LINK_PATTERN } from '../../../utils/constants';
 
+/**
+ * This component displays the learning materials in the level for a teacher. Teachers can add, update, and delete learning materials.
+ */
 export class LearningMaterial extends Component {
     state = {
         modalForm: {
@@ -160,6 +163,26 @@ export class LearningMaterial extends Component {
         )
     }
 }
+LearningMaterial.propTypes = {
+     /** A boolean to determine if the learning materials are still being loaded by the `listLearningMaterials` action creator (true: still loading, false: fully loaded) */
+    learningMaterialsLoading: PropTypes.bool.isRequired,
+
+   /** A boolean to determine if the learning materials failed to be loaded by the `listLearningMaterials` action creator (true: still loading or failed to load, false: successful load) */
+    learningMaterialsFailed: PropTypes.bool.isRequired,
+    /** An array of learning material objects loaded by the `listLearningMaterials` action creator */
+    learningMaterial: PropTypes.array.isRequired,
+    /** A boolean to determine if the game is playable or unplayable*/
+    playable: PropTypes.bool.isRequired,
+
+    /** An action creator for creating learning materials*/
+    createLearningMaterial: PropTypes.func.isRequired,
+    /** An action creator for updating learning materials */
+    updateLearningMaterial: PropTypes.func.isRequired,
+    /** An action creator for deleting learning materials */
+    deleteLearningMaterial: PropTypes.func.isRequired,
+    /** An action creator for listing learning materials */
+    listLearningMaterials: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
     learningMaterialsLoading: selectLearningMaterialsLoading(state),
