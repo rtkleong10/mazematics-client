@@ -34,7 +34,7 @@ class AdminTable extends Component{
 
     render(){return (
       <React.Fragment>
-      <AdminBar/>
+      {/* <AdminBar/> */}
       <MaterialTable
       title="Account System"
         columns={[
