@@ -14,20 +14,18 @@ import { createLevel, updateLevel, deleteLevel, listLevels, selectLevelsLoading,
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
 
 class TopicPage extends Component {
-    constructor(props) {
-        super(props);
+    state = {
+        modalForm: {
+            isVisible: false,
+            type: null,
+            selectedLevel: null,
+        },
+    }
 
-        const topicId = parseInt(props.match.params.topicId);
-        props.retrieveTopic(topicId);
-        props.listLevels(topicId);
-
-        this.state = {
-            modalForm: {
-                isVisible: false,
-                type: null,
-                selectedLevel: null,
-            },
-        }
+    componentDidMount() {
+        const topicId = parseInt(this.props.match.params.topicId);
+        this.props.retrieveTopic(topicId);
+        this.props.listLevels(topicId);
     }
 
     openModalForm = (type, selectedLevel) => {

@@ -9,12 +9,10 @@ import LearningMaterial from '../LearningMaterial';
 import { retrieveLevel, selectPlayableLevel, selectLevelLoading, selectLevelFailed } from '../../../redux/ducks/levels';
 
 export class LevelPage extends Component {
-    constructor(props) {
-        super(props);
-
-        const topicId = parseInt(props.match.params.topicId);
-        const levelId = parseInt(props.match.params.levelId);
-        props.retrieveLevel(topicId, levelId);
+    componentDidMount() {
+        const topicId = parseInt(this.props.match.params.topicId);
+        const levelId = parseInt(this.props.match.params.levelId);
+        this.props.retrieveLevel(topicId, levelId);
     }
     
     render() {

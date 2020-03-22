@@ -10,12 +10,10 @@ import { retrieveTopic, selectTopic, selectTopicLoading, selectTopicFailed } fro
 import { listLevels, selectLevelsLoading, selectLevelsFailed, selectPlayableLevels } from '../../../redux/ducks/levels';
 
 class TopicPage extends Component {
-    constructor(props) {
-        super(props);
-
-        const topicId = parseInt(props.match.params.topicId);
-        props.retrieveTopic(topicId);
-        props.listLevels(topicId);
+    componentDidMount() {
+        const topicId = parseInt(this.props.match.params.topicId);
+        this.props.retrieveTopic(topicId);
+        this.props.listLevels(topicId);
     }
 
     render() {

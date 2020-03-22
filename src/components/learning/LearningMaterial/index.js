@@ -6,11 +6,9 @@ import { listLearningMaterials, selectLearningMaterialsLoading, selectLearningMa
 import './styles.css';
 
 export class LearningMaterial extends Component {
-    constructor(props) {
-        super(props);
-
-        const levelId = props.levelId;
-        props.listLearningMaterials(levelId);
+    componentDidMount() {
+        const levelId = this.props.levelId;
+        this.props.listLearningMaterials(levelId);
     }
 
     render() {

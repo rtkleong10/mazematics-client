@@ -12,19 +12,17 @@ import './styles.css';
 import { CREATE, UPDATE, DELETE, EMPTY, YOUTUBE_LINK_PATTERN } from '../../../utils/constants';
 
 export class LearningMaterial extends Component {
-    constructor(props) {
-        super(props);
+    state = {
+        modalForm: {
+            isVisible: false,
+            type: null,
+            selectedLearningMaterial: null,
+        },
+    }
 
-        const levelId = props.levelId;
-        props.listLearningMaterials(levelId);
-        
-        this.state = {
-            modalForm: {
-                isVisible: false,
-                type: null,
-                selectedLearningMaterial: null,
-            },
-        }
+    componentDidMount() {
+        const levelId = this.props.levelId;
+        this.props.listLearningMaterials(levelId);
     }
 
     openModalForm = (type, selectedLearningMaterial) => {
