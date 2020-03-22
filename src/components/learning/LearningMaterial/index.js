@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
 
 import Loader from '../../common/Loader';
 import { listLearningMaterials, selectLearningMaterialsLoading, selectLearningMaterial, selectLearningMaterialsFailed } from '../../../redux/ducks/learningMaterials';

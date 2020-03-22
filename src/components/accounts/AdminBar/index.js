@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import {logout} from '../actions/logoutActions';
+import {logout} from '../../../redux/ducks/auth';
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
