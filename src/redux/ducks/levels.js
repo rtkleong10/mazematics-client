@@ -22,7 +22,7 @@ export const createLevel = (topicId, level) => (dispatch, getState) => {
             `${API_URL}/topics/${topicId}/${ENTITY_NAME}/create/`,
             {
                 ...level,
-                playable: false
+                playable: false,
             },
             getTokenConfig(getState),
         )
@@ -60,10 +60,7 @@ export const updateLevel = (topicId, level) => (dispatch, getState) => {
     axios
         .patch(
             `${API_URL}/topics/${topicId}/${ENTITY_NAME}/${level.id}/`,
-            {
-                ...level,
-                playable: false
-            },
+            level,
             getTokenConfig(getState),
         )
         .then(res => {
@@ -86,8 +83,8 @@ export const publishLevel = (topicId, levelId) => (dispatch, getState) => {
         .then(res => {
             dispatch(createApiAction('questions', STATUSES.SUCCESS, METHODS.LIST, res.data));
 
-            const questions = res.data;
-
+            const questions = res.data.content;
+            
             const {
                 mapDescriptor,
                 questionCoordinates

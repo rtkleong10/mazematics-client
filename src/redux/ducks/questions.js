@@ -27,10 +27,6 @@ const questionReader = question => {
         ...question,
         options: optionArr,
         answer: answerForArr,
-        coordinates: {
-            x: 0,
-            y: 0,
-        }
     };
 }
 
@@ -43,10 +39,6 @@ const questionWriter = question => {
     return {
         ...question,
         options: optionsObj,
-        coordinates: {
-            x: 0,
-            y: 0,
-        }
     };
 }
 
@@ -57,7 +49,10 @@ export const createQuestion = (levelId, question) => (dispatch, getState) => {
     axios
         .post(
             `${API_URL}/gameMaps/${levelId}/${ENTITY_NAME}/create/`,
-            questionWriter(question),
+            {
+                ...questionWriter(question),
+                coordinates: null
+            },
             getTokenConfig(getState),
         )
         .then(res => {
