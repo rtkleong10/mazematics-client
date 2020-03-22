@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import World from "../GamePage/world";
 // import ReactPlayer from "react-player";
 // import Timer from "../src/components/timer/"
-
+/**
+ * This component displays the GamePage for user. It contains the world component.
+ */
 export class GamePage extends Component {
     render() {
         return (
