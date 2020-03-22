@@ -91,6 +91,7 @@ export class LearningMaterialForm extends Component {
                 </div>
                 <div className="form-group">
                     <label>Link</label>
+                    <p className="small text-secondary">Must be a youtube embeded link (e.g. https://www.youtube.com/embed/AQ7THUKx6Es)</p>
                     <input
                         className="form-control"
                         type="text"
