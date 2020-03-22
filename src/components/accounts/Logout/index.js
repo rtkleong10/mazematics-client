@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import {logout} from '../../../redux/ducks/auth';
 
 export class Logout extends Component {
+    componentDidMount() {
+        this.props.logout();
+    }
+
     render() {
         return (
             <div className="container">
-                This is a logout page
+                <h1>You have logged out</h1>
+                <p>Thanks for visiting.</p>
+                <Link className="btn btn-primary" to="/login">Login</Link>
             </div>
         )
     }
 }
 
-export default Logout
+export default connect(null,{logout})(Logout);

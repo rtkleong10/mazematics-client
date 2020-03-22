@@ -8,7 +8,7 @@ configure({ adapter: new Adapter() });
 /* test file */
 import { shallow, mount, render } from 'enzyme';
 import Login from '../components/Login.js';
-import authReducer from '../reducers/authReducer';
+import auth from '../reducers/auth';
 import ReactDOM from 'react-dom';
 import AdminTable from '../components/AdminTable';
 
@@ -21,18 +21,18 @@ describe('TEST RUNNING TESTS', () => {
 });
 
 /* 2. test rendering reducers */
-describe('TEST RENDERING REDUCERS: authReducer.js', () => {
-    it('authReducer : renders without crashing', () => {
+describe('TEST RENDERING REDUCERS: auth.js', () => {
+    it('auth : renders without crashing', () => {
         const div = document.createElement('div');
-        ReactDOM.render(<authReducer/>, div);
+        ReactDOM.render(<auth/>, div);
     });
 });
 
 
-describe('TEST RENDERING REDUCERS: adminReducer.js', () => {
-    it('adminReducer : renders without crashing', () => {
+describe('TEST RENDERING REDUCERS: admin.js', () => {
+    it('admin : renders without crashing', () => {
         const div = document.createElement('div');
-        ReactDOM.render(<adminReducer/>, div);
+        ReactDOM.render(<admin/>, div);
     });
 });
 

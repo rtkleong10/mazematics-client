@@ -1,19 +1,12 @@
 import React, { Component} from 'react';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
+import { Button, CssBaseline, TextField, Container, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import {authenticateLogin, fetchMe} from '../actions/loginActions';
+import { authenticateLogin, fetchMe } from '../../../redux/ducks/auth';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {withRouter} from 'react-router';
-import LoginBackground1 from '../image/loginBackground1.png';
-import PokemonIcon from '../image/pokemonIcon.png';
+import LoginBackground1 from '../../../images/loginBackground1.png';
+import PokemonIcon from '../../../images/pokemonIcon.png';
 
 const styles =theme => ({
   main: {
@@ -27,7 +20,7 @@ const styles =theme => ({
     backgroundSize: '100% 120%' ,
     backgroundImage: `url(${LoginBackground1})`,
     //backgroundImage:
-        //'radial-gradient(circle at 50% 14em, #313264 0%, #00023b 60%, #00023b 100%)',
+    //'radial-gradient(circle at 50% 14em, #313264 0%, #00023b 60%, #00023b 100%)',
 },
 
   formControl: {
@@ -84,9 +77,9 @@ class Login extends Component {
       }
   }
 
-  componentWillMount(){
-    if(localStorage.getItem('access_token')){
-      this.props.history.push('/');
+  componentDidMount() {
+    if (localStorage.getItem('access_token')) {
+      this.props.fetchMe(this.props.access_token);
     }
   }
 
