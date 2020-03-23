@@ -7,10 +7,10 @@ import { PropTypes } from 'prop-types';
 class Popup extends React.Component {
   render() {
     return (
-      <div className="popup">
-        <div className="popup_inner">
-          <h1>{this.props.text}</h1>
-          <button onClick={this.props.closePopup}>close me</button>
+      <div className="popup" data-testid="POPUP">
+        <div className="popup_inner" data-testid="POPUP_INNER">
+          <h1 data-testid="TEXT">{this.props.text}</h1>
+          <button onClick={this.props.closePopup} data-testid="BUTTON">close me</button>
         </div>
       </div>
     );
