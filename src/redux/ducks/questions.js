@@ -17,7 +17,7 @@ const questionReader = question => {
     let answerForArr = null;
 
     for (const key of optionKeys) {
-        if (parseInt(key) == question.answer)   
+        if (parseInt(key) === question.answer)   
             answerForArr = optionArr.length;
         
         optionArr.push(question.options[key]);

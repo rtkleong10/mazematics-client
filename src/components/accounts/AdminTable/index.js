@@ -4,7 +4,7 @@ import {withRouter} from 'react-router';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchUsers, deleteUser, updateUser, createUser } from '../../../redux/ducks/admin';
-import AdminBar from '../AdminBar';
+// import AdminBar from '../AdminBar';
 
 /**
  * This component displays the adminpage for admin. It contains a welcome greeting and list of accounts.
