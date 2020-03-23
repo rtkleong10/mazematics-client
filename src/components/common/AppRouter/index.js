@@ -17,11 +17,13 @@ import NotFoundPage from '../NotFoundPage';
 function AppRouter(props) {
     let router = [
         <Route
+            key="Login"
             path="/login"
             exact
             component={Login}
             />,
         <Redirect
+            key="LoginRedirect"
             from="/"
             exact
             to="/login"
