@@ -32,6 +32,7 @@ export default function(state = initialState, action) {
         else{
           alert("successful authentication but no access_token!")
         }
+        break;
     
     case FETCH_ME:
       return {
