@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import World from "../GamePage/world";
+import World from "../world";
 // import ReactPlayer from "react-player";
 // import Timer from "../src/components/timer/"
 /**
