@@ -5,7 +5,7 @@ import { authenticateLogin, fetchMe } from '../../../redux/ducks/auth';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {withRouter} from 'react-router';
-import LoginBackground1 from '../../../images/loginBackground1.png';
+import icon from '../../../images/icon.png';
 import PokemonIcon from '../../../images/pokemonIcon.png';
 
 const styles =theme => ({
@@ -18,9 +18,8 @@ const styles =theme => ({
     justifyContent: 'flex-start',
     backgroundRepeat: 'no-repeat',
     backgroundSize: '100% 120%' ,
-    backgroundImage: `url(${LoginBackground1})`,
-    //backgroundImage:
-    //'radial-gradient(circle at 50% 14em, #313264 0%, #00023b 60%, #00023b 100%)',
+    backgroundImage:
+        'radial-gradient(circle at 50% 14em, #313264 0%, #00023b 60%, #00023b 100%)'
 },
 
   formControl: {
@@ -31,7 +30,7 @@ const styles =theme => ({
     marginTop: theme.spacing(2),
   },
   paper: {
-    marginTop: theme.spacing(18),
+    marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -61,6 +60,14 @@ const styles =theme => ({
       outline:0 
     },
   },
+  icon:{
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    maxWidth: '30%',
+    margin: 'auto'
+  }
 });
 
 /**
@@ -109,6 +116,7 @@ class Login extends Component {
         className={classes.main}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+         <img src={icon} className={classes.icon} alt="Mazematic Icon"/>
       <div className={classes.paper}>
         <img src= {PokemonIcon} className= {classes.avatar} alt="Pokemon Icon"/>
         <form className={classes.form} noValidate>
