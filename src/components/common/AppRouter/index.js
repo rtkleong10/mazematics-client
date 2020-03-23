@@ -15,20 +15,20 @@ import Logout from '../../accounts/Logout';
 import NotFoundPage from '../NotFoundPage';
 
 function AppRouter(props) {
-    let router = (
-        <>
-            <Route
-                path="/login"
-                exact
-                component={Login}
-                />
-            <Redirect
-                from="/"
-                exact
-                to="/login"
-                />
-        </>
-    );
+    let router = [
+        <Route
+            key="Login"
+            path="/login"
+            exact
+            component={Login}
+            />,
+        <Redirect
+            key="LoginRedirect"
+            from="/"
+            exact
+            to="/login"
+            />,
+    ];
 
     const {
         user
@@ -37,15 +37,15 @@ function AppRouter(props) {
 	if (user) {
         switch (user.role) {
             case USER_ROLES.STUDENT:
-                router = <LearningRouter />;
+                router = LearningRouter;
                 break;
 
             case USER_ROLES.TEACHER:
-                router = <TeachingRouter />;
+                router = TeachingRouter;
                 break;
 
             case USER_ROLES.ADMIN:
-                router = <AccountsRouter />;
+                router = AccountsRouter;
                 break;
 
             default:

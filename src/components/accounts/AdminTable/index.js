@@ -11,7 +11,7 @@ import AdminBar from '../AdminBar';
  */
 class AdminTable extends Component{
   
-    componentWillMount() {
+    componentDidMount() {
       //check condition if user has logged in
         // if(!this.props.isLoggedIn){
         //   this.props.history.push('/login');
@@ -20,17 +20,13 @@ class AdminTable extends Component{
           this.props.history.push('/');
         }
         this.props.fetchUsers();
-        console.log(this.props.currentUser)
       }
     
-      componentWillReceiveProps(nextProps) {
-        if(!localStorage.getItem('access_token')){
-          this.props.history.push('/');
-        }
-        /*if (nextProps.newUser) {
-          this.props.users.unshift(nextProps.newUser.data);
-        }*/
-      }
+      // componentDidUpdate() {
+      //   if(!localStorage.getItem('access_token')){
+      //     this.props.history.push('/');
+      //   }
+      // }
 
     render(){return (
       <React.Fragment>

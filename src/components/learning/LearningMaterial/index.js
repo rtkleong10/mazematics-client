@@ -56,15 +56,14 @@ export class LearningMaterial extends Component {
     }
 }
 LearningMaterial.propTypes = {
-
     /** A string containing the level ID of the level*/
-    levelId:PropTypes.string.isRequired,
+    levelId: PropTypes.number.isRequired,
     /** A boolean to determine if the learning materials are still being loaded by the `listLearningMaterials` action creator (true: still loading, false: fully loaded) */
     learningMaterialsLoading: PropTypes.bool.isRequired,
     /** A boolean to determine if the learning materials failed to be loaded by the `listLearningMaterials` action creator (true: still loading or failed to load, false: successful load) */
     learningMaterialsFailed: PropTypes.bool.isRequired,
     /** An array of learning material objects loaded by the `listLearningMaterials` action creator */
-    learningMaterial: PropTypes.array.isRequired,
+    learningMaterial: PropTypes.object,
 
     /** An action creator for listing learning materials */
     listLearningMaterials: PropTypes.func.isRequired,

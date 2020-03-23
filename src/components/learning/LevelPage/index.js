@@ -81,7 +81,7 @@ LevelPage.propTypes = {
     /** A boolean to determine if the level failed to be loaded by the `retrieveLevel` action creator (true: still loading or failed to load, false: successful load) */
     levelFailed: PropTypes.bool.isRequired,
     /** A level object loaded by the `retrieveLevel` action creator */
-    level: PropTypes.object.isRequired,
+    level: PropTypes.object,
 
     /** An action creator for retrieving level name */
     retrieveLevel: PropTypes.func.isRequired,
