@@ -153,24 +153,25 @@ export class QuestionsList extends Component {
 }
 
 QuestionsList.propTypes = {
+    /** A string containing the level ID of the level*/
+    levelId: PropTypes.number.isRequired,
     /** A boolean to determine if the questions are still being loaded by the `listQuestions` action creator (true: still loading, false: fully loaded) */
-   questionsLoading: PropTypes.object.isRequired,
+    questionsLoading: PropTypes.bool.isRequired,
+    /** A boolean to determine if the questions failed to be loaded by the `listQuestions` action creator (true: still loading or failed to load, false: successful load) */
+    questionsFailed: PropTypes.bool.isRequired,
+    /** An array of question objects loaded by the `listQuestions` action creator */
+    questions: PropTypes.array,
+    /** A boolean to determine if the game is playable or unplayable*/
+    playable: PropTypes.bool.isRequired,
 
-  /** A boolean to determine if the questions failed to be loaded by the `listQuestions` action creator (true: still loading or failed to load, false: successful load) */
-   questionsFailed: PropTypes.bool.isRequired,
-   /** An array of question objects loaded by the `listQuestions` action creator */
-   questions: PropTypes.array.isRequired,
-   /** A boolean to determine if the game is playable or unplayable*/
-   playable: PropTypes.bool.isRequired,
-
-   /** An action creator for creating a question*/
-   createQuestion: PropTypes.func.isRequired,
-   /** An action creator for updating a question*/
-   updateQuestion: PropTypes.func.isRequired,
-   /** An action creator for deleting a question */
-   deleteQuestion: PropTypes.func.isRequired,
-   /** An action creator for listing questions */
-   listQuestions: PropTypes.func.isRequired,
+    /** An action creator for creating a question*/
+    createQuestion: PropTypes.func.isRequired,
+    /** An action creator for updating a question*/
+    updateQuestion: PropTypes.func.isRequired,
+    /** An action creator for deleting a question */
+    deleteQuestion: PropTypes.func.isRequired,
+    /** An action creator for listing questions */
+    listQuestions: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

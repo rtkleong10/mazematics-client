@@ -38,7 +38,7 @@ beforeEach(() => {
 afterEach(cleanup);
 
 it('should take a snapshot', async () => {
-    const { asFragment, getByText } = renderWithReduxRouter(<QuestionForm />);
+    const { asFragment, getByText } = renderWithReduxRouter(<QuestionForm levelId={1} playable={false} />);
     await waitForElement(() => getByText('1 + 1'));
     expect(asFragment()).toMatchSnapshot();
 })

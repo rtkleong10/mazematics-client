@@ -83,18 +83,17 @@ class Login extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.loginSuccess && Object.keys(this.props.user).length === 0){
-      this.props.fetchMe(nextProps.access_token)
+  componentDidUpdate(nextProps) {
+    if(this.props.loginSuccess && Object.keys(prevProps.user).length === 0){
+      this.props.fetchMe(this.props.access_token)
     }
-    if(nextProps.loginSuccess && nextProps.user.email){  
+    if(this.props.loginSuccess && this.props.user.email){  
       this.props.history.push('/')
     }
 
   }
     handleChange =  e => {
       this.setState({[e.target.name]: e.target.value});
-      (console.log(this.state));
     };
     
     handleSubmit = e =>{
