@@ -83,7 +83,7 @@ class Login extends Component {
     }
   }
 
-  componentDidUpdate(nextProps) {
+  componentDidUpdate(prevProps) {
     if(this.props.loginSuccess && Object.keys(prevProps.user).length === 0){
       this.props.fetchMe(this.props.access_token)
     }
