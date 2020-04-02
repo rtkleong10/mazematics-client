@@ -84,21 +84,6 @@ class Login extends Component {
         }
     }
 
-    componentDidMount() {
-        if (localStorage.getItem('access_token')) {
-            this.props.fetchMe(this.props.access_token);
-        }
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.loginSuccess && Object.keys(prevProps.user).length === 0) {
-            this.props.fetchMe(this.props.access_token)
-        }
-        if (this.props.loginSuccess && this.props.user.email) {
-            this.props.history.push('/')
-        }
-
-    }
     handleChange = e => {
         this.setState({ [e.target.name]: e.target.value });
     };
@@ -106,6 +91,7 @@ class Login extends Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.authenticateLogin(this.state)
+        this.props.fetchMe(this.props.access_token)
     }
 
     render() {
