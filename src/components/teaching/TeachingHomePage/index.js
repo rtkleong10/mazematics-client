@@ -154,7 +154,7 @@ TeachingHomePage.propTypes = {
     /** A boolean to determine if the topics are still being loaded by the `listTopics` action creator (true: still loading, false: fully loaded) */
     topicsLoading: PropTypes.bool.isRequired,
     /** A boolean to determine if the topics failed to be loaded by the `listTopics` action creator (true: still loading or failed to load, false: successful load) */
-    topicsFailed: PropTypes.bool.isRequired,
+    topicsFailed: PropTypes.bool,
     /** An array of topic objects loaded by the `listTopics` action creaor */
     topics: PropTypes.array.isRequired,
 

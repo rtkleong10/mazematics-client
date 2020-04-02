@@ -79,7 +79,7 @@ LevelPage.propTypes = {
     /** A boolean to determine if the level is still being loaded by the `retrieveLevel` action creator (true: still loading, false: fully loaded) */
     levelLoading: PropTypes.bool.isRequired,
     /** A boolean to determine if the level failed to be loaded by the `retrieveLevel` action creator (true: still loading or failed to load, false: successful load) */
-    levelFailed: PropTypes.bool.isRequired,
+    levelFailed: PropTypes.bool,
     /** A level object loaded by the `retrieveLevel` action creator */
     level: PropTypes.object,
 

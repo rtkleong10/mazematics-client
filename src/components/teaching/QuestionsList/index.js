@@ -158,7 +158,7 @@ QuestionsList.propTypes = {
     /** A boolean to determine if the questions are still being loaded by the `listQuestions` action creator (true: still loading, false: fully loaded) */
     questionsLoading: PropTypes.bool.isRequired,
     /** A boolean to determine if the questions failed to be loaded by the `listQuestions` action creator (true: still loading or failed to load, false: successful load) */
-    questionsFailed: PropTypes.bool.isRequired,
+    questionsFailed: PropTypes.bool,
     /** An array of question objects loaded by the `listQuestions` action creator */
     questions: PropTypes.array,
     /** A boolean to determine if the game is playable or unplayable*/
