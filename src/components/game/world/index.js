@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Player from "../Player";
 import Map from "../Map";
-import { tiles } from "../../../utils/data/maps/1";
-import { SPRITE_SIZE } from "../../../utils/constants";
+import { SPRITE_SIZE, MAP_WIDTH, MAP_HEIGHT } from "../../../utils/constants";
 import Popup from "../Popup";
+
 /**
  * This component displays the world in the game for the user. It renders the player and map.
  */
@@ -12,7 +12,7 @@ class World extends Component {
         super(props);
         // this.handleKeyPress = this.handleKeyPress.bind(this);
         this.state = {
-            tiles: tiles,
+            tiles: props.tiles,
             showPopup: false
             // questions: 
         }
@@ -60,8 +60,8 @@ class World extends Component {
             <div
                 style={{
                     position: "relative",
-                    width: "1200px",
-                    height: "640px",
+                    width: `${MAP_WIDTH * 40}px`,
+                    height: `${MAP_HEIGHT * 40}px`,
                     margin: "20px auto"
                 }}
             >

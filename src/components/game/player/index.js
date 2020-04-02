@@ -64,9 +64,9 @@ class Player extends Component {
     observeBoundaries(oldPos, newPos) {
         return (
             newPos[0] >= 0 &&
-            newPos[0] <= MAP_WIDTH - SPRITE_SIZE &&
+            newPos[0] <= MAP_WIDTH * SPRITE_SIZE - SPRITE_SIZE &&
             newPos[1] >= 0 &&
-            newPos[1] <= MAP_HEIGHT - SPRITE_SIZE
+            newPos[1] <= MAP_HEIGHT * SPRITE_SIZE - SPRITE_SIZE
         );
     }
 

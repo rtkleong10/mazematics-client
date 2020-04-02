@@ -1,5 +1,5 @@
 import React from "react";
-import { SPRITE_SIZE } from "../../../utils/constants";
+import { SPRITE_SIZE, MAP_WIDTH, MAP_HEIGHT } from "../../../utils/constants";
 import "./styles.css";
 
 //action
@@ -67,7 +67,6 @@ function MapTile(props) {
 function MapRow(props) {
     return (
         <div
-            className={"row"}
             style={{
                 height: SPRITE_SIZE
             }}
@@ -88,9 +87,8 @@ function Map(props) {
                 position: "relative",
                 top: "0px",
                 left: "0px",
-                width: "1200px",
-                height: "640px",
-                border: "4px solid white"
+                width: `${MAP_WIDTH * 40}px`,
+                height: `${MAP_HEIGHT * 40}px`,
             }}
         >
             {props.tiles.map(row => (
