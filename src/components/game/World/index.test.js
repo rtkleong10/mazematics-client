@@ -2,6 +2,7 @@ import React from "react";
 import Player from "../Player";
 import Popup from "../Popup";
 import Map from "../Map";
+import { tiles } from "../../../utils/data/maps/1";
 // import { mount } from "enzyme";
 // import Adapter from "enzyme-adapter-react-16";
 import World from "./index.js";
@@ -27,7 +28,7 @@ afterEach(cleanup);
 
 it("renders without crashing", () => {
     const div = document.createElement("div");
-    ReactDOM.render(<World />, div);
+    ReactDOM.render(<World tiles={tiles} />, div);
 });
 
 // describe("World", () => {
