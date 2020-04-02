@@ -6,6 +6,7 @@ import errorsReducer from './ducks/errors';
 import topicsReducer from './ducks/topics';
 import levelsReducer from './ducks/levels';
 import learningMaterialsReducer from './ducks/learningMaterials';
+import progressReducer from './ducks/progress';
 import questionsReducer from './ducks/questions';
 
 export default combineReducers({
@@ -15,5 +16,6 @@ export default combineReducers({
     topicsReducer,
     levelsReducer,
     learningMaterialsReducer,
+    progressReducer,
     questionsReducer,
 });

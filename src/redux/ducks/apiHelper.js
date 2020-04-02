@@ -24,11 +24,11 @@ export function createApiAction(entityName, status, method, payload) {
 export function createApiReducer(entityName) {
     const initialState = {
         isLoading: {
-            CREATE: true,
-            RETRIEVE: true,
-            UPDATE: true,
-            DELETE: true,
-            LIST: true,
+            [METHODS.CREATE]: true,
+            [METHODS.RETRIEVE]: true,
+            [METHODS.UPDATE]: true,
+            [METHODS.DELETE]: true,
+            [METHODS.LIST]: true,
         },
         hasFailed: {},
         items: [],
@@ -46,7 +46,7 @@ export function createApiReducer(entityName) {
         const actionStatus = match[2];
         const actionMethod = match[3];
 
-        if (actionEntityName !== entityName.toUpperCase())
+        if (actionEntityName !== entityName.toUpperCase() || !Object.values(METHODS).includes(actionMethod))
             return state;
 
         switch (actionStatus) {
