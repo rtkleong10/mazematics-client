@@ -32,25 +32,37 @@ export class StudentReportsPage extends Component {
         if (reportFailed || !report)
             return <Redirect to="/not-found" />;
 
-        console.log(report);
-
         const topicId = parseInt(match.params.topicId);
         const levelId = parseInt(match.params.levelId);
 
-        let csvData = [
-            {
-                "Question": "1 + 2",
-                "Bob": 2,
-                "Joe": 3,
-                "Kristen": 3,
-            },
-            {
-                "Question": "1 + 3",
-                "Bob": 1,
-                "Joe": 3,
-                "Kristen": 3,
+        // Format CsvData
+        let csvData = [];
+
+        for (let i = 0; i < report.length; i++) {
+            const {
+                question: {
+                    questionText
+                },
+                attempts
+            } = report[i];
+
+            let csvRow = {
+                Question: questionText,
+            };
+
+            for (let j = 0; j < attempts.length; j++) {
+                const {
+                    user: {
+                        name
+                    },
+                    attemptCount
+                } = attempts[i];
+
+                csvRow[name] = attemptCount;
             }
-        ]
+
+            csvData.push(csvRow);
+        }
 
         return (
             <div className="container">
@@ -72,26 +84,30 @@ export class StudentReportsPage extends Component {
                     </thead>
                     <tbody>
                         {
-                            csvData.map(row => {
-                                let question = row["Question"]
+                            !reportFailed && report.length !== 0 && csvData.length !== 0
+                                ? csvData.map(row => {
+                                    let question = row["Question"]
 
-                                let sum = 0;
-                                let counter = 0;
+                                    let sum = 0;
+                                    let counter = 0;
 
-                                for (let key in row) {
-                                    if (key !== "Question") {
-                                        sum += row[key];
-                                        counter++;
+                                    for (let key in row) {
+                                        if (key !== "Question") {
+                                            sum += row[key];
+                                            counter++;
+                                        }
                                     }
-                                }
 
-                                return (
-                                    <tr key={question}>
-                                        <th scope="row">{question}</th>
-                                        <td>{(sum / counter).toFixed(2)}</td>
-                                    </tr>
-                                )
-                            })
+                                    return (
+                                        <tr key={question}>
+                                            <th scope="row">{question}</th>
+                                            <td>{(sum / counter).toFixed(2)}</td>
+                                        </tr>
+                                    )
+                                })
+                                : <tr>
+                                    <td colSpan="2">No results found.</td>
+                                </tr>
                         }
                     </tbody>
                 </table>

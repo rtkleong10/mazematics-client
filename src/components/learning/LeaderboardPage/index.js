@@ -31,53 +31,8 @@ export class LeaderboardPage extends Component {
         if (leaderboardFailed || !leaderboard)
             return <Redirect to="/not-found" />;
 
-        console.log(leaderboard);
-
         const topicId = parseInt(match.params.topicId);
         const levelId = parseInt(match.params.levelId);
-
-        // let leaderboardData = [
-        //     {
-        //         "name": "Bob",
-        //         "timing": 10.2
-        //     },
-        //     {
-        //         "name": "Joe",
-        //         "timing": 11.2
-        //     },
-        //     {
-        //         "name": "Caleb",
-        //         "timing": 12.1
-        //     },
-        //     {
-        //         "name": "Cathy",
-        //         "timing": 13.1231
-        //     },
-        //     {
-        //         "name": "Sarah",
-        //         "timing": 14.321
-        //     },
-        //     {
-        //         "name": "May",
-        //         "timing": 15.123
-        //     },
-        //     {
-        //         "name": "Harry",
-        //         "timing": 16.143
-        //     },
-        //     {
-        //         "name": "Matthew",
-        //         "timing": 17.341
-        //     },
-        //     {
-        //         "name": "Clyde",
-        //         "timing": 19.241
-        //     },
-        //     {
-        //         "name": "Elizabeth",
-        //         "timing": 21.2321
-        //     }
-        // ]
 
         return (
             <div className="container">
@@ -103,11 +58,9 @@ export class LeaderboardPage extends Component {
                                         </tr>
                                     )
                                 )
-                                : (
-                                    <tr>
-                                        <td colSpan="2">No results found.</td>
-                                    </tr>
-                                )
+                                : <tr>
+                                    <td colSpan="2">No results found.</td>
+                                </tr>
                         }
                     </tbody>
                 </table>

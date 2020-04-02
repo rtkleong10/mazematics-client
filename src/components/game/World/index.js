@@ -19,9 +19,7 @@ class World extends Component {
     }
 
     componentDidMount() {
-        window.addEventListener("keydown", e => {
-            this.handleKeyDown(e);
-        });
+        this.worldRef.focus();
     }
 
     hidePopup = () => {
@@ -30,8 +28,9 @@ class World extends Component {
         });
     }
 
-    handleKeyDown(e) {
+    handleKeyDown = e => {
         e.preventDefault();
+        this.playerRef.handleKeyDown(e);
 
         switch (e.keyCode) {
             case 27:
@@ -62,11 +61,15 @@ class World extends Component {
                     position: "relative",
                     width: `${MAP_WIDTH * 40}px`,
                     height: `${MAP_HEIGHT * 40}px`,
-                    margin: "20px auto"
+                    margin: "20px auto",
+                    outline: 0,
                 }}
-            >
+                tabIndex="0"
+                onKeyDown={this.handleKeyDown}
+                ref={worldRef => this.worldRef = worldRef}
+                >
                 <Map tiles={this.state.tiles} />
-                <Player tiles={this.state.tiles} showPopup={this.state.showPopup} handleRemoveObstacle={this.handleRemoveObstacle} />
+                <Player ref={playerRef => this.playerRef = playerRef} tiles={this.state.tiles} showPopup={this.state.showPopup} handleRemoveObstacle={this.handleRemoveObstacle} />
 
                 {this.state.showPopup ? (
                     <Popup

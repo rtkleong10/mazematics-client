@@ -49,7 +49,6 @@ export class GamePage extends Component {
                 <Link className="btn btn-light mb-2" to={`/topics/${level.topic}/levels/${level.id}`}>
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Level Page
                 </Link>
-                <h1>Game</h1>
                 <World tiles={tiles} />
                 {/* <Timer/> */}
                     {/* <ReactPlayer
