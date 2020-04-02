@@ -92,7 +92,7 @@ export const publishLevel = (topicId, levelId) => (dispatch, getState) => {
             
             for (let i = 0; i < questions.length; i++) {
                 updateQuestion(levelId, {
-                    ...questions[i],
+                    id: questions[i].id,
                     coordinates: {
                         x: questionCoordinates[i][0],
                         y: questionCoordinates[i][1],
