@@ -104,8 +104,7 @@ export function generateTiles(mapDescriptor, questions) {
                     break;
 
                 case WALL:
-                    tile = TILE_MAPPING.rock;
-                    // tile = TILE_MAPPING.tree;
+                    tile = Math.random() <= 0.75 ? TILE_MAPPING.tree: TILE_MAPPING.rock;
                     break;
 
                 case GOAL:
@@ -113,7 +112,7 @@ export function generateTiles(mapDescriptor, questions) {
                     break;
 
                 case QUESTION:
-                    tile = TILE_MAPPING.bulbasaur;
+                    tile = Math.floor(Math.random() * 9) + 7;
                     break;
                 
                 default:

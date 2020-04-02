@@ -26,12 +26,4 @@ export const TILE_MAPPING = {
     house: 4,
     rock: 5,
     tree: 6,
-    snorlax: 7,
-    charizard: 9,
-    bulbasaur: 10,
-    dratini: 11,
-    jigglypuff: 12,
-    mario: 13,
-    farfetch: 14,
-    whale: 15,
 };
