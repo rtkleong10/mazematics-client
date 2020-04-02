@@ -85,7 +85,6 @@ LevelPage.propTypes = {
 
     /** An action creator for retrieving level name */
     retrieveLevel: PropTypes.func.isRequired,
-
 };
 
 const mapStateToProps = state => ({
