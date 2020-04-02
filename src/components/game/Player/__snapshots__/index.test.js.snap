@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should take a snapshot 1`] = `
+<DocumentFragment>
+  <div
+    style="position: absolute; top: 0px; left: 0px; background-image: url(rsz_pokemonplayer.png); background-position: 0px 0px; width: 40px; height: 40px;"
+  />
+</DocumentFragment>
+`;

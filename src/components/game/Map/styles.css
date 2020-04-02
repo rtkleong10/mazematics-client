@@ -1,0 +1,55 @@
+.tile {
+  display: inline-flex;
+}
+
+.grass {
+  background-image: url("/tiles/rsz_grass.png");
+}
+
+.rock {
+  background-image: url("/tiles/rsz_pokemonrock.png");
+}
+
+.tree {
+  background-image: url("/tiles/rsz_pokemontree.png");
+}
+
+.snorlax {
+  background-image: url("/tiles/rsz_snorlax.png");
+}
+
+.bulbasaur {
+  background-image: url("/tiles/rsz_bulbasaur.png");
+}
+
+.pikachu {
+  background-image: url("/tiles/rsz_pikachu.png");
+}
+
+.charizard {
+  background-image: url("/tiles/rsz_charizard.png");
+}
+
+.house {
+  background-image: url("/tiles/rsz_house.png");
+}
+
+.mario {
+  background-image: url("/tiles/rsz_mario.png");
+}
+
+.dratini {
+  background-image: url("/tiles/rsz_dratini.png");
+}
+
+.farfetch {
+  background-image: url("/tiles/rsz_farfetch.png");
+}
+
+.jigglypuff {
+  background-image: url("/tiles/rsz_jigglypuff.png");
+}
+
+.whale {
+  background-image: url("/tiles/rsz_whale.png");
+}
