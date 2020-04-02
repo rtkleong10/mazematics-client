@@ -94,7 +94,7 @@ export class LeaderboardPage extends Component {
                     </thead>
                     <tbody>
                         {
-                            leaderboard.length !== 0 && !leaderboard 
+                            leaderboard.length !== 0 && leaderboard 
                                 ? (
                                     leaderboard.map(row =>
                                         <tr key={row.name}>
