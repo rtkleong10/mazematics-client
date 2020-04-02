@@ -16,12 +16,6 @@ class Player extends Component {
         };
     }
 
-    componentDidMount() {
-        window.addEventListener("keydown", e => {
-            this.handleKeyDown(e);
-        });
-    }
-
     getNewPosition(oldPos, direction) {
         switch (direction) {
             case "WEST":
@@ -128,6 +122,7 @@ class Player extends Component {
 
     handleKeyDown(e) {
         e.preventDefault();
+        console.log(e);
 
         switch (e.keyCode) {
             case 37:
