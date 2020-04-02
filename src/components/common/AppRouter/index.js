@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { USER_ROLES } from '../../../utils/constants';
+import { fetchMe, selectUserLoading, selectUserFailed, selectUser } from '../../../redux/ducks/auth';
 
 import Header from '../Header';
 import Alert from '../Alert';
@@ -13,74 +14,102 @@ import AccountsRouter from '../../accounts/AccountsRouter';
 import LearningRouter from '../../learning/LearningRouter';
 import Logout from '../../accounts/Logout';
 import NotFoundPage from '../NotFoundPage';
+import Loader from '../Loader';
 
-function AppRouter(props) {
-    let router = [
-        <Route
-            key="Login"
-            path="/login"
-            exact
-            component={Login}
-            />,
-        <Redirect
-            key="LoginRedirect"
-            from="/"
-            exact
-            to="/login"
-            />,
-    ];
-
-    const {
-        user
-    } = props;
-
-	if (user) {
-        switch (user.role) {
-            case USER_ROLES.STUDENT:
-                router = LearningRouter;
-                break;
-
-            case USER_ROLES.TEACHER:
-                router = TeachingRouter;
-                break;
-
-            case USER_ROLES.ADMIN:
-                router = AccountsRouter;
-                break;
-
-            default:
-                break;
+class AppRouter extends Component {
+    componentDidMount() {
+        if (localStorage.getItem('access_token')) {
+            this.props.fetchMe(localStorage.getItem('access_token'));
         }
     }
 
-    return (
-        <BrowserRouter>
-            <Alert />
-            <Header />
-            <Switch>
-                <Route
-                    path="/not-found"
-                    exact
-                    component={NotFoundPage}
-                    />
-                <Route
-                    path="/logout"
-                    exact
-                    component={Logout}
-                    />
-                {router}
+    render() {
+        const {
+            userLoading,
+            userFailed,
+            user
+        } = this.props;
+
+        if (userLoading && localStorage.getItem('access_token'))
+            return <Loader />;
+        
+        let router = [
+            <Route
+                key="Login"
+                path="/login"
+                exact
+                component={Login}
+                />,
+            <Redirect
+                key="LoginRedirect"
+                from="/"
+                exact
+                to="/login"
+                />,
+        ];
+
+        if (!userFailed && user && Object.keys(user).length !== 0 && user.constructor === Object) {
+            router = [
                 <Redirect
-                    from="/"
-                    to="/not-found"
+                    key="LoginRedirect"
+                    from="/login"
+                    to="/"
                     />
-            </Switch>
-            <Footer />
-        </BrowserRouter>
-    );
+            ]
+
+            switch (user.role) {
+                case USER_ROLES.STUDENT:
+                    router = router.concat(LearningRouter);
+                    break;
+
+                case USER_ROLES.TEACHER:
+                    router = router.concat(TeachingRouter);
+                    break;
+
+                case USER_ROLES.ADMIN:
+                    router = router.concat(AccountsRouter);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        return (
+            <BrowserRouter>
+                <Alert />
+                <Header />
+                <Switch>
+                    <Route
+                        path="/not-found"
+                        exact
+                        component={NotFoundPage}
+                        />
+                    <Route
+                        path="/logout"
+                        exact
+                        component={Logout}
+                        />
+                    {router}
+                    <Redirect
+                        from="/"
+                        to="/not-found"
+                        />
+                </Switch>
+                <Footer />
+            </BrowserRouter>
+        );
+    }
 }
 
-const mapStateToProps = (state) => ({
-    user: state.authReducer.user
+const mapStateToProps = state => ({
+    userLoading: selectUserLoading(state),
+    userFailed: selectUserFailed(state),
+    user: selectUser(state),
 });
 
-export default connect(mapStateToProps)(AppRouter);
+const dispatchers = {
+    fetchMe,
+};
+
+export default connect(mapStateToProps, dispatchers)(AppRouter);
