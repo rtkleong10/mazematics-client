@@ -15,7 +15,7 @@ const initialState = {
   item: {}
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case FETCH_USERS:
       console.log(action.payload)
@@ -38,26 +38,26 @@ export default function(state = initialState, action) {
       };
 
     case UPDATE_USER_SUCCESS:
-        console.log(state.items)
-        const index = state.items.findIndex(user => user.email === action.payload.email)
-        state.items.splice(index, 1, action.payload)
-        return {
-          ...state,
-          items: [...state.items]
-          };
+      console.log(state.items)
+      const index = state.items.findIndex(user => user.email === action.payload.email)
+      state.items.splice(index, 1, action.payload)
+      return {
+        ...state,
+        items: [...state.items]
+      };
 
     case UPDATE_USER_FAIL:
       alert("FAIL TO UPDATE USER")
       return {
         ...state
-        };
-        
+      };
+
     case DELETE_USER_SUCCESS:
-      let newState = state.items.filter(function(user) {return user.email !== action.payload.email});
-        return {
-          ...state,
+      let newState = state.items.filter(function (user) { return user.email !== action.payload.email });
+      return {
+        ...state,
         items: newState
-          };
+      };
     case DELETE_USER_FAIL:
       // state.items.push(action.payload)
       alert("FAIL TO DELETE USERS")
@@ -72,94 +72,94 @@ export default function(state = initialState, action) {
 
 // ACTION CREATORS
 export const fetchUsers = () => dispatch => {
-  return(
-  fetch(`${API_URL}/users/`,{
+  return (
+    fetch(`${API_URL}/users/`, {
       method: 'GET',
-      headers:{
+      headers: {
         Authorization: `bearer ${localStorage.getItem("access_token")}`
       }
     })
-  .then(res => {if(!res.ok){throw res} return res.json()})
-  .then(users =>
-      dispatch({
-        type: FETCH_USERS,
-        payload: users.content
-      })
-     )
-   )
-  
+      .then(res => { if (!res.ok) { throw res } return res.json() })
+      .then(users =>
+        dispatch({
+          type: FETCH_USERS,
+          payload: users.content
+        })
+      )
+  )
+
 };
 
 export const createUser = newUser => dispatch => {
 
-  return(
-  fetch(`${API_URL}/users/create/`, {
-    method: 'POST',
-    headers: {
-      Authorization: `bearer ${localStorage.getItem("access_token")}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(newUser)
-  })
-    .then(res => {if(!res.ok){throw res} return res.json()})
-    .then(user => 
-      dispatch({
-        type: CREATE_USER_SUCCESS,
-        payload: user
-      }))
-    .catch(error => 
-      dispatch({
-        type: CREATE_USER_FAIL,
-        payload: error
-      }))
-  )
-};
-
-export const updateUser = (newUserData,oldUserData) => dispatch => {
-  return(
-  fetch(`${API_URL}/users/${oldUserData.email}`, {
-    method: 'PATCH',
-    headers: {
-      Authorization: `bearer ${localStorage.getItem("access_token")}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(newUserData)
-  })
-    .then(res => {if(!res.ok){throw res} return res.json()})
-    .then(user =>
-      dispatch({
-        type: UPDATE_USER_SUCCESS,
-        payload: user
-      })
-    )
-    .catch(error =>
-      dispatch({
-        type: UPDATE_USER_FAIL,
-        payload: error
-      })
-    )
-  )
-};
-
-export const deleteUser = UserData => dispatch => { 
-  return(
-  fetch(`${API_URL}/users/${UserData.email}`, {
-    method: 'DELETE',
-    headers: {
-      Authorization: `bearer ${localStorage.getItem("access_token")}`
-    },
-  })
-  .then(res => {if(!res.ok){throw res} return res.json()})
-  .then(user =>
-      dispatch({
-        type: DELETE_USER_SUCCESS,
-        payload: UserData
-      }))
-  .catch(error=> 
+  return (
+    fetch(`${API_URL}/users/create/`, {
+      method: 'POST',
+      headers: {
+        Authorization: `bearer ${localStorage.getItem("access_token")}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newUser)
+    })
+      .then(res => { if (!res.ok) { throw res } return res.json() })
+      .then(user =>
         dispatch({
-        type: DELETE_USER_FAIL,
-        payload: error
-    }))
+          type: CREATE_USER_SUCCESS,
+          payload: user
+        }))
+      .catch(error =>
+        dispatch({
+          type: CREATE_USER_FAIL,
+          payload: error
+        }))
+  )
+};
+
+export const updateUser = (newUserData, oldUserData) => dispatch => {
+  return (
+    fetch(`${API_URL}/users/${oldUserData.email}`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `bearer ${localStorage.getItem("access_token")}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newUserData)
+    })
+      .then(res => { if (!res.ok) { throw res } return res.json() })
+      .then(user =>
+        dispatch({
+          type: UPDATE_USER_SUCCESS,
+          payload: user
+        })
+      )
+      .catch(error =>
+        dispatch({
+          type: UPDATE_USER_FAIL,
+          payload: error
+        })
+      )
+  )
+};
+
+export const deleteUser = UserData => dispatch => {
+  return (
+    fetch(`${API_URL}/users/${UserData.email}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `bearer ${localStorage.getItem("access_token")}`
+      },
+    })
+      .then(res => { if (!res.ok) { throw res } return res.json() })
+      .then(user =>
+        dispatch({
+          type: DELETE_USER_SUCCESS,
+          payload: UserData
+        }))
+      .catch(error =>
+        dispatch({
+          type: DELETE_USER_FAIL,
+          payload: error
+        }))
   )
 };
 

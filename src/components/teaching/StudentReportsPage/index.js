@@ -1,17 +1,38 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { CSVLink } from 'react-csv';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
+
+import { fetchReport, selectReportLoading, selectReportFailed, selectReport } from '../../../redux/ducks/progress';
+import Loader from '../../common/Loader';
+
 /**
  * This component displays the students reports for a teacher. It contains a downloadable csv file.
  */
 export class StudentReportsPage extends Component {
+    componentDidMount() {
+        const levelId = parseInt(this.props.match.params.levelId);
+        this.props.fetchReport(levelId);
+    }
+
     render() {
         const {
-            match
+            match,
+            reportLoading,
+            reportFailed,
+            report
         } = this.props;
+
+        if (reportLoading)
+            return <Loader />;
+
+        if (reportFailed || !report)
+            return <Redirect to="/not-found" />;
+
+        console.log(report);
 
         const topicId = parseInt(match.params.topicId);
         const levelId = parseInt(match.params.levelId);
@@ -80,8 +101,24 @@ export class StudentReportsPage extends Component {
 }
 
 StudentReportsPage.propTypes = {
-     /** An object containing the topic ID and level ID based on which data is displayed */
-    match: PropTypes.object.isRequired,
+    /** An object containing the topic ID and level ID based on which data is displayed */
+   match: PropTypes.object.isRequired,
+
+   reportLoading: PropTypes.bool.isRequired,
+   reportFailed: PropTypes.bool,
+   report: PropTypes.array.isRequired,
+
+   fetchReport: PropTypes.func.isRequired,
 };
 
-export default StudentReportsPage
+const mapStateToProps = state => ({
+    reportLoading: selectReportLoading(state),
+    reportFailed: selectReportFailed(state),
+    report: selectReport(state),
+});
+
+const dispatchers = {
+    fetchReport,
+};
+
+export default connect(mapStateToProps, dispatchers)(StudentReportsPage);

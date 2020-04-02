@@ -16,7 +16,7 @@ beforeEach(() => {
                     title: "Adding 1 to 100",
                     description: "Smol numbers.",
                     playable: true,
-                    topic_id: 1
+                    topic: 1
                 }
             });
 
@@ -114,7 +114,7 @@ it('should display edit or delete buttons if unplayable', async () => {
                     title: "Adding 1 to 100",
                     description: "Smol numbers.",
                     playable: false,
-                    topic_id: 1
+                    topic: 1
                 }
             });
 

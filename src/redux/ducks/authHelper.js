@@ -9,3 +9,5 @@ export const getTokenConfig = getState => {
 
     return config;
 }
+
+export const getUser = getState => getState().authReducer.user.email;

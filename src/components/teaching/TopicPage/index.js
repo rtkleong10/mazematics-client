@@ -168,13 +168,13 @@ TopicPage.propTypes = {
     /** A boolean to determine if the topic is still being loaded by the `retrieveTopic` action creator (true: still loading, false: fully loaded) */
     topicLoading: PropTypes.bool.isRequired,
     /** A boolean to determine if the topic failed to be loaded by the `retrieveTopic` action creator (true: still loading or failed to load, false: successful load) */
-    topicFailed: PropTypes.bool.isRequired,
+    topicFailed: PropTypes.bool,
     /** A topic object loaded by the `retrieveTopic` action creator */
     topic: PropTypes.object,
     /** A boolean to determine if the levels are still being loaded by the `listLevels` action creator (true: still loading, false: fully loaded) */
     levelsLoading: PropTypes.bool.isRequired,
     /** A boolean to determine if the topics failed to be loaded by the `listLevels` action creator (true: still loading or failed to load, false: successful load) */
-    levelsFailed: PropTypes.bool.isRequired,
+    levelsFailed: PropTypes.bool,
     /** An array of topic objects loaded by the `listLevels` action creaor */
     levels: PropTypes.array.isRequired,
 
