@@ -91,7 +91,6 @@ class Login extends Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.authenticateLogin(this.state)
-        this.props.fetchMe(this.props.access_token)
     }
 
     render() {

@@ -121,12 +121,13 @@ export const authenticateLogin = userData => dispatch => {
         }
         return res.json()
     })
-        .then(result =>
-            // dispatch(fetchMe(result.access_token))
+        .then(result => {
+            fetchMe(result.access_token)(dispatch);
             dispatch({
                 type: AUTH_LOGIN_SUCCESS,
                 payload: result
-            }))
+            })
+        })
         .catch(error => {
             dispatch({
                 type: AUTH_LOGIN_FAIL,
