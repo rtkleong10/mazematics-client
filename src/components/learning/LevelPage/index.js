@@ -38,13 +38,13 @@ export class LevelPage extends Component {
 
         return (
             <div className="container">
-                <Link className="btn btn-light mb-2" to={`/topics/${level.topic_id}/`}>
+                <Link className="btn btn-light mb-2" to={`/topics/${level.topic}/`}>
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Topic Page
                 </Link>
                 <h1>{level.title}</h1>
                 <p>{level.description}</p>
                 <div className="mb-4">
-                    <Link className="btn btn-primary" to={`/topics/${level.topic_id}/levels/${level.id}/leaderboard`}>
+                    <Link className="btn btn-primary" to={`/topics/${level.topic}/levels/${level.id}/leaderboard`}>
                         View Leaderboard
                     </Link>
                 </div>
@@ -64,7 +64,7 @@ export class LevelPage extends Component {
                             <LearningMaterial levelId={level.id} />
                         </div>
                 }
-                <Link className="btn btn-primary mb-4" to={`/topics/${level.topic_id}/levels/${level.id}/game`}>
+                <Link className="btn btn-primary mb-4" to={`/topics/${level.topic}/levels/${level.id}/game`}>
                     Play Game
                 </Link>
             </div>
@@ -87,6 +87,7 @@ LevelPage.propTypes = {
     retrieveLevel: PropTypes.func.isRequired,
 
 };
+
 const mapStateToProps = state => ({
     levelLoading: selectLevelLoading(state),
     levelFailed: selectLevelFailed(state),
