@@ -8,6 +8,11 @@ exports[`should take a snapshot 1`] = `
     <main
       class="MuiContainer-root MuiContainer-maxWidthXs"
     >
+      <img
+        alt="Mazematic Icon"
+        class="Login-icon-8"
+        src="icon.png"
+      />
       <div
         class="Login-paper-4"
       >
@@ -51,10 +56,10 @@ exports[`should take a snapshot 1`] = `
               />
               <fieldset
                 aria-hidden="true"
-                class="PrivateNotchedOutline-root-74 MuiOutlinedInput-notchedOutline"
+                class="PrivateNotchedOutline-root-75 MuiOutlinedInput-notchedOutline"
               >
                 <legend
-                  class="PrivateNotchedOutline-legendLabelled-76 PrivateNotchedOutline-legendNotched-77"
+                  class="PrivateNotchedOutline-legendLabelled-77 PrivateNotchedOutline-legendNotched-78"
                 >
                   <span>
                     Username *
@@ -94,10 +99,10 @@ exports[`should take a snapshot 1`] = `
               />
               <fieldset
                 aria-hidden="true"
-                class="PrivateNotchedOutline-root-74 MuiOutlinedInput-notchedOutline"
+                class="PrivateNotchedOutline-root-75 MuiOutlinedInput-notchedOutline"
               >
                 <legend
-                  class="PrivateNotchedOutline-legendLabelled-76"
+                  class="PrivateNotchedOutline-legendLabelled-77"
                 >
                   <span>
                     Password *
