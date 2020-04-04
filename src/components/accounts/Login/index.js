@@ -131,21 +131,6 @@ class Login extends Component {
                                 id="password"
                                 autoComplete="current-password"
                             />
-                            <FormControl className={classes.formControl}>
-                                <InputLabel id="demo-simple-select-autowidth-label">Role</InputLabel>
-                                <Select
-                                    labelId="select-autowidth-label"
-                                    id="select-autowidth"
-                                    value={role}
-                                    name="role"
-                                    onChange={this.handleChange}
-                                    autoWidth
-                                >
-                                    <MenuItem value={"ROLE_STUDENT"}>Student</MenuItem>
-                                    <MenuItem value={"ROLE_TEACHER"}>Teacher</MenuItem>
-                                    <MenuItem value={"ROLE_ADMIN"}>Admin</MenuItem>
-                                </Select>
-                            </FormControl>
                             <Button
                                 type="submit"
                                 fullWidth
