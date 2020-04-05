@@ -164,15 +164,12 @@ Login.propTypes = {
     access_token: PropTypes.string,
     /** Refresh token of the currently logged in user */
     refresh_token: PropTypes.string,
-    /** A boolean indicating if login is successful */
-    loginSuccess: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
     user: state.authReducer.user,
     access_token: state.authReducer.access_token,
     refresh_token: state.authReducer.refresh_token,
-    loginSuccess: state.authReducer.loginSuccess
 });
 
 export default withRouter(connect(mapStateToProps, { authenticateLogin, fetchMe })(withStyles(styles)(Login)));

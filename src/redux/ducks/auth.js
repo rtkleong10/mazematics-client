@@ -2,44 +2,67 @@ import { API_URL } from "../../utils/constants";
 import axios from 'axios';
 import { displayError } from './errors';
 import { getCurrentTime } from '../../utils/getCurrentTime';
+import { getTokenConfig } from "./authHelper";
 
+// ACTION TYPES
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
 export const FETCH_ME_REQUEST = 'FETCH_ME_REQUEST';
 export const FETCH_ME_SUCCESS = 'FETCH_ME_SUCCESS';
 export const FETCH_ME_FAILURE = 'FETCH_ME_FAILURE';
-export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
-export const AUTH_LOGIN_FAIL = 'AUTH_LOGIN_FAIL';
-export const AUTH_LOGOUT = 'AUTH_LOGOUT';
-export const REFRESH_TOKEN = 'REFRESH_TOKEN';
 
 // REDUCER
 const initialState = {
-    loginSucess: false,
     userLoading: true,
     userFailed: null,
     user: {},
     access_token: localStorage.getItem("access_token"),
     refresh_token: localStorage.getItem("refresh_token"),
     expires_in: localStorage.getItem("expires_in"),
-    time_token_acquired: getCurrentTime()
+    time_token_acquired: getCurrentTime(),
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case AUTH_LOGIN_SUCCESS:
-            if (action.payload.access_token) {
-                return {
-                    ...state,
-                    loginSuccess: true,
-                    access_token: action.payload.access_token,
-                    refresh_token: action.payload.refresh_token,
-                    expires_in: 0,//action.payload.expires_in
-                    time_token_acquired: getCurrentTime()
-                }
+        case LOGIN:
+            // Store refresh and access token in localStorage
+            const {
+                access_token,
+                refresh_token,
+                expires_in,
+            } = action.payload;
+
+            const currentTime = getCurrentTime()
+
+            localStorage.setItem("access_token", access_token);
+            localStorage.setItem("refresh_token", refresh_token);
+            localStorage.setItem("expires_in", expires_in);
+            localStorage.setItem("time_token_acquired", currentTime);
+
+            return {
+                ...state,
+                access_token: access_token,
+                refresh_token: refresh_token,
+                expires_in: expires_in,
+                time_token_acquired: currentTime,
             }
-            else {
-                alert("successful authentication but no access_token!")
+
+        case LOGOUT:
+            // Remove refresh and access token in localStorage
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token");
+            localStorage.removeItem("expires_in");
+            localStorage.removeItem("current_user");
+            localStorage.removeItem("time_token_acquired");
+
+            return {
+                ...state,
+                user: {},
+                access_token: '',
+                refresh_token: '',
+                expires_in: 0,
+                time_token_acquired: ''
             }
-            break;
 
         case FETCH_ME_REQUEST:
             return {
@@ -62,48 +85,47 @@ export default function (state = initialState, action) {
                 userFailed: true,
             }
 
-
-        case AUTH_LOGIN_FAIL:
-            return {
-                ...state,
-                user: '',
-                loginSuccess: false,
-            };
-
-        case AUTH_LOGOUT:
-            //remove refresh and access token in localStorage
-            localStorage.removeItem("access_token");
-            localStorage.removeItem("refresh_token");
-            localStorage.removeItem("expires_in");
-            localStorage.removeItem("current_user");
-            localStorage.removeItem("time_token_acquired");
-            return {
-                ...state,
-                loginSuccess: false,
-                user: '',
-                access_token: '',
-                refresh_token: '',
-                expires_in: 0,
-                time_token_acquired: ''
-            }
-
-        case REFRESH_TOKEN:
-            return {
-                ...state,
-                access_token: action.payload.access_token,
-                refresh_token: action.payload.refresh_token,
-                expires_in: action.payload.expires_in
-            }
         default:
             return state;
-
     }
 
 }
 
 // ACTION CREATORS
-export const authenticateLogin = userData => dispatch => {
+export function loginAction(payload) {
+    return {
+        type: LOGIN,
+        payload: payload,
+    }
+}
 
+export function logoutAction() {
+    return {
+        type: LOGOUT,
+    }
+}
+
+export function fetchMeRequestAction() {
+    return {
+        type: FETCH_ME_REQUEST,
+    }
+}
+
+export function fetchMeSuccessAction(userInfo) {
+    return {
+        type: FETCH_ME_SUCCESS,
+        payload: userInfo
+    }
+}
+
+export function fetchMeFailureAction() {
+    return {
+        type: FETCH_ME_FAILURE,
+    }
+}
+
+// OPERATIONS
+export const authenticateLogin = userData => dispatch => {
     var formdata = new FormData();
     formdata.append("username", userData.username);
     formdata.append("password", userData.password);
@@ -112,34 +134,67 @@ export const authenticateLogin = userData => dispatch => {
     fetch(`${API_URL}/oauth/token`, {
         method: 'POST',
         headers: {
-            'Authorization': 'Basic bXktY2xpZW50Om15LXNlY3JldA==' //+ btoa('my-client:my-secret')
+            'Authorization': `Basic ${btoa('my-client:my-secret')}`
         },
         body: formdata,
-    }).then(res => {
-        if (!res.ok) {
-            throw res
-        }
-        return res.json()
     })
+        .then(res => {
+            if (!res.ok)
+                throw res
+            
+            return res.json()
+        })
         .then(result => {
             fetchMe(result.access_token)(dispatch);
-            dispatch({
-                type: AUTH_LOGIN_SUCCESS,
-                payload: result
-            })
+            dispatch(loginAction(result));
         })
-        .catch(error => {
-            dispatch({
-                type: AUTH_LOGIN_FAIL,
-                payload: error
-            })
+        .catch(err => {
+            displayError("Unable to login")(dispatch);
+        });
+};
+
+export const refreshTokenLogin = () => (dispatch, getState) => {
+    var formdata = new FormData();
+    formdata.append("refresh_token", getState().authReducer.refresh_token);
+    formdata.append("grant_type", "refresh_token");
+
+    fetch(`${API_URL}/oauth/token`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Basic ${btoa('my-client:my-secret')}`
+        },
+        body: formdata,
+    })
+        .then(res => {
+            if (!res.ok)
+                throw res
+            
+            return res.json()
+        })
+        .then(result => {
+            fetchMe(result.access_token)(dispatch);
+            dispatch(loginAction(result));
+        })
+        .catch(err => {
+            displayError("Unable to login")(dispatch);
+        });
+};
+
+export const logout = () => (dispatch, getState) => {
+    fetch(`${API_URL}/oauth/revoke`, {
+        method: 'DELETE',
+        ...getTokenConfig(getState)
+    })
+        .then(() => {
+            dispatch(logoutAction());
+        })
+        .catch(err => {
+            displayError("Unable to logout")(dispatch);
         });
 };
 
 export const fetchMe = access_token => dispatch => {
-    dispatch({
-        type: FETCH_ME_REQUEST,
-    });
+    dispatch(fetchMeRequestAction());
 
     axios
         .post(
@@ -152,31 +207,12 @@ export const fetchMe = access_token => dispatch => {
             },
         )
         .then(res => {
-            dispatch({
-                type: FETCH_ME_SUCCESS,
-                payload: res.data
-            });
+            dispatch(fetchMeSuccessAction(res.data));
         })
         .catch(err => {
-            displayError("Unable to fetch me")(dispatch);
-            dispatch({
-                type: FETCH_ME_FAILURE,
-            });
+            displayError("Unable to fetch current user information")(dispatch);
+            dispatch(fetchMeFailureAction());
         });
-};
-
-export const logout = () => dispatch => {
-    fetch(`${API_URL}/oauth/revoke`, {
-        method: 'DELETE',
-        headers: {
-            'Authorization': 'bearer ' + localStorage.getItem('access_token')
-        },
-    })
-        .then(() =>
-            dispatch({
-                type: AUTH_LOGOUT,
-            })
-        )
 };
 
 // SELECTORS
