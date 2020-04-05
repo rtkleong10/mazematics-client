@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Button, CssBaseline, TextField, Container, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
+import { Button, CssBaseline, TextField, Container } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { authenticateLogin, fetchMe } from '../../../redux/ducks/auth';
+import { authenticateLogin } from '../../../redux/ducks/auth';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import icon from '../../../images/icon.png';
 import PokemonIcon from '../../../images/pokemonIcon.png';
 
@@ -74,37 +73,40 @@ const styles = theme => ({
  * This component displays the loginpage for user.
  */
 class Login extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: '',
-            password: '',
-            role: '',
-        }
+    state = {
+        username: '',
+        password: '',
     }
 
     handleChange = e => {
-        this.setState({ [e.target.name]: e.target.value });
+        this.setState({
+            [e.target.name]: e.target.value
+        });
     };
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.authenticateLogin(this.state)
+        this.props.authenticateLogin(this.state);
     }
 
     render() {
-        const { username, password, role } = this.state;
-        const { classes } = this.props;
+        const {
+            username,
+            password,
+        } = this.state;
+
+        const {
+            classes,
+        } = this.props;
+
         return (
-            <div
-                className={classes.main}>
+            <div className={classes.main}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
                     <img src={icon} className={classes.icon} alt="Mazematic Icon" />
                     <div className={classes.paper}>
                         <img src={PokemonIcon} className={classes.avatar} alt="Pokemon Icon" />
-                        <form className={classes.form} noValidate>
+                        <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
                             <TextField
                                 onChange={this.handleChange}
                                 defaultValue={username}
@@ -137,11 +139,9 @@ class Login extends Component {
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
-                                onClick={this.handleSubmit}
                             >
                                 Login
-          </Button>
-
+                            </Button>
                         </form>
                     </div>
                 </Container>
@@ -154,22 +154,12 @@ class Login extends Component {
 Login.propTypes = {
     /** An action creator for authenticating login */
     authenticateLogin: PropTypes.func.isRequired,
-    /** An action creator for fetching current user */
-    fetchMe: PropTypes.func.isRequired,
     /** An object used for styling */
     classes: PropTypes.object.isRequired,
-    /** The currently logged in user */
-    user: PropTypes.object,
-    /** Access token of the currently logged in user */
-    access_token: PropTypes.string,
-    /** Refresh token of the currently logged in user */
-    refresh_token: PropTypes.string,
 };
 
-const mapStateToProps = state => ({
-    user: state.authReducer.user,
-    access_token: state.authReducer.access_token,
-    refresh_token: state.authReducer.refresh_token,
-});
+const dispatchers = {
+    authenticateLogin,
+};
 
-export default withRouter(connect(mapStateToProps, { authenticateLogin, fetchMe })(withStyles(styles)(Login)));
+export default connect(() => {}, dispatchers)(withStyles(styles)(Login));
