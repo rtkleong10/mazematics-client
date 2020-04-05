@@ -3,6 +3,7 @@ import MaterialTable from 'material-table';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Select from '@material-ui/core/Select';
 import { fetchUsers, deleteUser, updateUser, createUser } from '../../../redux/ducks/admin';
 // import AdminBar from '../AdminBar';
 
@@ -10,7 +11,7 @@ import { fetchUsers, deleteUser, updateUser, createUser } from '../../../redux/d
  * This component displays the adminpage for admin. It contains a welcome greeting and list of accounts.
  */
 class AdminTable extends Component {
-
+    
     componentDidMount() {
         //check condition if user has logged in
         // if(!this.props.isLoggedIn){
@@ -35,9 +36,9 @@ class AdminTable extends Component {
                     title="Account Management System"
                     columns={[
                         { title: 'Name', field: 'name' },
-                        { title: 'Email', field: 'email' },
-                        { title: 'Role', field: 'role' },
-                        { title: 'Password', field: 'pass' }
+                        { title: 'Email', field: 'email'},
+                        { title: 'Role', field: 'role', lookup: { ROLE_STUDENT: "ROLE_STUDENT", ROLE_TEACHER: "ROLE_TEACHER", ROLE_ADMIN:"ROLE_ADMIN" }  },
+                        { title: 'Password', field: 'pass'}
                     ]}
                     data={this.props.users}
                     options={{

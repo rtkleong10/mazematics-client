@@ -1,4 +1,5 @@
 import { API_URL } from "../../utils/constants";
+import axios from 'axios';
 
 // ACTION TYPES
 export const FETCH_USERS = 'FETCH_USERS';
@@ -73,35 +74,44 @@ export default function (state = initialState, action) {
 // ACTION CREATORS
 export const fetchUsers = () => dispatch => {
     return (
-        fetch(`${API_URL}/users/`, {
-            method: 'GET',
+        axios.get(`${API_URL}/users/`, {
             headers: {
                 Authorization: `bearer ${localStorage.getItem("access_token")}`
             }
         })
-            .then(res => { if (!res.ok) { throw res } return res.json() })
+            .then(res => { if (!res.data===true) { throw res } return res.data })
             .then(users =>
                 dispatch({
                     type: FETCH_USERS,
                     payload: users.content
                 })
             )
+            .catch(err => {
+                alert("Unable to fetch user data");
+            })
     )
 
 };
 
 export const createUser = newUser => dispatch => {
-
     return (
-        fetch(`${API_URL}/users/create/`, {
-            method: 'POST',
-            headers: {
+        axios.post(`${API_URL}/users/create/`, 
+        
+            {
+                name: newUser.name,
+                email: newUser.email,
+                pass: newUser.pass,
+                role: newUser.role
+            }
+            ,
+            {headers: {
                 Authorization: `bearer ${localStorage.getItem("access_token")}`,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                }
             },
-            body: JSON.stringify(newUser)
-        })
-            .then(res => { if (!res.ok) { throw res } return res.json() })
+            
+        )
+            .then(res => { if (!res.data==true) { throw res } return res.data  })
             .then(user =>
                 dispatch({
                     type: CREATE_USER_SUCCESS,
@@ -117,15 +127,21 @@ export const createUser = newUser => dispatch => {
 
 export const updateUser = (newUserData, oldUserData) => dispatch => {
     return (
-        fetch(`${API_URL}/users/${oldUserData.email}`, {
-            method: 'PATCH',
-            headers: {
+        axios.patch(`${API_URL}/users/${oldUserData.email}`, 
+        {
+            name: newUserData.name,
+            email: newUserData.email,
+            pass: newUserData.pass,
+            role: newUserData.role
+        },
+           { headers: {
                 Authorization: `bearer ${localStorage.getItem("access_token")}`,
                 "Content-Type": "application/json"
-            },
-            body: JSON.stringify(newUserData)
-        })
-            .then(res => { if (!res.ok) { throw res } return res.json() })
+            }
+        }
+        )
+           
+            .then(res => { if (!res.data==true) { throw res } return res.data })
             .then(user =>
                 dispatch({
                     type: UPDATE_USER_SUCCESS,
@@ -143,13 +159,12 @@ export const updateUser = (newUserData, oldUserData) => dispatch => {
 
 export const deleteUser = UserData => dispatch => {
     return (
-        fetch(`${API_URL}/users/${UserData.email}`, {
-            method: 'DELETE',
+        axios.delete(`${API_URL}/users/${UserData.email}`, {
             headers: {
                 Authorization: `bearer ${localStorage.getItem("access_token")}`
             },
         })
-            .then(res => { if (!res.ok) { throw res } return res.json() })
+            .then(res => { if (!res.data==true) { throw res } return res.data })
             .then(user =>
                 dispatch({
                     type: DELETE_USER_SUCCESS,
