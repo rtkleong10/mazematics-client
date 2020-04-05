@@ -12,7 +12,7 @@ import Login from '../../accounts/Login';
 import TeachingRouter from '../../teaching/TeachingRouter';
 import AccountsRouter from '../../accounts/AccountsRouter';
 import LearningRouter from '../../learning/LearningRouter';
-import Logout from '../../accounts/Logout';
+import LogoutPage from '../../accounts/LogoutPage';
 import NotFoundPage from '../NotFoundPage';
 import Loader from '../Loader';
 
@@ -93,7 +93,7 @@ class AppRouter extends Component {
                     <Route
                         path="/logout"
                         exact
-                        component={Logout}
+                        component={LogoutPage}
                         />
                     {router}
                     <Redirect
