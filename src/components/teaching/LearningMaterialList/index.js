@@ -143,7 +143,7 @@ export class LearningMaterialList extends Component {
                                 )
                             }
                         </div>
-                        : <p>No learning material found.</p>
+                        : <p>No learning materials found.</p>
                 }
                 {editable && modalFormComponent}
             </>
