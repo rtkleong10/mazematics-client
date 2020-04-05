@@ -219,3 +219,5 @@ export const fetchMe = access_token => dispatch => {
 export const selectUserLoading = state => state.authReducer.userLoading === true;
 export const selectUserFailed = state => state.authReducer.userLoading === false && state.authReducer.userFailed === true;
 export const selectUser = state => state.authReducer.user;
+
+export const selectRefreshToken = state => state.authReducer.refresh_token;

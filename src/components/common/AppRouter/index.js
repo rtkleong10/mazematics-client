@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { USER_ROLES } from '../../../utils/constants';
-import { refreshTokenLogin, selectUserLoading, selectUserFailed, selectUser } from '../../../redux/ducks/auth';
+import { refreshTokenLogin, selectUserLoading, selectUserFailed, selectUser, selectRefreshToken } from '../../../redux/ducks/auth';
 
 import Header from '../Header';
 import Alert from '../Alert';
@@ -18,19 +18,24 @@ import Loader from '../Loader';
 
 class AppRouter extends Component {
     componentDidMount() {
-        if (localStorage.getItem('refresh_token')) {
-            this.props.refreshTokenLogin(localStorage.getItem('refresh_token'));
-        }
+        const {
+            refresh_token,
+            refreshTokenLogin
+        } = this.props;
+
+        if (refresh_token)
+            refreshTokenLogin(refresh_token);
     }
 
     render() {
         const {
             userLoading,
             userFailed,
-            user
+            user,
+            refresh_token
         } = this.props;
 
-        if (userLoading && localStorage.getItem('access_token'))
+        if (userLoading && refresh_token)
             return <Loader />;
         
         let router = [
@@ -106,6 +111,7 @@ const mapStateToProps = state => ({
     userLoading: selectUserLoading(state),
     userFailed: selectUserFailed(state),
     user: selectUser(state),
+    refresh_token: selectRefreshToken(state),
 });
 
 const dispatchers = {

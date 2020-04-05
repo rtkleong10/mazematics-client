@@ -11,6 +11,7 @@ import SimpleForm from '../SimpleForm';
 import DeleteForm from '../DeleteForm';
 import { createTopic, updateTopic, deleteTopic, listTopics, selectTopicsLoading, selectTopics, selectTopicFailed } from '../../../redux/ducks/topics';
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
+import { selectUser } from '../../../redux/ducks/auth';
 
 /**
  * This component displays the homepage for a teacher. It contains a welcome greeting and list of topics.
@@ -168,8 +169,8 @@ TeachingHomePage.propTypes = {
     listTopics: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-    user: state.authReducer.user,
+const mapStateToProps = state => ({
+    user: selectUser(state),
     topicsLoading: selectTopicsLoading(state),
     topicsFailed: selectTopicFailed(state),
     topics: selectTopics(state),

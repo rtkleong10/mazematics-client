@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 
 import Loader from '../../common/Loader';
 import { listTopics, selectTopics, selectTopicsLoading, selectTopicsFailed } from '../../../redux/ducks/topics';
+import { selectUser } from '../../../redux/ducks/auth';
+
 /**
  * This component displays the learning home page for a student. It contains a list of study topics to choose from
  */
@@ -62,7 +64,7 @@ LearningHomePage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    user: state.authReducer.user,
+    user: selectUser(state),
     topicsLoading: selectTopicsLoading(state),
     topicsFailed: selectTopicsFailed(state),
     topics: selectTopics(state),
