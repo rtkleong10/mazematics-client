@@ -25,7 +25,7 @@ beforeEach(() => {
 afterEach(cleanup);
 
 it('should take a snapshot', async () => {
-    const { asFragment, getByText } = renderWithReduxRouter(<LearningMaterialList levelId={1} playable={false} />);
+    const { asFragment, getByText } = renderWithReduxRouter(<LearningMaterialList levelId={1} editable={true} />);
     await waitForElement(() => getByText('Basic Addition'));
     expect(asFragment()).toMatchSnapshot();
 })

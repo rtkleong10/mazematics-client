@@ -58,10 +58,10 @@ export class LevelPage extends Component {
                     }
                 </div>
                 <h2>Learning Materials</h2>
-                <LearningMaterialList levelId={level.id} playable={level.playable} />
+                <LearningMaterialList levelId={level.id} editable={!level.playable} />
                 <br />
                 <h2>Questions</h2>
-                <QuestionsList levelId={level.id} playable={level.playable} />
+                <QuestionsList levelId={level.id} editable={!level.playable} />
             </div>
         );
     }

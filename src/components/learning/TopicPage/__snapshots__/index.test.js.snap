@@ -37,7 +37,6 @@ exports[`should take a snapshot 1`] = `
     </h2>
     <div
       class="card mb-4"
-      href="#"
     >
       <div
         class="card-body"

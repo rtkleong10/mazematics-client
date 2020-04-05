@@ -6,7 +6,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types'
 
 import Loader from '../../common/Loader';
-import LearningMaterialList from '../LearningMaterialList';
+import LearningMaterialList from '../../teaching/LearningMaterialList';
 import { retrieveLevel, selectPlayableLevel, selectLevelLoading, selectLevelFailed } from '../../../redux/ducks/levels';
 
 /**
@@ -56,7 +56,7 @@ export class LevelPage extends Component {
                             </button>
                             <div className="collapse mb-4" id="learningMaterialCollapse">
                                 <h2>Learning Materials</h2>
-                                <LearningMaterialList levelId={level.id} />
+                                <LearningMaterialList levelId={level.id} editable={false} />
                             </div>
                         </div>
                         : <div className="mb-4">

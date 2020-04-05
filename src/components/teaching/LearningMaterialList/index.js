@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 
@@ -9,8 +9,8 @@ import ModalForm from '../../common/ModalForm';
 import LearningMaterialForm from '../LearningMaterialForm';
 import DeleteForm from '../DeleteForm';
 import { createLearningMaterial, listLearningMaterials, updateLearningMaterial, deleteLearningMaterial, selectLearningMaterials, selectLearningMaterialsLoading, selectLearningMaterialsFailed } from '../../../redux/ducks/learningMaterials';
-import './styles.css';
-import { CREATE, UPDATE, DELETE, EMPTY, YOUTUBE_LINK_PATTERN } from '../../../utils/constants';
+import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
+import LearningMaterial from '../LearningMaterial';
 
 /**
  * This component displays the learning materials in the level for a teacher. Teachers can add, update, and delete learning materials.
@@ -107,18 +107,18 @@ export class LearningMaterialList extends Component {
             learningMaterialsLoading,
             learningMaterialsFailed,
             learningMaterials,
-            playable,
+            editable,
         } = this.props;
 
         if (learningMaterialsLoading)
             return <Loader />;
 
         const modalFormComponent = this.getModalFormComponent();
-
+        
         return (
-            <Fragment>
+            <>
                 {
-                    !playable &&
+                    editable &&
                     <div className="mb-4">
                         <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>
                             <FontAwesomeIcon icon={faPlus} className="mr-2" />Create a Learning Material
@@ -127,49 +127,26 @@ export class LearningMaterialList extends Component {
                 }
                 
                 {
-                    learningMaterials.length != 0 && !learningMaterialsFailed
+                    learningMaterials.length !== 0 && !learningMaterialsFailed
                         ? <div className="row">
                             {
-                                learningMaterials.map(learningMaterial => (
+                                learningMaterials.map(learningMaterial => 
                                     <div className="col-lg-6 mb-4" key={learningMaterial.id}>
-                                        <div className="card h-100">
-                                            {
-                                                YOUTUBE_LINK_PATTERN.test(learningMaterial.link) &&
-                                                <div className="video-box card-img-top">
-                                                    <div>
-                                                        <iframe
-                                                            title="Learning Material Video"
-                                                            src={learningMaterial.link}
-                                                            frameBorder="0"
-                                                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                                            allowFullScreen />
-                                                    </div>
-                                                </div>
-                                            }
-                                            <div className="card-body">
-                                                <h3 className="card-title">{learningMaterial.title}</h3>
-                                                <p className="card-text">{learningMaterial.description}</p>
-                                                {
-                                                    !playable &&
-                                                    <div>
-                                                        <button href="#" className="btn btn-success mr-2" onClick={() => this.openModalForm(UPDATE, learningMaterial)}>
-                                                            <FontAwesomeIcon icon={faEdit} />
-                                                        </button>
-                                                        <button href="#" className="btn btn-danger" onClick={() => this.openModalForm(DELETE, learningMaterial)}>
-                                                            <FontAwesomeIcon icon={faTrash} />
-                                                        </button>
-                                                    </div>
-                                                }
-                                            </div>
-                                        </div>
+                                        <LearningMaterial
+                                            editable={editable}
+                                            classes="h-100"
+                                            learningMaterial={learningMaterial}
+                                            handleUpdate={learningMaterial => this.openModalForm(UPDATE, learningMaterial)}
+                                            handleDelete={learningMaterial => this.openModalForm(DELETE, learningMaterial)}
+                                            />
                                     </div>
-                                ))
+                                )
                             }
                         </div>
                         : <p>No learning material found.</p>
                 }
-                {modalFormComponent}
-            </Fragment>
+                {editable && modalFormComponent}
+            </>
         )
     }
 }
@@ -183,8 +160,8 @@ LearningMaterialList.propTypes = {
     learningMaterialsFailed: PropTypes.bool,
     /** An array of learning material objects loaded by the `listLearningMaterials` action creator */
     learningMaterials: PropTypes.array,
-    /** A boolean to determine if the game is playable or unplayable*/
-    playable: PropTypes.bool.isRequired,
+    /** A boolean to determine if the game is editable or not editable */
+    editable: PropTypes.bool.isRequired,
 
     /** An action creator for creating learning materials*/
     createLearningMaterial: PropTypes.func.isRequired,

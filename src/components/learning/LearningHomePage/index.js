@@ -33,7 +33,7 @@ class LearningHomePage extends Component {
                 {
                     topics.length !== 0 && !topicsFailed
                         ? topics.map((topic) => (
-                            <div href="#" className="card mb-4" key={topic.id}>
+                            <div className="card mb-4" key={topic.id}>
                                 <div className="card-body">
                                     <Link to={`/topics/${topic.id}`}>
                                         <h3 className="card-title">{topic.title}</h3>

@@ -45,7 +45,7 @@ class TopicPage extends Component {
                 {
                     levels.length !== 0 && !levelsFailed
                         ? levels.map((level) => (
-                            <div href="#" className="card mb-4" key={level.id}>
+                            <div className="card mb-4" key={level.id}>
                                 <div className="card-body">
                                     <Link to={`/topics/${topic.id}/levels/${level.id}`}>
                                         <h3 className="card-title">{level.title}</h3>
