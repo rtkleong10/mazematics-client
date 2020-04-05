@@ -162,4 +162,4 @@ const dispatchers = {
     authenticateLogin,
 };
 
-export default connect(() => {}, dispatchers)(withStyles(styles)(Login));
+export default connect(() => ({}), dispatchers)(withStyles(styles)(Login));
