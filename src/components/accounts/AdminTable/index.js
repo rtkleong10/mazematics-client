@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Select from '@material-ui/core/Select';
-import { fetchUsers, deleteUser, updateUser, createUser } from '../../../redux/ducks/admin';
+import { listUsers, deleteUser, updateUser, createUser } from '../../../redux/ducks/admin';
 // import AdminBar from '../AdminBar';
 
 /**
@@ -20,7 +20,7 @@ class AdminTable extends Component {
         if (!localStorage.getItem('access_token')) {
             this.props.history.push('/');
         }
-        this.props.fetchUsers();
+        this.props.listUsers();
     }
 
     // componentDidUpdate() {
@@ -68,14 +68,14 @@ class AdminTable extends Component {
 
 AdminTable.propTypes = {
     /** An action creator for loading accounts from the server*/
-    fetchUsers: PropTypes.func.isRequired,
+    listUsers: PropTypes.func.isRequired,
     /** An action creator for creating a user account */
     createUser: PropTypes.func.isRequired,
     /** An action creator for deleting a user account */
     deleteUser: PropTypes.func.isRequired,
     /** An action creator for updating a user account*/
     updateUser: PropTypes.func.isRequired,
-    /** An array of users objects loaded by the `fetchUsers` action creator */
+    /** An array of users objects loaded by the `listUsers` action creator */
     users: PropTypes.array.isRequired,
     /** A user object of updated user*/
     newUser: PropTypes.object,
@@ -86,8 +86,7 @@ AdminTable.propTypes = {
 const mapStateToProps = state => ({
     users: state.adminReducer.items,
     newUser: state.adminReducer.item,
-    isLoggedIn: state.authReducer.loginSuccess,
     currentUser: state.authReducer.currentUser
 });
 
-export default withRouter(connect(mapStateToProps, { fetchUsers, createUser, deleteUser, updateUser })(AdminTable));
+export default withRouter(connect(mapStateToProps, { listUsers, createUser, deleteUser, updateUser })(AdminTable));

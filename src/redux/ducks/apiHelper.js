@@ -21,7 +21,7 @@ export function createApiAction(entityName, status, method, payload) {
 }
 
 // REDUCER
-export function createApiReducer(entityName) {
+export function createApiReducer(entityName, id="id") {
     const initialState = {
         isLoading: {
             [METHODS.CREATE]: true,
@@ -92,7 +92,7 @@ export function createApiReducer(entityName) {
                                 ...state.isLoading,
                                 [actionMethod]: false
                             },
-                            items: state.items.map(item => (item.id === action.payload.id) ? action.payload : item),
+                            items: state.items.map(item => (item[id] === action.payload[id]) ? action.payload : item),
                             item: action.payload,
                         }
 
@@ -103,7 +103,7 @@ export function createApiReducer(entityName) {
                                 ...state.isLoading,
                                 [actionMethod]: false
                             },
-                            items: state.items.filter(item => item.id !== action.payload),
+                            items: state.items.filter(item => item[id] !== action.payload),
                         }
 
                     case METHODS.LIST:
