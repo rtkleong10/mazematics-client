@@ -72,7 +72,7 @@ const styles = theme => ({
 /**
  * This component displays the loginpage for user.
  */
-class Login extends Component {
+class LoginPage extends Component {
     state = {
         username: '',
         password: '',
@@ -151,7 +151,7 @@ class Login extends Component {
 
 }
 
-Login.propTypes = {
+LoginPage.propTypes = {
     /** An action creator for authenticating login */
     authenticateLogin: PropTypes.func.isRequired,
     /** An object used for styling */
@@ -162,4 +162,4 @@ const dispatchers = {
     authenticateLogin,
 };
 
-export default connect(() => ({}), dispatchers)(withStyles(styles)(Login));
+export default connect(() => ({}), dispatchers)(withStyles(styles)(LoginPage));

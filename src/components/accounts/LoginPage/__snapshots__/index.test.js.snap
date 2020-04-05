@@ -3,26 +3,26 @@
 exports[`should take a snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="Login-main-1"
+    class="LoginPage-main-1"
   >
     <main
       class="MuiContainer-root MuiContainer-maxWidthXs"
     >
       <img
         alt="Mazematic Icon"
-        class="Login-icon-8"
+        class="LoginPage-icon-8"
         src="icon.png"
       />
       <div
-        class="Login-paper-4"
+        class="LoginPage-paper-4"
       >
         <img
           alt="Pokemon Icon"
-          class="Login-avatar-5"
+          class="LoginPage-avatar-5"
           src="pokemonIcon.png"
         />
         <form
-          class="Login-form-6"
+          class="LoginPage-form-6"
           novalidate=""
         >
           <div
@@ -112,7 +112,7 @@ exports[`should take a snapshot 1`] = `
             </div>
           </div>
           <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-contained Login-submit-7 MuiButton-containedPrimary MuiButton-fullWidth"
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained LoginPage-submit-7 MuiButton-containedPrimary MuiButton-fullWidth"
             tabindex="0"
             type="submit"
           >
