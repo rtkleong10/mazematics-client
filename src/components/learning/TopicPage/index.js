@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Loader from '../../common/Loader';
 import { retrieveTopic, selectTopic, selectTopicLoading, selectTopicFailed } from '../../../redux/ducks/topics';
 import { listLevels, selectLevelsLoading, selectLevelsFailed, selectPlayableLevels } from '../../../redux/ducks/levels';
+import BasicCard from '../../common/BasicCard';
 /**
  * This component displays the topics page for a student. It contains a list of levels for the topic.
  */
@@ -44,16 +45,15 @@ class TopicPage extends Component {
                 <h2>Levels</h2>
                 {
                     levels.length !== 0 && !levelsFailed
-                        ? levels.map((level) => (
-                            <div className="card mb-4" key={level.id}>
-                                <div className="card-body">
-                                    <Link to={`/topics/${topic.id}/levels/${level.id}`}>
-                                        <h3 className="card-title">{level.title}</h3>
-                                    </Link>
-                                    <p className="card-text">{level.description}</p>
-                                </div>
-                            </div>
-                        ))
+                        ? levels.map(level =>
+                            <BasicCard
+                                key={level.id}
+                                editable={false}
+                                classes="mb-4"
+                                details={level}
+                                link={`/topics/${topic.id}/levels/${level.id}`}
+                                />
+                        )
                         : <p>No levels found.</p>
                 }
             </div>

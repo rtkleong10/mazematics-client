@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Loader from '../../common/Loader';
 import { listTopics, selectTopics, selectTopicsLoading, selectTopicsFailed } from '../../../redux/ducks/topics';
 import { selectUser } from '../../../redux/ducks/auth';
+import BasicCard from '../../common/BasicCard';
 
 /**
  * This component displays the learning home page for a student. It contains a list of study topics to choose from
@@ -32,16 +32,15 @@ class LearningHomePage extends Component {
                 <h2>Topics</h2>
                 {
                     topics.length !== 0 && !topicsFailed
-                        ? topics.map((topic) => (
-                            <div className="card mb-4" key={topic.id}>
-                                <div className="card-body">
-                                    <Link to={`/topics/${topic.id}`}>
-                                        <h3 className="card-title">{topic.title}</h3>
-                                    </Link>
-                                    <p className="card-text">{topic.description}</p>
-                                </div>
-                            </div>
-                        ))
+                        ? topics.map(topic => 
+                            <BasicCard
+                                key={topic.id}
+                                editable={false}
+                                classes="mb-4"
+                                details={topic}
+                                link={`/topics/${topic.id}`}
+                                />
+                        )
                         : <p>No topics found.</p>
                 }
             </div>

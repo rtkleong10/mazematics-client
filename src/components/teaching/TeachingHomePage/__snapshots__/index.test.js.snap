@@ -41,15 +41,16 @@ exports[`should take a snapshot 1`] = `
       <div
         class="card-body"
       >
-        <a
-          href="/topics/1"
+        <h3
+          class="card-title"
         >
-          <h3
-            class="card-title"
+          <a
+            href="/topics/1"
           >
             Addition
-          </h3>
-        </a>
+          </a>
+           
+        </h3>
         <p
           class="card-text"
         >
@@ -103,15 +104,16 @@ exports[`should take a snapshot 1`] = `
       <div
         class="card-body"
       >
-        <a
-          href="/topics/2"
+        <h3
+          class="card-title"
         >
-          <h3
-            class="card-title"
+          <a
+            href="/topics/2"
           >
             Subtraction
-          </h3>
-        </a>
+          </a>
+           
+        </h3>
         <p
           class="card-text"
         >
