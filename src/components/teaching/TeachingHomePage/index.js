@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
-import SimpleForm from '../SimpleForm';
+import BasicForm from '../BasicForm';
 import DeleteForm from '../DeleteForm';
 import { createTopic, updateTopic, deleteTopic, listTopics, selectTopicsLoading, selectTopics, selectTopicFailed } from '../../../redux/ducks/topics';
 import { CREATE, UPDATE, DELETE, EMPTY } from '../../../utils/constants';
@@ -64,7 +64,7 @@ class TeachingHomePage extends Component {
                         title="Create a Topic"
                         isVisible={isVisible}
                         onClose={this.handleModalClose}
-                        FormComponent={SimpleForm}
+                        FormComponent={BasicForm}
                         initialState={EMPTY}
                         onSubmit={this.props.createTopic}
                         />
@@ -76,7 +76,7 @@ class TeachingHomePage extends Component {
                         title="Edit Topic"
                         isVisible={isVisible}
                         onClose={this.handleModalClose}
-                        FormComponent={SimpleForm}
+                        FormComponent={BasicForm}
                         initialState={selectedTopic}
                         onSubmit={topic => this.props.updateTopic({...topic, id: selectedTopic.id})}
                         />

@@ -1,11 +1,11 @@
 import React from 'react'
 import { render, cleanup, fireEvent } from '@testing-library/react'
-import SimpleForm from './index.js';
+import BasicForm from './index.js';
 
 afterEach(cleanup);
 
 it('should take a snapshot', () => {
-    const { asFragment } = render(<SimpleForm />);
+    const { asFragment } = render(<BasicForm />);
     expect(asFragment()).toMatchSnapshot();
 })
 
@@ -16,7 +16,7 @@ it('should return form data', () => {
     }
 
     var result;
-    const { getByLabelText, getByText } = render(<SimpleForm onSubmit={(formResult) => result = formResult}  />);
+    const { getByLabelText, getByText } = render(<BasicForm onSubmit={(formResult) => result = formResult}  />);
 
     fireEvent.change(getByLabelText(/title/i), {
         target: {value: expectedResult.title},

@@ -7,7 +7,7 @@ import { faEdit, faTrash, faPlus, faChevronLeft } from '@fortawesome/free-solid-
 
 import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
-import SimpleForm from '../SimpleForm';
+import BasicForm from '../BasicForm';
 import DeleteForm from '../DeleteForm';
 import { retrieveTopic, selectTopic, selectTopicLoading, selectTopicFailed } from '../../../redux/ducks/topics';
 import { createLevel, updateLevel, deleteLevel, listLevels, selectLevelsLoading, selectLevelsFailed, selectLevels } from '../../../redux/ducks/levels';
@@ -70,7 +70,7 @@ class TopicPage extends Component {
                         title="Create a Level"
                         isVisible={isVisible}
                         onClose={this.handleModalClose}
-                        FormComponent={SimpleForm}
+                        FormComponent={BasicForm}
                         initialState={EMPTY}
                         onSubmit={level => this.props.createLevel(topic.id, level)}
                         />
@@ -82,7 +82,7 @@ class TopicPage extends Component {
                         title="Edit Level"
                         isVisible={isVisible}
                         onClose={this.handleModalClose}
-                        FormComponent={SimpleForm}
+                        FormComponent={BasicForm}
                         initialState={selectedLevel}
                         onSubmit={level => this.props.updateLevel(topic.id, {...level, id: selectedLevel.id})}
                         />

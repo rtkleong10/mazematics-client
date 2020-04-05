@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { EMPTY } from '../../../utils/constants';
-export class SimpleForm extends Component {
+export class BasicForm extends Component {
     emptyState = {
         title: '',
         description: ''
@@ -94,4 +94,4 @@ export class SimpleForm extends Component {
     }
 }
 
-export default SimpleForm
+export default BasicForm
