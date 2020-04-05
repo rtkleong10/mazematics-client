@@ -8,14 +8,14 @@ import Loader from '../../common/Loader';
 import ModalForm from '../../common/ModalForm';
 import LearningMaterialForm from '../LearningMaterialForm';
 import DeleteForm from '../DeleteForm';
-import { createLearningMaterial, listLearningMaterials, updateLearningMaterial, deleteLearningMaterial, selectLearningMaterial, selectLearningMaterialsLoading, selectLearningMaterialsFailed } from '../../../redux/ducks/learningMaterials';
+import { createLearningMaterial, listLearningMaterials, updateLearningMaterial, deleteLearningMaterial, selectLearningMaterials, selectLearningMaterialsLoading, selectLearningMaterialsFailed } from '../../../redux/ducks/learningMaterials';
 import './styles.css';
 import { CREATE, UPDATE, DELETE, EMPTY, YOUTUBE_LINK_PATTERN } from '../../../utils/constants';
 
 /**
  * This component displays the learning materials in the level for a teacher. Teachers can add, update, and delete learning materials.
  */
-export class LearningMaterial extends Component {
+export class LearningMaterialList extends Component {
     state = {
         modalForm: {
             isVisible: false,
@@ -71,7 +71,7 @@ export class LearningMaterial extends Component {
                         FormComponent={LearningMaterialForm}
                         initialState={EMPTY}
                         onSubmit={question => this.props.createLearningMaterial(levelId, question)}
-                        />
+                    />
                 );
 
             case UPDATE:
@@ -82,8 +82,8 @@ export class LearningMaterial extends Component {
                         onClose={this.handleModalClose}
                         FormComponent={LearningMaterialForm}
                         initialState={selectedLearningMaterial}
-                        onSubmit={question => this.props.updateLearningMaterial(levelId, {...question, id: selectedLearningMaterial.id})}
-                        />
+                        onSubmit={question => this.props.updateLearningMaterial(levelId, { ...question, id: selectedLearningMaterial.id })}
+                    />
                 );
 
             case DELETE:
@@ -94,7 +94,7 @@ export class LearningMaterial extends Component {
                         onClose={this.handleModalClose}
                         FormComponent={DeleteForm}
                         onSubmit={isConfirm => isConfirm && this.props.deleteLearningMaterial(levelId, selectedLearningMaterial.id)}
-                        />
+                    />
                 );
 
             default:
@@ -106,7 +106,7 @@ export class LearningMaterial extends Component {
         const {
             learningMaterialsLoading,
             learningMaterialsFailed,
-            learningMaterial,
+            learningMaterials,
             playable,
         } = this.props;
 
@@ -118,44 +118,53 @@ export class LearningMaterial extends Component {
         return (
             <Fragment>
                 {
-                    (!learningMaterial && !playable) &&
-                        <div className="mb-4">
-                            <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>
-                                <FontAwesomeIcon icon={faPlus} className="mr-2" />Create a Learning Material
+                    !playable &&
+                    <div className="mb-4">
+                        <button className="btn btn-primary" onClick={() => this.openModalForm(CREATE, null)}>
+                            <FontAwesomeIcon icon={faPlus} className="mr-2" />Create a Learning Material
                             </button>
-                        </div>
+                    </div>
                 }
+                
                 {
-                    learningMaterial && !learningMaterialsFailed
-                        ? <div className="card">
+                    learningMaterials.length != 0 && !learningMaterialsFailed
+                        ? <div className="row">
                             {
-                                YOUTUBE_LINK_PATTERN.test(learningMaterial.link) &&
-                                    <div className="video-box card-img-top">
-                                        <div>
-                                            <iframe
-                                                title="Learning Material Video"
-                                                src={learningMaterial.link}
-                                                frameBorder="0"
-                                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                                allowFullScreen />
+                                learningMaterials.map(learningMaterial => (
+                                    <div className="col-lg-6 mb-4" key={learningMaterial.id}>
+                                        <div className="card h-100">
+                                            {
+                                                YOUTUBE_LINK_PATTERN.test(learningMaterial.link) &&
+                                                <div className="video-box card-img-top">
+                                                    <div>
+                                                        <iframe
+                                                            title="Learning Material Video"
+                                                            src={learningMaterial.link}
+                                                            frameBorder="0"
+                                                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                            allowFullScreen />
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div className="card-body">
+                                                <h3 className="card-title">{learningMaterial.title}</h3>
+                                                <p className="card-text">{learningMaterial.description}</p>
+                                                {
+                                                    !playable &&
+                                                    <div>
+                                                        <button href="#" className="btn btn-success mr-2" onClick={() => this.openModalForm(UPDATE, learningMaterial)}>
+                                                            <FontAwesomeIcon icon={faEdit} />
+                                                        </button>
+                                                        <button href="#" className="btn btn-danger" onClick={() => this.openModalForm(DELETE, learningMaterial)}>
+                                                            <FontAwesomeIcon icon={faTrash} />
+                                                        </button>
+                                                    </div>
+                                                }
+                                            </div>
                                         </div>
                                     </div>
+                                ))
                             }
-                            <div className="card-body">
-                                <h3 className="card-title">{learningMaterial.title}</h3>
-                                <p className="card-text">{learningMaterial.description}</p>
-                                {
-                                    !playable &&
-                                        <div>
-                                            <button href="#" className="btn btn-success mr-2" onClick={() => this.openModalForm(UPDATE, learningMaterial)}>
-                                                <FontAwesomeIcon icon={faEdit} />
-                                            </button>
-                                            <button href="#" className="btn btn-danger" onClick={() => this.openModalForm(DELETE, learningMaterial)}>
-                                                <FontAwesomeIcon icon={faTrash} />
-                                            </button>
-                                        </div>
-                                }
-                            </div>
                         </div>
                         : <p>No learning material found.</p>
                 }
@@ -164,16 +173,16 @@ export class LearningMaterial extends Component {
         )
     }
 }
-LearningMaterial.propTypes = {
+LearningMaterialList.propTypes = {
     /** A string containing the level ID of the level*/
     levelId: PropTypes.number.isRequired,
-     /** A boolean to determine if the learning materials are still being loaded by the `listLearningMaterials` action creator (true: still loading, false: fully loaded) */
-    learningMaterialsLoading: PropTypes.bool.isRequired,
 
-   /** A boolean to determine if the learning materials failed to be loaded by the `listLearningMaterials` action creator (true: still loading or failed to load, false: successful load) */
+    /** A boolean to determine if the learning materials are still being loaded by the `listLearningMaterials` action creator (true: still loading, false: fully loaded) */
+    learningMaterialsLoading: PropTypes.bool.isRequired,
+    /** A boolean to determine if the learning materials failed to be loaded by the `listLearningMaterials` action creator (true: still loading or failed to load, false: successful load) */
     learningMaterialsFailed: PropTypes.bool,
     /** An array of learning material objects loaded by the `listLearningMaterials` action creator */
-    learningMaterial: PropTypes.object,
+    learningMaterials: PropTypes.array,
     /** A boolean to determine if the game is playable or unplayable*/
     playable: PropTypes.bool.isRequired,
 
@@ -190,7 +199,7 @@ LearningMaterial.propTypes = {
 const mapStateToProps = state => ({
     learningMaterialsLoading: selectLearningMaterialsLoading(state),
     learningMaterialsFailed: selectLearningMaterialsFailed(state),
-    learningMaterial: selectLearningMaterial(state),
+    learningMaterials: selectLearningMaterials(state),
 });
 
 const dispatchers = {
@@ -200,4 +209,4 @@ const dispatchers = {
     deleteLearningMaterial
 };
 
-export default connect(mapStateToProps, dispatchers)(LearningMaterial);
+export default connect(mapStateToProps, dispatchers)(LearningMaterialList);

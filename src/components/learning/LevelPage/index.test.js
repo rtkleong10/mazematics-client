@@ -65,7 +65,7 @@ it('should load learning material', () => {
 
 it('should load and display the learning material', async () => {
     const { getByText } = renderWithReduxRouter(<LevelPage match={matchObject} />);
-    const learningMaterial = await waitForElement(() => getByText('Learning Material'));
+    const learningMaterial = await waitForElement(() => getByText('Learning Materials'));
     expect(axiosMock.get).toHaveBeenCalledTimes(2);
     expect(learningMaterial).toBeTruthy();
 })
@@ -89,7 +89,7 @@ it('should not display a unplayable level', async () => {
 it('should not display edit or delete buttons', async () => {
     const { getByText, container } = renderWithReduxRouter(<LevelPage match={matchObject} />);
     
-    await waitForElement(() => getByText('Learning Material'));
+    await waitForElement(() => getByText('Learning Materials'));
     
     const editButton = container.querySelector('[data-icon="edit"]');
     expect(editButton).toBeFalsy();

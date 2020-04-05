@@ -6,11 +6,11 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types'
 
 import Loader from '../../common/Loader';
-import LearningMaterial from '../LearningMaterial';
+import LearningMaterialList from '../LearningMaterialList';
 import { retrieveLevel, selectPlayableLevel, selectLevelLoading, selectLevelFailed } from '../../../redux/ducks/levels';
 
 /**
- * This component displays the level page for a student. It contains the LearningMaterial component and an option to play the level and view leaderboard.
+ * This component displays the level page for a student. It contains the LearningMaterialList component and an option to play the level and view leaderboard.
  */
 export class LevelPage extends Component {
     componentDidMount() {
@@ -52,16 +52,16 @@ export class LevelPage extends Component {
                     viewedBefore
                         ? <div>
                             <button className="btn btn-primary mb-4" type="button" data-toggle="collapse" data-target="#learningMaterialCollapse">
-                                View Learning Material
+                                View Learning Materials
                             </button>
                             <div className="collapse mb-4" id="learningMaterialCollapse">
-                                <h2>Learning Material</h2>
-                                <LearningMaterial levelId={level.id} />
+                                <h2>Learning Materials</h2>
+                                <LearningMaterialList levelId={level.id} />
                             </div>
                         </div>
                         : <div className="mb-4">
-                            <h2>Learning Material</h2>
-                            <LearningMaterial levelId={level.id} />
+                            <h2>Learning Materials</h2>
+                            <LearningMaterialList levelId={level.id} />
                         </div>
                 }
                 <Link className="btn btn-primary mb-4" to={`/topics/${level.topic}/levels/${level.id}/game`}>
