@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import 'bootstrap/dist/js/bootstrap.js';
 
 export class Modal extends Component {
     componentDidMount() {
