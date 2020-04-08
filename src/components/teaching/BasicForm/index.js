@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { EMPTY } from '../../../utils/constants';
+
 export class BasicForm extends Component {
     emptyState = {
         title: '',
