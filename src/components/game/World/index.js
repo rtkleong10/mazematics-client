@@ -26,20 +26,6 @@ class World extends Component {
         this.mapRef.focus();
     }
 
-    handleKeyDown = e => {
-        e.preventDefault();
-        this.playerRef.handleKeyDown(e);
-
-        switch (e.keyCode) {
-            case 27:
-                this.hidePopup();
-                //console.log("SHOWPOPUP: ", this.state.showPopup);
-                return;
-            default:
-                console.log(e.keyCode);
-        }
-    }
-
     handleEncounterObstacle = (pos) => {
         const y = pos[1] / SPRITE_SIZE; //40 divide 40 = 1 step
         const x = pos[0] / SPRITE_SIZE;
@@ -96,8 +82,8 @@ class World extends Component {
                     margin: "20px auto",
                 }}
                 >
-                <Map tiles={this.state.tiles} onKeyDown={this.handleKeyDown} ref={mapRef => this.mapRef = mapRef} />
-                <Player ref={playerRef => this.playerRef = playerRef} tiles={this.state.tiles} showPopup={this.state.showPopup} handleEncounterObstacle={this.handleEncounterObstacle} />
+                <Map tiles={this.state.tiles} onKeyDown={e => this.playerRef.handleKeyDown(e)} ref={mapRef => this.mapRef = mapRef} />
+                <Player ref={playerRef => this.playerRef = playerRef} tiles={this.state.tiles} showPopup={this.state.questionModal.isVisible} handleEncounterObstacle={this.handleEncounterObstacle} />
                 <QuestionModal
                     question={questionModal.question}
                     isVisible={questionModal.isVisible}
