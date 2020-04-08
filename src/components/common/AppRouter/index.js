@@ -8,11 +8,11 @@ import { refreshTokenLogin, selectUserLoading, selectUserFailed, selectUser, sel
 import Header from '../Header';
 import Alert from '../Alert';
 import Footer from '../Footer';
-import Login from '../../accounts/Login';
+import LoginPage from '../../accounts/LoginPage';
 import TeachingRouter from '../../teaching/TeachingRouter';
 import AccountsRouter from '../../accounts/AccountsRouter';
 import LearningRouter from '../../learning/LearningRouter';
-import Logout from '../../accounts/Logout';
+import LogoutPage from '../../accounts/LogoutPage';
 import NotFoundPage from '../NotFoundPage';
 import Loader from '../Loader';
 
@@ -40,10 +40,10 @@ class AppRouter extends Component {
         
         let router = [
             <Route
-                key="Login"
+                key="LoginPage"
                 path="/login"
                 exact
-                component={Login}
+                component={LoginPage}
                 />,
             <Redirect
                 key="LoginRedirect"
@@ -93,7 +93,7 @@ class AppRouter extends Component {
                     <Route
                         path="/logout"
                         exact
-                        component={Logout}
+                        component={LogoutPage}
                         />
                     {router}
                     <Redirect

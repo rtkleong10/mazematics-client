@@ -7,7 +7,7 @@ import {logout} from '../../../redux/ducks/auth';
 /**
  * This component displays the logout page for user.
  */
-export class Logout extends Component {
+export class LogoutPage extends Component {
     componentDidMount() {
         this.props.logout();
     }
@@ -23,4 +23,4 @@ export class Logout extends Component {
     }
 }
 
-export default connect(null,{logout})(Logout);
+export default connect(null,{logout})(LogoutPage);

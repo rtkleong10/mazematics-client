@@ -8,7 +8,7 @@ import Loader from '../../common/Loader';
 /**
  * This component displays the adminpage for admin. It contains a welcome greeting and list of accounts.
  */
-class AdminTable extends Component {
+class AdminPage extends Component {
     
     componentDidMount() {
         this.props.listUsers();
@@ -78,7 +78,7 @@ class AdminTable extends Component {
     }
 }
 
-AdminTable.propTypes = {
+AdminPage.propTypes = {
     /** A boolean to determine if the users are still being loaded by the `listUsers` action creator (true: still loading, false: fully loaded) */
     usersLoading: PropTypes.bool.isRequired,
     /** A boolean to determine if the users failed to be loaded by the `listUsers` action creator (true: still loading or failed to load, false: successful load) */
@@ -109,4 +109,4 @@ const dispatchers = {
     listUsers,
 };
 
-export default connect(mapStateToProps, dispatchers)(AdminTable);
+export default connect(mapStateToProps, dispatchers)(AdminPage);

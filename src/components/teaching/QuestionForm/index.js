@@ -82,8 +82,17 @@ export class QuestionForm extends Component {
     }
 
     onDeleteOption = selectedIndex => {
+        let answer = this.state.answer;
+
+        if (selectedIndex < answer) {
+            answer--;
+        } else if (selectedIndex === answer) {
+            answer = null;
+        }
+
         this.setState({
             options: this.state.options.filter((option, i) => i !== selectedIndex),
+            answer: answer,
         });
     }
 

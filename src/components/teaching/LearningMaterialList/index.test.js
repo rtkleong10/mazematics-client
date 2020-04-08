@@ -2,7 +2,7 @@ import React from 'react'
 import { cleanup, waitForElement } from '@testing-library/react'
 import axiosMock from 'axios'
 
-import LearningMaterial from './index.js';
+import LearningMaterialList from './index.js';
 import { renderWithReduxRouter } from '../../../utils/tests.js';
 
 jest.mock('axios');
@@ -25,7 +25,7 @@ beforeEach(() => {
 afterEach(cleanup);
 
 it('should take a snapshot', async () => {
-    const { asFragment, getByText } = renderWithReduxRouter(<LearningMaterial levelId={1} playable={false} />);
+    const { asFragment, getByText } = renderWithReduxRouter(<LearningMaterialList levelId={1} editable={true} />);
     await waitForElement(() => getByText('Basic Addition'));
     expect(asFragment()).toMatchSnapshot();
 })
