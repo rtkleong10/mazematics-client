@@ -38,7 +38,7 @@ class AppRouter extends Component {
         if (userLoading && refresh_token)
             return <Loader />;
         
-        let router = [
+        let routes = [
             <Route
                 key="LoginPage"
                 path="/login"
@@ -54,7 +54,7 @@ class AppRouter extends Component {
         ];
 
         if (!userFailed && user && Object.keys(user).length !== 0 && user.constructor === Object) {
-            router = [
+            routes = [
                 <Redirect
                     key="LoginRedirect"
                     from="/login"
@@ -64,15 +64,15 @@ class AppRouter extends Component {
 
             switch (user.role) {
                 case USER_ROLES.STUDENT:
-                    router = router.concat(LearningRouter);
+                    routes = routes.concat(LearningRouter);
                     break;
 
                 case USER_ROLES.TEACHER:
-                    router = router.concat(TeachingRouter);
+                    routes = routes.concat(TeachingRouter);
                     break;
 
                 case USER_ROLES.ADMIN:
-                    router = router.concat(AccountsRouter);
+                    routes = routes.concat(AccountsRouter);
                     break;
 
                 default:
@@ -95,7 +95,7 @@ class AppRouter extends Component {
                         exact
                         component={LogoutPage}
                         />
-                    {router}
+                    {routes}
                     <Redirect
                         from="/"
                         to="/not-found"
