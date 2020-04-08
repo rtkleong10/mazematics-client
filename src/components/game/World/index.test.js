@@ -8,6 +8,7 @@ import { tiles } from "../../../utils/data/maps/1";
 import World from "./index.js";
 import ReactDOM from "react-dom";
 import { cleanup } from "@testing-library/react";
+import { renderWithRedux } from "../../../utils/tests";
 // import { configure } from "enzyme";
 
 // configure({ adapter: new Adapter() });
@@ -26,10 +27,9 @@ import { cleanup } from "@testing-library/react";
 
 afterEach(cleanup);
 
-it("renders without crashing", () => {
-    const div = document.createElement("div");
-    ReactDOM.render(<World tiles={tiles} />, div);
-});
+it('renders without crashing', async () => {
+    renderWithRedux(<World tiles={tiles} question={[]} levelId={1} />);
+})
 
 // describe("World", () => {
 //     let props;
