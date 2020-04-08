@@ -108,7 +108,7 @@ class Player extends Component {
         const newPos = this.getNewPosition(oldPos, direction);
 
         if (this.isObstacle(newPos)) {
-            this.props.handleRemoveObstacle(newPos);
+            this.props.handleEncounterObstacle(newPos);
         }
     }
 
@@ -122,7 +122,6 @@ class Player extends Component {
 
     handleKeyDown(e) {
         e.preventDefault();
-        console.log(e);
 
         switch (e.keyCode) {
             case 37:
@@ -137,7 +136,7 @@ class Player extends Component {
                 return this.removeObstacle();
 
             default:
-                console.log(e.keyCode);
+                break;
         }
     }
 

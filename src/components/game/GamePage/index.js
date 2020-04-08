@@ -49,7 +49,7 @@ export class GamePage extends Component {
                 <Link className="btn btn-light mb-2" to={`/topics/${level.topic}/levels/${level.id}`}>
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Level Page
                 </Link>
-                <World tiles={tiles} />
+                <World levelId={level.id} tiles={tiles} questions={questions} />
                 {/* <Timer/> */}
                     {/* <ReactPlayer
                 width="0%"
@@ -93,7 +93,7 @@ const mapStateToProps = state => ({
 
     questionsLoading: selectQuestionsLoading(state),
     questionsFailed: selectQuestionsFailed(state),
-    questions: selectQuestions(state)
+    questions: selectQuestions(state),
 });
 
 const dispatchers = {

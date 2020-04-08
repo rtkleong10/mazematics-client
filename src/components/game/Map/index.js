@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { SPRITE_SIZE, MAP_WIDTH, MAP_HEIGHT } from "../../../utils/constants";
 import "./styles.css";
 
@@ -80,23 +80,32 @@ function MapRow(props) {
 }
 
 //action
-function Map(props) {
-    // console.log(props.tiles);
-    return (
-        <div
-            style={{
-                position: "relative",
-                top: "0px",
-                left: "0px",
-                width: `${MAP_WIDTH * 40}px`,
-                height: `${MAP_HEIGHT * 40}px`,
-            }}
-        >
-            {props.tiles.map((row, i) => (
-                <MapRow key={i} tiles={row} />
-            ))}
-        </div>
-    );
+class Map extends Component {
+    focus() {
+        this.mapRef.focus();
+    }
+
+    render() {
+        return (
+            <div
+                style={{
+                    position: "relative",
+                    top: "0px",
+                    left: "0px",
+                    width: `${MAP_WIDTH * 40}px`,
+                    height: `${MAP_HEIGHT * 40}px`,
+                    outline: 0,
+                }}
+                ref={mapRef => this.mapRef = mapRef}
+                onKeyDown={this.props.onKeyDown}
+                tabIndex="0"
+                >
+                {this.props.tiles.map((row, i) => (
+                    <MapRow key={i} tiles={row} />
+                ))}
+            </div>
+        );
+    }
 }
 
 export default Map;

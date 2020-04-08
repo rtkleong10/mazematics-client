@@ -131,7 +131,7 @@ export class QuestionForm extends Component {
                             <input
                                 className="form-control w-100 mr-2"
                                 type="text"
-                                name="questionText"
+                                name="option"
                                 onChange={e => this.onChangeOption(i, e.target.value)}
                                 value={option}
                                 />

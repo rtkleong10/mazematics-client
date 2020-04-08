@@ -180,19 +180,21 @@ export const submitAnswer = (gameMapId, questionId, answer) => (dispatch, getSta
     dispatch(createApiAction(ENTITY_NAME, STATUSES.REQUEST, ADDITIONAL_METHODS.ANSWER));
     const user = getUser(getState);
 
-    axios
-        .post(
-            `${API_URL}/${ENTITY_NAME}/users/${user.email}/gameMaps/${gameMapId}/questions/${questionId}/submit/`,
-            answer,
-            getTokenConfig(getState),
-        )
-        .then(res => {
-            dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, ADDITIONAL_METHODS.ANSWER, res.data));
-        })
-        .catch(err => {
-            displayError("Unable to submit answer")(dispatch);
-            dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, ADDITIONAL_METHODS.ANSWER));
-        });
+    return (
+        axios
+            .post(
+                `${API_URL}/${ENTITY_NAME}/users/${user.email}/gameMaps/${gameMapId}/questions/${questionId}/submit/`,
+                answer,
+                getTokenConfig(getState)
+            )
+            .then(res => {
+                dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, ADDITIONAL_METHODS.ANSWER, res.data));
+            })
+            .catch(err => {
+                displayError("Unable to submit answer")(dispatch);
+                dispatch(createApiAction(ENTITY_NAME, STATUSES.FAILURE, ADDITIONAL_METHODS.ANSWER));
+            })
+    )
 };
 
 export const fetchLeaderboard = gameMapId => (dispatch, getState) => {
@@ -234,9 +236,9 @@ export const selectProgressLoading = state => state.progressReducer.crudlReducer
 export const selectProgressFailed = state => state.progressReducer.crudlReducer.isLoading[METHODS.RETRIEVE] === false && state.progressReducer.crudlReducer.hasFailed[METHODS.RETRIEVE] === true;
 export const selectProgress = state => state.progressReducer.crudlReducer.item;
 
-export const selectSubmitAnswerLoading = state => state.progressReducer.additionalReducer.isLoading[ADDITIONAL_METHODS.ANSWER] === true;
-export const selectSubmitAnswerFailed = state => state.progressReducer.additionalReducer.isLoading[ADDITIONAL_METHODS.ANSWER] === false && state.progressReducer.additionalReducer.hasFailed[ADDITIONAL_METHODS.ANSWER] === true;
-export const selectSubmitAnswer = state => state.progressReducer.additionalReducer.answerResult;
+export const selectAnswerResultLoading = state => state.progressReducer.additionalReducer.isLoading[ADDITIONAL_METHODS.ANSWER] === true;
+export const selectAnswerResultFailed = state => state.progressReducer.additionalReducer.isLoading[ADDITIONAL_METHODS.ANSWER] === false && state.progressReducer.additionalReducer.hasFailed[ADDITIONAL_METHODS.ANSWER] === true;
+export const selectAnswerResult = state => state.progressReducer.additionalReducer.answerResult;
 
 export const selectLeaderboardLoading = state => state.progressReducer.additionalReducer.isLoading[ADDITIONAL_METHODS.LEADERBOARD] === true;
 export const selectLeaderboardFailed = state => state.progressReducer.additionalReducer.isLoading[ADDITIONAL_METHODS.LEADERBOARD] === false && state.progressReducer.additionalReducer.hasFailed[ADDITIONAL_METHODS.LEADERBOARD] === true;
