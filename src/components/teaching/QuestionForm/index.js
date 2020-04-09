@@ -155,7 +155,9 @@ export class QuestionForm extends Component {
 }
 
 QuestionForm.propTypes = {
-    initialState: PropTypes.object,
+    /** The initial state of the form. If it's 'EMPTY', then the form will be empty. If it's an object, the form will display the form with initial state's content. */
+    initialState: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    /** The function to call when the form is submitted */
     onSubmit: PropTypes.func.isRequired,
 }
 

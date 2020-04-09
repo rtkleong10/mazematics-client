@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { EMPTY } from '../../../utils/constants';
 
 export class QuestionForm extends Component {
@@ -92,6 +94,13 @@ export class QuestionForm extends Component {
             </form>
         )
     }
+}
+
+QuestionForm.propTypes = {
+    /** The initial state of the form. If it's 'EMPTY', then the form will be empty. If it's an object, the form will display the form with initial state's content. */
+    initialState: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    /** The function to call when the form is submitted */
+    onSubmit: PropTypes.func.isRequired,
 }
 
 export default QuestionForm
