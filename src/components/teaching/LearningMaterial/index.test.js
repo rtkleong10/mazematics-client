@@ -12,6 +12,6 @@ it('should take a snapshot', async () => {
         link: 'https://www.youtube.com/embed/AQ7THUKx6Es',
     };
 
-    const { asFragment, getByText } = render(<LearningMaterial editable={false} learningMaterial={learningMaterial} />);
+    const { asFragment } = render(<LearningMaterial editable={false} learningMaterial={learningMaterial} />);
     expect(asFragment()).toMatchSnapshot();
 })
