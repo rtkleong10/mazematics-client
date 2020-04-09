@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { EMPTY } from '../../../utils/constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -150,6 +152,11 @@ export class QuestionForm extends Component {
             </form>
         )
     }
+}
+
+QuestionForm.propTypes = {
+    initialState: PropTypes.object,
+    onSubmit: PropTypes.func.isRequired,
 }
 
 export default QuestionForm

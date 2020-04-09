@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { EMPTY } from '../../../utils/constants';
 
 export class BasicForm extends Component {
@@ -94,5 +96,10 @@ export class BasicForm extends Component {
         )
     }
 }
+
+BasicForm.propTypes = {
+    initialState: PropTypes.object,
+    onSubmit: PropTypes.func.isRequired,
+};
 
 export default BasicForm

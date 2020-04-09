@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { EMPTY } from '../../../utils/constants';
 
 /**
@@ -112,6 +114,11 @@ export class LearningMaterialForm extends Component {
             </form>
         )
     }
+}
+
+LearningMaterialForm.propTypes = {
+    initialState: PropTypes.object,
+    onSubmit: PropTypes.func.isRequired,
 }
 
 export default LearningMaterialForm
