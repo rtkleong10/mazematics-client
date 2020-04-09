@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { QuestionForm } from '../QuestionForm';
-import { submitAnswer, selectAnswerResult, selectAnswerResultFailed, selectAnswerResultLoading } from '../../../redux/ducks/progress';
+import { submitAnswer, selectAnswerResult, selectAnswerResultFailed } from '../../../redux/ducks/progress';
 import Modal from '../../common/Modal';
 import { EMPTY } from '../../../utils/constants';
 
@@ -62,8 +63,19 @@ export class QuestionModal extends Component {
     }
 };
 
+QuestionModal.propTypes = {
+    levelId: PropTypes.number.isRequired,
+    onClose: PropTypes.func.isRequired,
+    question: PropTypes.object.isRequired,
+    isVisible: PropTypes.bool.isRequired,
+
+    answerResultFailed: PropTypes.bool,
+    answerResult: PropTypes.number,
+
+    submitAnswer: PropTypes.func.isRequired,
+}
+
 const mapStateToProps = state => ({
-    answerResultLoading: selectAnswerResultLoading(state),
     answerResultFailed: selectAnswerResultFailed(state), 
     answerResult: selectAnswerResult(state),
 });
