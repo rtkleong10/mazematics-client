@@ -1,0 +1,26 @@
+.itm-side {
+  display: left;
+}
+
+.cnt {
+  position: absolute;
+  top: 0%;
+  right: 0.5%;
+  display: table;
+}
+
+.cnt::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.clear-margin {
+  position: relative;
+  top: 0%;
+  right: 1%;
+}
+
+.redcode {
+  color: rgb(200, 0, 0);
+}
