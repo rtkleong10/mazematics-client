@@ -68,19 +68,23 @@ export class QuestionForm extends Component {
             <form className="form" onSubmit={this.onSubmit}>
                 <p><strong>Options</strong></p>
                 {
-                    options.map((option, i) => 
-                        <div className="form-check" key={i}>
-                            <input
-                                className="form-check-input"
-                                id={`option-${i}`}
-                                type="radio"
-                                name="radio"
-                                onChange={e => this.onChangeAnswer(e.target.checked ? i : null)}
-                                checked={answer === parseInt(i)}
-                                />
-                            <label className="form-check-label" htmlFor={`option-${i}`}>{option}</label>
-                        </div>
-                    )
+                    Object.keys(options).map(key => {
+                        let option = options[key];
+                        
+                        return (
+                            <div className="form-check" key={key}>
+                                <input
+                                    className="form-check-input"
+                                    id={`option-${key}`}
+                                    type="radio"
+                                    name="radio"
+                                    onChange={e => this.onChangeAnswer(e.target.checked ? key : null)}
+                                    checked={answer === key}
+                                    />
+                                <label className="form-check-label" htmlFor={`option-${key}`}>{option}</label>
+                            </div>
+                        )
+                    })
                 }
                 <div className="form-group mt-4">
                     <button className="btn btn-primary" type="submit">Submit</button>
