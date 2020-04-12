@@ -7,7 +7,7 @@ import { USER_ROLES } from '../../../utils/constants';
 import { refreshTokenLogin, selectUserLoading, selectUserFailed, selectUser, selectRefreshToken } from '../../../redux/ducks/auth';
 
 import Header from '../Header';
-import Alert from '../Alert';
+import Errors from '../Errors';
 import Footer from '../Footer';
 import LoginPage from '../../accounts/LoginPage';
 import teachingRoutes from '../../teaching/teachingRoutes';
@@ -83,7 +83,7 @@ class AppRouter extends Component {
 
         return (
             <BrowserRouter>
-                <Alert />
+                <Errors />
                 <Header />
                 <Switch>
                     <Route
