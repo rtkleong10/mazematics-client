@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+/** This component displays a delete form */
 export default function DeleteForm(props) {
     const {
         onSubmit
@@ -15,5 +15,6 @@ export default function DeleteForm(props) {
 }
 
 DeleteForm.propTypes = {
+    /** The function to call when the form is submitted */
     onSubmit: PropTypes.func.isRequired,
 }

@@ -72,11 +72,13 @@ export class LeaderboardPage extends Component {
 LeaderboardPage.propTypes = {
     /** An object containing the topic ID and level ID based on which data is displayed */
    match: PropTypes.object.isRequired,
-
+   /** A boolean to determine if the leaderboard is still being loaded by the `fetchLeaderboard` action creator (true: still loading, false: fully loaded)*/
    leaderboardLoading: PropTypes.bool.isRequired,
+   /** A boolean to determine if the leaderboard is still being loaded by the `fetchLeaderboard` action creator (true: still loading or failed to load, false: successful load) */
    leaderboardFailed: PropTypes.bool,
+   /** An array of leaderboard rankings loaded by the `fetchLeaderboard` action creator */
    leaderboard: PropTypes.array.isRequired,
-
+   /** An action creator for listing leaderboard rankings */
    fetchLeaderboard: PropTypes.func.isRequired,
 };
 

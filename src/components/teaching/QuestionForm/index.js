@@ -5,6 +5,7 @@ import { EMPTY } from '../../../utils/constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
+/** This component display the form to modify a question  */
 export class QuestionForm extends Component {
     emptyState = {
         questionText: '',
