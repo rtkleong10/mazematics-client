@@ -101,6 +101,16 @@ class Player extends Component {
         });
     }
 
+    changeDirection(direction) {
+        const walkIndex = this.getWalkIndex();
+
+        this.setState({
+            direction,
+            walkIndex,
+            spriteLocation: this.getSpriteLocation(direction, walkIndex),
+        });
+    }
+
     //remove pokemon after pressing spacebar when beside the pokemon
     removeObstacle() {
         const oldPos = this.state.position;
@@ -115,9 +125,12 @@ class Player extends Component {
     attemptMove(direction) {
         const oldPos = this.state.position;
         const newPos = this.getNewPosition(oldPos, direction);
+
         //TODO: Don't allow player to move if quiz-in-progress aka props.showPopup is true
         if (this.observeBoundaries(oldPos, newPos) && this.observeImpassable(oldPos, newPos) && !this.props.showPopup)
             this.dispatchMove(direction, newPos);
+        else
+            this.changeDirection(direction);
     }
 
     handleKeyDown(e) {
