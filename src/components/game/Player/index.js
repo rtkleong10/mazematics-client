@@ -9,8 +9,8 @@ class Player extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            position: [0, 0],
-            spriteLocation: "0px 0px",
+            position: [SPRITE_SIZE, SPRITE_SIZE],
+            spriteLocation: `0px 0px`,
             direction: "east",
             walkIndex: 0
         };
