@@ -20,6 +20,7 @@ export class QuestionModal extends Component {
             answerResult,
             answerResultFailed,
             onClose,
+            onIncorrectAnswer,
         } = this.props;
 
         submitAnswer(levelId, question.id, answer)
@@ -28,6 +29,7 @@ export class QuestionModal extends Component {
                     if (answerResult) {
                         onClose(true);
                     } else {
+                        onIncorrectAnswer();
                         this.setState({
                             incorrectAnswer: true,
                         });
@@ -68,6 +70,7 @@ QuestionModal.propTypes = {
     onClose: PropTypes.func.isRequired,
     question: PropTypes.object.isRequired,
     isVisible: PropTypes.bool.isRequired,
+    onIncorrectAnswer: PropTypes.func.isRequired,
 
     answerResultFailed: PropTypes.bool,
     answerResult: PropTypes.number,
