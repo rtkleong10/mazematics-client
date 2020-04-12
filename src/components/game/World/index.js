@@ -6,7 +6,7 @@ import { SPRITE_SIZE, MAP_WIDTH, MAP_HEIGHT } from "../../../utils/constants";
 import QuestionModal from "../QuestionModal";
 import ElapsedTime from "../ElapsedTime";
 import PokemonClock from "../../../images/pokemon-clock.png";
-import "./style.css";
+import "./styles.css";
 import formatDuration from "format-duration";
 /**
  * This component displays the world in the game for the user. It renders the player and map.

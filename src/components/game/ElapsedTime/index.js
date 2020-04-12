@@ -1,6 +1,6 @@
 import React from "react";
 import formatDuration from "format-duration";
-import "./style.css";
+import "./styles.css";
 
 function elapsedTime(events) {
   /**return "00:00";*/
