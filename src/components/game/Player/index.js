@@ -51,7 +51,7 @@ class Player extends Component {
 
     getWalkIndex() {
         const walkIndex = this.state.walkIndex;
-        return (walkIndex + 1) % 3;
+        return (walkIndex + 1) % 4;
     }
 
     //true false function
