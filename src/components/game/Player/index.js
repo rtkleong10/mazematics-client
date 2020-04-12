@@ -9,7 +9,7 @@ class Player extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            position: [SPRITE_SIZE, SPRITE_SIZE],
+            position: [1, 1],
             spriteLocation: `0px 0px`,
             direction: "east",
             walkIndex: 0
@@ -19,13 +19,13 @@ class Player extends Component {
     getNewPosition(oldPos, direction) {
         switch (direction) {
             case "WEST":
-                return [oldPos[0] - SPRITE_SIZE, oldPos[1]];
+                return [oldPos[0] - 1, oldPos[1]];
             case "EAST":
-                return [oldPos[0] + SPRITE_SIZE, oldPos[1]];
+                return [oldPos[0] + 1, oldPos[1]];
             case "NORTH":
-                return [oldPos[0], oldPos[1] - SPRITE_SIZE];
+                return [oldPos[0], oldPos[1] - 1];
             case "SOUTH":
-                return [oldPos[0], oldPos[1] + SPRITE_SIZE];
+                return [oldPos[0], oldPos[1] + 1];
             default:
                 break;
         }
@@ -51,31 +51,31 @@ class Player extends Component {
 
     getWalkIndex() {
         const walkIndex = this.state.walkIndex;
-        return walkIndex >= 3 ? 0 : walkIndex + 1;
+        return (walkIndex + 1) % 3;
     }
 
     //true false function
     observeBoundaries(oldPos, newPos) {
         return (
             newPos[0] >= 0 &&
-            newPos[0] <= MAP_WIDTH * SPRITE_SIZE - SPRITE_SIZE &&
+            newPos[0] <= MAP_WIDTH - 1 &&
             newPos[1] >= 0 &&
-            newPos[1] <= MAP_HEIGHT * SPRITE_SIZE - SPRITE_SIZE
+            newPos[1] <= MAP_HEIGHT - 1
         );
     }
 
     observeImpassable(oldPos, newPos) {
         const tiles = this.props.tiles;
-        const y = newPos[1] / SPRITE_SIZE; //40 divide 40 = 1 step
-        const x = newPos[0] / SPRITE_SIZE;
+        const y = newPos[1];
+        const x = newPos[0];
         const nextTile = tiles[y][x];
         return nextTile < 3;
     }
 
     passThroughImpassable(oldPos, newPos) {
         const tiles = this.props.tiles;
-        const y = newPos[1] / SPRITE_SIZE; //40 divide 40 = 1 step
-        const x = newPos[0] / SPRITE_SIZE;
+        const y = newPos[1];
+        const x = newPos[0];
         const nextTile = tiles[y][x];
 
         return nextTile < 3 || nextTile > 6;
@@ -83,8 +83,8 @@ class Player extends Component {
 
     isObstacle(newPos) {
         const tiles = this.props.tiles;
-        const y = newPos[1] / SPRITE_SIZE; //40 divide 40 = 1 step
-        const x = newPos[0] / SPRITE_SIZE;
+        const y = newPos[1];
+        const x = newPos[0];
         const nextTile = tiles[y][x];
 
         return nextTile > 6;
@@ -145,8 +145,8 @@ class Player extends Component {
             <div
                 style={{
                     position: "absolute",
-                    top: this.state.position[1],
-                    left: this.state.position[0],
+                    top: this.state.position[1] * SPRITE_SIZE,
+                    left: this.state.position[0] * SPRITE_SIZE,
                     backgroundImage: `url('${walkSprite}')`,
                     backgroundPosition: this.state.spriteLocation,
                     width: "40px",

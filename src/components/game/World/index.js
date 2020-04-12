@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import Player from "../Player";
 import Map from "../Map";
-import { SPRITE_SIZE, MAP_WIDTH, MAP_HEIGHT } from "../../../utils/constants";
+import { MAP_WIDTH, MAP_HEIGHT } from "../../../utils/constants";
 import QuestionModal from "../QuestionModal";
 import GameClock from "../GameClock";
 
@@ -81,8 +81,8 @@ class World extends Component {
 
     handleEncounterObstacle = (pos) => {
         this.addTimerEvent(false); //pause the timer
-        const y = pos[1] / SPRITE_SIZE; //40 divide 40 = 1 step
-        const x = pos[0] / SPRITE_SIZE;
+        const y = pos[1];
+        const x = pos[0];
 
         const question = this.props.questions.find(
             (question) => question.coordinates.x === x && question.coordinates.y === y
@@ -97,7 +97,7 @@ class World extends Component {
         });
     };
 
-    handleQuestionModalClose = (correctAnswer) => {
+    handleQuestionModalClose = correctAnswer => {
         this.mapRef.focus();
 
         this.setState({
@@ -109,8 +109,8 @@ class World extends Component {
 
         if (correctAnswer) {
             const pos = this.state.questionModal.pos;
-            const y = pos[1] / SPRITE_SIZE; //40 divide 40 = 1 step
-            const x = pos[0] / SPRITE_SIZE;
+            const y = pos[1]; //40 divide 40 = 1 step
+            const x = pos[0];
             var newTiles = this.state.tiles;
             newTiles[y][x] = 0;
 
