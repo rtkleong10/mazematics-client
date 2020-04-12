@@ -1,7 +1,7 @@
 import React from "react";
 import formatDuration from "format-duration";
 
-import PokemonClock from "../../../images/pokemon-clock.png";
+import PokemonClock from "./pokemonClock.png";
 import "./styles.css";
 
 export default function GameClock(props) {
