@@ -146,7 +146,6 @@ export const authenticateLogin = userData => dispatch => {
         })
         .then(result => {
             fetchMe(result.access_token)(dispatch);
-            console.log(result);
             dispatch(loginAction(result));
         })
         .catch(err => {
