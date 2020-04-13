@@ -178,6 +178,7 @@ export const refreshTokenLogin = () => (dispatch, getState) => {
         })
         .catch(err => {
             displayError("Unable to login")(dispatch);
+            dispatch(fetchMeFailureAction());
         });
 };
 
@@ -191,7 +192,6 @@ export const logout = () => (dispatch, getState) => {
         })
         .catch(err => {
             displayError("Unable to logout")(dispatch);
-            dispatch(fetchMeFailureAction());
         });
 };
 
