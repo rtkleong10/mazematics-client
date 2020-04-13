@@ -123,4 +123,22 @@ describe('Integration test for teachers', () => {
         expect(axiosMock.get).toHaveBeenCalledTimes(1);
         done();
     });
+
+    it('should be able to logout', async done => {
+        global.fetch = jest.fn().mockImplementation(() => Promise.resolve({ok: true, json: () => ({})}));
+
+        const { getByText } = container;
+
+        fireEvent.click(getByText(/logout/i).closest('a'));
+
+        const loginButton = await waitForElement(() => getByText(/login/i).closest('a'));
+        fireEvent.click(loginButton);
+        
+        const login = await waitForElement(() => getByText(/login/i));
+
+        expect(login).toBeVisible();
+
+        expect(global.fetch).toHaveBeenCalledTimes(1);
+        done();
+    });
 });
