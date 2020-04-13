@@ -1,0 +1,3 @@
+```js
+<LearningMaterialForm initialState="EMPTY"/>
+```

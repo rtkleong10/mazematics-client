@@ -1,0 +1,3 @@
+```js
+<BasicForm initialState="EMPTY"/>
+```
