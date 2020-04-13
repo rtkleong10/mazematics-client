@@ -9,15 +9,14 @@ import topicJson from './json/topic.json';
 import levelsJson from './json/levels.json';
 import levelJson from './json/level.json';
 import learningMaterialsJson from './json/learningMaterials.json';
-import questionJson from './json/questions.json';
-import studentsReportsJson from './json/studentReports.json';
+import leaderboardJson from './json/leaderboard.json';
 import App from '../../components/common/App';
 
 jest.mock('axios');
 
 afterEach(jest.clearAllMocks);
 
-describe('Integration test for teaching platform', () => {
+describe('Integration test for students', () => {
     let container;
 
     beforeAll(() => {
@@ -39,8 +38,8 @@ describe('Integration test for teaching platform', () => {
         const { getByLabelText, getByText } = container;
 
         const loginDetails = {
-            username: 'teacher1@test.com',
-            password: 'teacher123',
+            username: 'user1@test.com',
+            password: 'user123',
         }
 
         fireEvent.change(getByLabelText(/username/i), {
@@ -91,32 +90,28 @@ describe('Integration test for teaching platform', () => {
                 return Promise.resolve(levelJson);
             else if (/learningMaterials/.test(url))
                 return Promise.resolve(learningMaterialsJson);
-            else if (/questions/.test(url))
-                return Promise.resolve(questionJson);
         });
 
         const { getByText } = container;
 
         fireEvent.click(getByText(/addition from 1 to 1000/i).closest('a'));
         
-        const learningMaterials = await waitForElement(() => getByText(/learning materials/i));
-        const questions = await waitForElement(() => getByText(/questions/i));
+        const learningMaterials = await waitForElement(() => getByText(/view learning materials/i));
 
         expect(learningMaterials).toBeVisible();
-        expect(questions).toBeVisible();
 
-        expect(axiosMock.get).toHaveBeenCalledTimes(3);
+        expect(axiosMock.get).toHaveBeenCalledTimes(2);
         done();
     });
 
-    it('should be able to click view student reports', async done => {
-        axiosMock.get.mockResolvedValueOnce(studentsReportsJson);
+    it('should be able to click view leaderboard', async done => {
+        axiosMock.get.mockResolvedValueOnce(leaderboardJson);
 
         const { getByText } = container;
 
-        fireEvent.click(getByText(/view student reports/i).closest('a'));
+        fireEvent.click(getByText(/view leaderboard/i).closest('a'));
         
-        const studentReports = await waitForElement(() => getByText(/student reports/i));
+        const studentReports = await waitForElement(() => getByText(/leaderboard/i));
 
         expect(studentReports).toBeVisible();
 
