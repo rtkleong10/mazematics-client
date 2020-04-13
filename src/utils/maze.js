@@ -62,7 +62,6 @@ export function generateMaze(numQuestions) {
 
     // Add surrounding walls
     let mazeWithSurroundings = mazeWithWalls.map(row => [WALL, ...row, WALL]);
-    console.log(mazeWithSurroundings);
 
     let wallRow = [];
     for (let i = 0; i < MAP_WIDTH; i++)
