@@ -22,7 +22,10 @@ const initialState = {
         [ADDITIONAL_METHODS.REPORT]: true,
     },
     hasFailed: {},
-    answerResult: null,
+    answerResult: {
+        question: null,
+        isCorrect: null,
+    },
     leaderboard: [],
     report: [],
 };
@@ -188,7 +191,10 @@ export const submitAnswer = (gameMapId, questionId, answer) => (dispatch, getSta
                 getTokenConfig(getState)
             )
             .then(res => {
-                dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, ADDITIONAL_METHODS.ANSWER, res.data));
+                dispatch(createApiAction(ENTITY_NAME, STATUSES.SUCCESS, ADDITIONAL_METHODS.ANSWER, {
+                    question: questionId,
+                    isCorrect: res.data,
+                }));
             })
             .catch(err => {
                 displayError("Unable to submit answer")(dispatch);
