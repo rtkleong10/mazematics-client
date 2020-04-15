@@ -142,7 +142,6 @@ export const authenticateLogin = userData => dispatch => {
     //     },
         
     // )
-
     fetch(`${API_URL}/oauth/token`, {
         method: 'POST',
         headers: {
@@ -165,19 +164,20 @@ export const authenticateLogin = userData => dispatch => {
 
 export const refreshTokenLogin = () => (dispatch, getState) => {
     var formdata = new FormData();
-    formdata.append("refresh_token", getState().authReducer.refresh_token);
+    // formdata.append("refresh_token", getState().authReducer.refresh_token);
+    formdata.append("refresh_token", localStorage.getItem("refresh_token"));
     formdata.append("grant_type", "refresh_token");
 
     fetch(`${API_URL}/oauth/token`, {
+        method: 'POST',
         headers: {
             'Authorization': `Basic ${btoa('my-client:my-secret')}`
         },
         body: formdata,
     })
-        .then(res => {
+        .then(res => { 
             if (!res.ok)
                 throw res
-            
             return res.json()
         })
         .then(result => {
