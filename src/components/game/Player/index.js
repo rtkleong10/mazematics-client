@@ -9,7 +9,6 @@ class Player extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            position: [1, 1],
             spriteLocation: `0px 0px`,
             direction: "east",
             walkIndex: 0
@@ -93,8 +92,10 @@ class Player extends Component {
     //dispatch
     dispatchMove(direction, newPos) {
         const walkIndex = this.getWalkIndex();
+
+        this.props.onChangePosition(newPos);
+
         this.setState({
-            position: newPos,
             direction,
             walkIndex,
             spriteLocation: this.getSpriteLocation(direction, walkIndex)
@@ -113,7 +114,7 @@ class Player extends Component {
 
     //remove pokemon after pressing spacebar when beside the pokemon
     removeObstacle() {
-        const oldPos = this.state.position;
+        const oldPos = this.props.position;
         const direction = this.state.direction;
         const newPos = this.getNewPosition(oldPos, direction);
 
@@ -123,7 +124,7 @@ class Player extends Component {
     }
 
     attemptMove(direction) {
-        const oldPos = this.state.position;
+        const oldPos = this.props.position;
         const newPos = this.getNewPosition(oldPos, direction);
 
         //TODO: Don't allow player to move if quiz-in-progress aka props.showPopup is true
@@ -154,12 +155,16 @@ class Player extends Component {
     }
 
     render() {
+        const {
+            position,
+        } = this.props;
+
         return (
             <div
                 style={{
                     position: "absolute",
-                    top: this.state.position[1] * SPRITE_SIZE,
-                    left: this.state.position[0] * SPRITE_SIZE,
+                    top: position[1] * SPRITE_SIZE,
+                    left: position[0] * SPRITE_SIZE,
                     backgroundImage: `url('${walkSprite}')`,
                     backgroundPosition: this.state.spriteLocation,
                     width: "40px",
