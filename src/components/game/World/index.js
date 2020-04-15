@@ -24,6 +24,7 @@ class World extends Component {
         nonce: 0,
         timingEvents: [],
         penaltyCount: 0,
+        position: [1, 1],
     };
 
     constructor(props) {
@@ -128,7 +129,9 @@ class World extends Component {
         } = this.props;
 
         const {
+            tiles,
             questionModal,
+            position,
         } = this.state;
 
         const timings = this.getTimings();
