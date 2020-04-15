@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MazematicsIcon from './mazematicsIcon.png';
 import PokemonIcon from './pokemonIcon.png';
+import {fetchMe} from './../../../redux/ducks/auth.js'
+import App from './../../common/App/index.js';
 
 const styles = theme => ({
     main: {
@@ -76,6 +78,13 @@ class LoginPage extends Component {
     state = {
         username: '',
         password: '',
+    }
+
+    componentWillMount(){
+        if(localStorage.getItem('access_token')){
+            this.props.fetchMe(localStorage.getItem('access_token'))
+            App()
+        }
     }
 
     handleChange = e => {
@@ -163,6 +172,7 @@ LoginPage.propTypes = {
 
 const dispatchers = {
     authenticateLogin,
+    fetchMe
 };
 
 export default connect(() => ({}), dispatchers)(withStyles(styles)(LoginPage));
