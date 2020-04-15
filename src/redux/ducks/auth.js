@@ -131,19 +131,28 @@ export const authenticateLogin = userData => dispatch => {
     formdata.append("password", userData.password);
     formdata.append("grant_type", "password");
 
+    // axios
+    // .post(
+    //     `${API_URL}/oauth/token`,
+    //     formdata,
+    //     {
+    //         headers: {
+    //             'Authorization': `Basic ${btoa('my-client:my-secret')}`
+    //         }
+    //     },
+        
+    // )
+
     fetch(`${API_URL}/oauth/token`, {
         method: 'POST',
         headers: {
             'Authorization': `Basic ${btoa('my-client:my-secret')}`
-        },
+        }
+    ,
         body: formdata,
     })
-        .then(res => {
-            if (!res.ok)
-                throw res
-            
-            return res.json()
-        })
+    .then(res =>  res.json()
+        )
         .then(result => {
             fetchMe(result.access_token)(dispatch);
             dispatch(loginAction(result));
@@ -160,7 +169,6 @@ export const refreshTokenLogin = () => (dispatch, getState) => {
     formdata.append("grant_type", "refresh_token");
 
     fetch(`${API_URL}/oauth/token`, {
-        method: 'POST',
         headers: {
             'Authorization': `Basic ${btoa('my-client:my-secret')}`
         },
