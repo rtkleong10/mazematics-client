@@ -146,15 +146,17 @@ class World extends Component {
                 }}
             >
                 <Map
-                    tiles={this.state.tiles}
-                    onKeyDown={(e) => this.playerRef.handleKeyDown(e)}
-                    ref={(mapRef) => (this.mapRef = mapRef)}
+                    tiles={tiles}
+                    onKeyDown={e => this.playerRef.handleKeyDown(e)}
+                    ref={mapRef => this.mapRef = mapRef}
                 />
                 <Player
-                    ref={(playerRef) => (this.playerRef = playerRef)}
-                    tiles={this.state.tiles}
-                    showPopup={this.state.questionModal.isVisible}
+                    ref={playerRef => this.playerRef = playerRef}
+                    tiles={tiles}
+                    showPopup={questionModal.isVisible}
                     handleEncounterObstacle={this.handleEncounterObstacle}
+                    onChangePosition={this.handleChangePosition}
+                    position={position}
                 />
                 <GameClock elapsedTime={timings.elapsedTime} penaltyTime={timings.penaltyTime} />
                 <QuestionModal
