@@ -80,7 +80,13 @@ class World extends Component {
         };
     }
 
-    handleEncounterObstacle = (pos) => {
+    handleChangePosition = position => {
+        this.setState({
+            position: position,
+        });
+    }
+
+    handleEncounterObstacle = pos => {
         this.addTimerEvent(false); //pause the timer
         const y = pos[1];
         const x = pos[0];
@@ -146,15 +152,17 @@ class World extends Component {
                 }}
             >
                 <Map
-                    tiles={this.state.tiles}
-                    onKeyDown={(e) => this.playerRef.handleKeyDown(e)}
-                    ref={(mapRef) => (this.mapRef = mapRef)}
+                    tiles={tiles}
+                    onKeyDown={e => this.playerRef.handleKeyDown(e)}
+                    ref={mapRef => this.mapRef = mapRef}
                 />
                 <Player
-                    ref={(playerRef) => (this.playerRef = playerRef)}
-                    tiles={this.state.tiles}
-                    showPopup={this.state.questionModal.isVisible}
+                    ref={playerRef => this.playerRef = playerRef}
+                    tiles={tiles}
+                    showPopup={questionModal.isVisible}
                     handleEncounterObstacle={this.handleEncounterObstacle}
+                    onChangePosition={this.handleChangePosition}
+                    position={position}
                 />
                 <GameClock elapsedTime={timings.elapsedTime} penaltyTime={timings.penaltyTime} />
                 <QuestionModal
