@@ -80,7 +80,13 @@ class World extends Component {
         };
     }
 
-    handleEncounterObstacle = (pos) => {
+    handleChangePosition = position => {
+        this.setState({
+            position: position,
+        });
+    }
+
+    handleEncounterObstacle = pos => {
         this.addTimerEvent(false); //pause the timer
         const y = pos[1];
         const x = pos[0];
