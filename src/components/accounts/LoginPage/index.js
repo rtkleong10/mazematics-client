@@ -168,6 +168,8 @@ LoginPage.propTypes = {
     authenticateLogin: PropTypes.func.isRequired,
     /** An object used for styling */
     classes: PropTypes.object.isRequired,
+    /** An action creator for fetching current user information */
+    fetchMe: PropTypes.func.isRequired,
 };
 
 const dispatchers = {
