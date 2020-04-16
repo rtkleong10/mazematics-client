@@ -164,8 +164,8 @@ export const authenticateLogin = userData => dispatch => {
 
 export const refreshTokenLogin = () => (dispatch, getState) => {
     var formdata = new FormData();
-    // formdata.append("refresh_token", getState().authReducer.refresh_token);
-    formdata.append("refresh_token", localStorage.getItem("refresh_token"));
+    formdata.append("refresh_token", getState().authReducer.refresh_token);
+    // formdata.append("refresh_token", localStorage.getItem("refresh_token"));
     formdata.append("grant_type", "refresh_token");
 
     fetch(`${API_URL}/oauth/token`, {
