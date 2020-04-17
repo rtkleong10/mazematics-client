@@ -32,7 +32,7 @@ describe('Integration test for teachers', () => {
     })
 
     it('should be able to login', async done => {
-        global.fetch = jest.fn().mockImplementation(() => Promise.resolve({ok: true, json: () => tokenJson}));
+        axiosMock.post.mockResolvedValueOnce(tokenJson);
         axiosMock.post.mockResolvedValueOnce(userJson);
         axiosMock.get.mockResolvedValueOnce(topicsJson);
 
@@ -57,8 +57,7 @@ describe('Integration test for teachers', () => {
         expect(topics).toBeVisible();
         expect(addition).toBeVisible();
 
-        expect(global.fetch).toHaveBeenCalledTimes(1);
-        expect(axiosMock.post).toHaveBeenCalledTimes(1);
+        expect(axiosMock.post).toHaveBeenCalledTimes(2);
         expect(axiosMock.get).toHaveBeenCalledTimes(1);
         done();
     });
@@ -125,7 +124,7 @@ describe('Integration test for teachers', () => {
     });
 
     it('should be able to logout', async done => {
-        global.fetch = jest.fn().mockImplementation(() => Promise.resolve({ok: true, json: () => ({})}));
+        axiosMock.delete.mockResolvedValueOnce({});
 
         const { getByText } = container;
 
@@ -138,7 +137,7 @@ describe('Integration test for teachers', () => {
 
         expect(login).toBeVisible();
 
-        expect(global.fetch).toHaveBeenCalledTimes(1);
+        expect(axiosMock.delete).toHaveBeenCalledTimes(1);
         done();
     });
 });
