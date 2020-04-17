@@ -26,7 +26,7 @@ describe('Integration test for system administrators', () => {
     })
 
     it('should be able to login', async done => {
-        global.fetch = jest.fn().mockImplementation(() => Promise.resolve({ok: true, json: () => tokenJson}));
+        axiosMock.post.mockResolvedValueOnce(tokenJson);
         axiosMock.post.mockResolvedValueOnce(userJson);
         axiosMock.get.mockResolvedValueOnce(usersJson);
 
@@ -49,14 +49,13 @@ describe('Integration test for system administrators', () => {
 
         expect(admin1).toBeVisible();
 
-        expect(global.fetch).toHaveBeenCalledTimes(1);
-        expect(axiosMock.post).toHaveBeenCalledTimes(1);
+        expect(axiosMock.post).toHaveBeenCalledTimes(2);
         expect(axiosMock.get).toHaveBeenCalledTimes(1);
         done();
     });
 
     it('should be able to logout', async done => {
-        global.fetch = jest.fn().mockImplementation(() => Promise.resolve({ok: true, json: () => ({})}));
+        axiosMock.delete.mockResolvedValueOnce({});
 
         const { getByText } = container;
 
@@ -69,7 +68,7 @@ describe('Integration test for system administrators', () => {
 
         expect(login).toBeVisible();
 
-        expect(global.fetch).toHaveBeenCalledTimes(1);
+        expect(axiosMock.delete).toHaveBeenCalledTimes(1);
         done();
     });
 });
