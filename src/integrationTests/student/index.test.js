@@ -161,7 +161,7 @@ describe('Integration test for students', () => {
     });
 
     it('should be able to logout', async done => {
-        axiosMock.post.mockResolvedValueOnce({});
+        axiosMock.delete.mockResolvedValueOnce({});
 
         const { getByText } = container;
 
