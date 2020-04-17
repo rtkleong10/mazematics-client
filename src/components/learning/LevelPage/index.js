@@ -66,7 +66,7 @@ export class LevelPage extends Component {
                         </div>
                         : <div className="mb-4">
                             <h2>Learning Materials</h2>
-                            <LearningMaterialList levelId={level.id} />
+                            <LearningMaterialList levelId={level.id} editable={false} />
                         </div>
                 }
                 <Link className="btn btn-primary mb-4" to={`/topics/${level.topic}/levels/${level.id}/game`}>
