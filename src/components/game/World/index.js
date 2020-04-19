@@ -104,6 +104,10 @@ class World extends Component {
         });
     };
 
+    handleCompleteGame = () => {
+        this.props.onCompleteGame();
+    }
+
     handleQuestionModalClose = correctAnswer => {
         this.mapRef.focus();
 
@@ -160,8 +164,9 @@ class World extends Component {
                     ref={playerRef => this.playerRef = playerRef}
                     tiles={tiles}
                     showPopup={questionModal.isVisible}
-                    handleEncounterObstacle={this.handleEncounterObstacle}
+                    onEncounterObstacle={this.handleEncounterObstacle}
                     onChangePosition={this.handleChangePosition}
+                    onCompleteGame={this.handleCompleteGame}
                     position={position}
                 />
                 <GameClock elapsedTime={timings.elapsedTime} penaltyTime={timings.penaltyTime} />

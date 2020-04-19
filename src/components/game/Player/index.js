@@ -89,6 +89,15 @@ class Player extends Component {
         return nextTile > 6;
     }
 
+    isGoal(newPos) {
+        const tiles = this.props.tiles;
+        const y = newPos[1];
+        const x = newPos[0];
+        const nextTile = tiles[y][x];
+
+        return nextTile === 4;
+    }
+
     //dispatch
     dispatchMove(direction, newPos) {
         const walkIndex = this.getWalkIndex();
@@ -113,14 +122,15 @@ class Player extends Component {
     }
 
     //remove pokemon after pressing spacebar when beside the pokemon
-    removeObstacle() {
+    attemptAction() {
         const oldPos = this.props.position;
         const direction = this.state.direction;
         const newPos = this.getNewPosition(oldPos, direction);
 
-        if (this.isObstacle(newPos)) {
-            this.props.handleEncounterObstacle(newPos);
-        }
+        if (this.isObstacle(newPos))
+            this.props.onEncounterObstacle(newPos);
+        else if (this.isGoal(newPos))
+            this.props.onCompleteGame();
     }
 
     attemptMove(direction) {
@@ -147,7 +157,7 @@ class Player extends Component {
             case 40:
                 return this.attemptMove("SOUTH");
             case 32: //spacebar
-                return this.removeObstacle();
+                return this.attemptAction();
 
             default:
                 break;
