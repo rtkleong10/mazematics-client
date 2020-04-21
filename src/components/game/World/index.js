@@ -56,10 +56,10 @@ class World extends Component {
         });
     }
 
-    handleIncorrectAnswer = () =>  {
+    addPenalty = penaltyCount =>  {
         // Add a penalty for every incorrect answer
         this.setState({
-            penaltyCount: this.state.penaltyCount + 1,
+            penaltyCount: this.state.penaltyCount + penaltyCount,
         });
     }
 
@@ -203,7 +203,7 @@ class World extends Component {
                     question={questionModal.question}
                     isVisible={questionModal.isVisible}
                     onClose={this.handleQuestionModalClose}
-                    onIncorrectAnswer={this.handleIncorrectAnswer}
+                    addPenalty={this.addPenalty}
                     levelId={levelId}
                 />
             </div>

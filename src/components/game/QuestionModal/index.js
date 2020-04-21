@@ -8,6 +8,20 @@ import Modal from '../../common/Modal';
 import { EMPTY } from '../../../utils/constants';
 
 export class QuestionModal extends Component {
+    state = {
+        attempts: 0
+    };
+
+    handleClose = isCorrect => {
+        const penaltyCount = isCorrect ? this.state.attempts - 1 : this.state.attempts;
+        this.props.addPenalty(penaltyCount);
+        this.props.onClose(isCorrect);
+
+        this.setState({
+            attempts: 0
+        });
+    }
+
     handleSubmit = answer => {
         const {
             levelId,
@@ -16,13 +30,16 @@ export class QuestionModal extends Component {
         } = this.props;
         
         submitAnswer(levelId, question.id, answer);
+
+        this.setState({
+            attempts: this.state.attempts + 1
+        });
     }
 
     render() {
         const {
             question,
             isVisible,
-            onClose,
             answerResult,
         } = this.props;
 
@@ -33,8 +50,8 @@ export class QuestionModal extends Component {
                 <Modal
                     title="Correct Answer"
                     isVisible={isVisible}
-                    onClose={() => onClose(true)}>
-                        <button className="btn btn-success" onClick={() => onClose(true)}>Return to Maze</button>
+                    onClose={() => this.handleClose(true)}>
+                        <button className="btn btn-success" onClick={() => this.handleClose(true)}>Return to Maze</button>
                 </Modal>
             )
         }
@@ -43,7 +60,7 @@ export class QuestionModal extends Component {
             <Modal
                 title={question.questionText}
                 isVisible={isVisible}
-                onClose={() => onClose(false)}>
+                onClose={() => this.handleClose(false)}>
                     {isCorrect === false && <p className="text-danger">Incorrect Answer</p>}
                     <QuestionForm
                         options={question.options}
@@ -60,7 +77,7 @@ QuestionModal.propTypes = {
     onClose: PropTypes.func.isRequired,
     question: PropTypes.object.isRequired,
     isVisible: PropTypes.bool.isRequired,
-    onIncorrectAnswer: PropTypes.func.isRequired,
+    addPenalty: PropTypes.func.isRequired,
 
     answerResultFailed: PropTypes.bool,
     answerResult: PropTypes.object,
