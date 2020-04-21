@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should take a snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="clock d-flex align-items-center"
+  >
+    <img
+      alt="Pokemon Clock"
+      class="mr-2"
+      height="20px"
+      src="pokemonClock.png"
+      width="20px"
+    />
+    <small
+      class="mr-2"
+    >
+      0:00
+    </small>
+    <small
+      class="text-danger"
+    >
+      Penalty: 0s
+    </small>
+  </div>
+</DocumentFragment>
+`;

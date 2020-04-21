@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import { SPRITE_SIZE, MAP_WIDTH, MAP_HEIGHT } from "../../../utils/constants";
 import "./styles.css";
 
+/**
+ * This component creates the tiles of the map based on numbers given for different obstacles.
+ * This component creates the rows of the map based on the tiles created.
+ * This component displays the map of the game based on the rows created.
+ */
 //action
 function getTileSprite(type) {
     switch (type) {

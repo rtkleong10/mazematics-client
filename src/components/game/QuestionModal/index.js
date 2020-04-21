@@ -73,15 +73,21 @@ export class QuestionModal extends Component {
 };
 
 QuestionModal.propTypes = {
+    /** A number to indicate the level user is currently on */
     levelId: PropTypes.number.isRequired,
+    /** A function to call when user submits a correct answer */
     onClose: PropTypes.func.isRequired,
+    /** A question object displayed on Question Model and is fetched by API*/
     question: PropTypes.object.isRequired,
+    /** A boolean to indicate if Question Form Popup is visible to player */
     isVisible: PropTypes.bool.isRequired,
+    /** A function to penalise time duration and is called after answerResultFailed = True */
     addPenalty: PropTypes.func.isRequired,
-
+    /** A boolean to indicate if user's selection option is correct(answerResultFailed = False) or wrong (answerResultFailed = True) */
     answerResultFailed: PropTypes.bool,
+    /** A answer result object to indicate user's selected option */
     answerResult: PropTypes.object,
-
+    /** A function to call when the user clicks submit button, function contains parameters of user's answer, question id, and level id */
     submitAnswer: PropTypes.func.isRequired,
 }
 
