@@ -9,5 +9,5 @@ const details = {
         title: 'Basic Addition',
         description: 'This is an interesting video',
     };
-withReduxRouter(<BasicCard editable={true} details={details} link="https://www.youtube.com/embed/AuX7nPBqDts" handleUpdate={()=>{}} handleDelete={()=>{}}/>).renderedComponent
+withReduxRouter(<BasicCard editable={true} details={details} link="https://www.youtube.com/embed/AuX7nPBqDts" handleUpdate={()=>{}} handleDelete={()=>{}}/>)
 ```

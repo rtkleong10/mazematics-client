@@ -23,7 +23,24 @@ const initialState = {
             "name": "Bob"
         }
     },
-    topicsReducer: {
+    levelsReducer: {
+        item: 
+                    {
+                        "id": 1,
+                        "title": "Adding 1 to 100",
+                        "description": "Small numbers.",
+                        "topic":1,
+                        "playable":true
+
+                        },
+        isLoading: {
+            [METHODS.LIST]: false
+        },
+        hasLoaded: {
+            [METHODS.LIST]: false
+        }
+    },
+    questionsReducer: {
         items: [
                     {
                         "id": 1,
@@ -33,16 +50,42 @@ const initialState = {
                             "1": 2,
                         },
                         "answer": 1,
+                    },
+                    {
+                        "id": 2,
+                        "questionText": "1 + 2",
+                        "options": {
+                            "0": 1,
+                            "1": 2,
+                            "2": 3,
+                        },
+                        "answer": 2,
                     }
-                    ],
+                ],
         isLoading: {
             [METHODS.LIST]: false
         },
-        hasLoaded: {
+        hasFailed: {
             [METHODS.LIST]: false
         }
-    }
+    },
+    learningMaterialsReducer: {
+        items: [
+                    {
+                            "id": 1,
+                            "title": "Basic addition",
+                            "description": "Interesting video",
+                            "link": "https://www.youtube.com/embed/Fe8u2I3vmHU",
+                        }
+                ],
+        isLoading: {
+            [METHODS.LIST]: false
+        },
+        hasFailed: {
+            [METHODS.LIST]: false
+        }
+    },
 }
 
-withReduxRouter(<LevelPage match={matchObject}/>, initialState).renderedComponent
+withReduxRouter(<LevelPage match={matchObject}/>, initialState)
 ```

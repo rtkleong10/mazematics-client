@@ -56,7 +56,7 @@ export default function LearningMaterial(props) {
 }
 
 LearningMaterial.propTypes = {
-    /** A string storing the name of the class of the question */
+    /** A string storing the html to be included in the component */
     classes: PropTypes.string,
     /** A boolean to determine if the learning material object is editable or not (true: editable, false: cannot be edited) */
     editable: PropTypes.bool.isRequired,

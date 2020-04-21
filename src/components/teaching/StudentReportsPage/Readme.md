@@ -12,11 +12,6 @@ const matchObject = {
     }
 }
 const initialState = {
-    authReducer: {
-        user: {
-            "name": "Bob"
-        }
-    },
     progressReducer: {
         additionalReducer: {
             report: [
@@ -78,5 +73,5 @@ const initialState = {
     }
 }
 
-withReduxRouter(<StudentReportsPage />, initialState).renderedComponent
+withReduxRouter(<StudentReportsPage match={matchObject}/>, initialState)
 ```

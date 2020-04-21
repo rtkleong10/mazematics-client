@@ -12,15 +12,15 @@ beforeEach(() => {
         data: [
             {
                 name: "Bob",
-                timing: 1.2,
+                timing: 120000,
             },
             {
                 name: "Joe",
-                timing: 1.5,
+                timing: 150000,
             },
             {
                 name: "Kelly",
-                timing: 2.0,
+                timing: 200000,
             },
         ]
     });

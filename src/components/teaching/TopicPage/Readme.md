@@ -38,7 +38,7 @@ const initialState = {
                     "id": 2,
                     "title": "Adding 1 to 1000",
                     "description": "Big numbers.",
-                    "playable":false
+                    "playable":true
                 }
         ],
         isLoading: {
@@ -50,5 +50,5 @@ const initialState = {
     }
 }
 
-withReduxRouter(<TopicPage match={matchObject} />, initialState).renderedComponent
+withReduxRouter(<TopicPage match={matchObject} />, initialState)
 ```

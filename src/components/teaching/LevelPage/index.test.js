@@ -14,7 +14,7 @@ beforeEach(() => {
                 data: {
                     id: 1,
                     title: "Adding 1 to 100",
-                    description: "Smol numbers.",
+                    description: "Small numbers.",
                     playable: true,
                     topic: 1
                 }
@@ -112,7 +112,7 @@ it('should display edit or delete buttons if unplayable', async () => {
                 data: {
                     id: 1,
                     title: "Adding 1 to 100",
-                    description: "Smol numbers.",
+                    description: "Small numbers.",
                     playable: false,
                     topic: 1
                 }

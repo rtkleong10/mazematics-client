@@ -11,5 +11,5 @@ quesobj={
 };
 var editablebool=true;
 
-withReduxRouter(<Question editable={editablebool} question={quesobj}/>).renderedComponent;
+<Question editable={editablebool} question={quesobj} handleUpdate={()=>{}} handleDelete={()=>{}}/>
 ```

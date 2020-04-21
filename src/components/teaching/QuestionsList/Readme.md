@@ -36,5 +36,5 @@ const initialState = {
     }
 }
 
-withReduxRouter(<QuestionsList levelId={1} editable={true}/>, initialState).renderedComponent
+withReduxRouter(<QuestionsList levelId={1} editable={true}/>, initialState)
 ```
