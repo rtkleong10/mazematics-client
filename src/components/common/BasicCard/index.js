@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-
+/**This component is used to display an item with a title and description */
 export default function BasicCard(props) {
     const {
         classes,
@@ -44,11 +44,18 @@ export default function BasicCard(props) {
 }
 
 BasicCard.propTypes = {
+     /** A string storing the html to be included in the component */
     classes: PropTypes.string,
+    /** A boolean to determine if the item is editable or not (true: editable, false: cannot be edited) */
     editable: PropTypes.bool.isRequired,
+    /** An object containing the item's title and description */
     details: PropTypes.object.isRequired,
+    /** A badge for the component */
     badge: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.element]),
+    /** A string storing a link for the item title */
     link: PropTypes.string.isRequired,
+    /** An action creator for handling item update request */
     handleUpdate: PropTypes.func,
+    /** An action creator for handling item deletion request */
     handleDelete: PropTypes.func,
 }

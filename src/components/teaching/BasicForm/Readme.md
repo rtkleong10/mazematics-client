@@ -1,3 +1,6 @@
 ```js
-<BasicForm initialState="EMPTY"/>
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+
+<BasicForm initialState="EMPTY" onSubmit={()=>{}}/>
 ```

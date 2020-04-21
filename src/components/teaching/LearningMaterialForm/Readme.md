@@ -1,3 +1,3 @@
 ```js
-<LearningMaterialForm initialState="EMPTY"/>
+<LearningMaterialForm initialState="EMPTY" onSubmit={()=>{}}/>
 ```
