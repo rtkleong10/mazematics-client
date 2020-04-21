@@ -4,8 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { authenticateLogin } from '../../../redux/ducks/auth';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import icon from '../../../images/icon.png';
-import PokemonIcon from '../../../images/pokemonIcon.png';
+import MazematicsIcon from './mazematicsIcon.png';
+import PokemonIcon from './pokemonIcon.png';
 
 const styles = theme => ({
     main: {
@@ -100,14 +100,15 @@ class LoginPage extends Component {
         } = this.props;
 
         return (
-            <div className={classes.main}>
+            <div className={classes.main} data-test="loginContainer">
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
-                    <img src={icon} className={classes.icon} alt="Mazematic Icon" />
+                    <img src={MazematicsIcon} className={classes.icon} alt="Mazematic Icon" />
                     <div className={classes.paper}>
                         <img src={PokemonIcon} className={classes.avatar} alt="Pokemon Icon" />
                         <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
                             <TextField
+                                data-testid = "usernameField"
                                 onChange={this.handleChange}
                                 defaultValue={username}
                                 variant="outlined"
@@ -121,6 +122,7 @@ class LoginPage extends Component {
                                 autoFocus
                             />
                             <TextField
+                                data-testid = "passwordField"
                                 onChange={this.handleChange}
                                 defaultValue={password}
                                 variant="outlined"
@@ -134,6 +136,7 @@ class LoginPage extends Component {
                                 autoComplete="current-password"
                             />
                             <Button
+                                data-testid = "loginButton"
                                 type="submit"
                                 fullWidth
                                 variant="contained"
@@ -159,7 +162,7 @@ LoginPage.propTypes = {
 };
 
 const dispatchers = {
-    authenticateLogin,
+    authenticateLogin
 };
 
 export default connect(() => ({}), dispatchers)(withStyles(styles)(LoginPage));
