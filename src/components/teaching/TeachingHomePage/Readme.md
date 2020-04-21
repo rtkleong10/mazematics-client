@@ -28,9 +28,12 @@ const initialState = {
         ],
         isLoading: {
             [METHODS.LIST]: false
+        },
+        hasFailed: {
+            [METHODS.LIST]: false
         }
     }
 }
 
-withReduxRouter(<TeachingHomePage />, initialState).renderedComponent
+withReduxRouter(<TeachingHomePage />, initialState)
 ```

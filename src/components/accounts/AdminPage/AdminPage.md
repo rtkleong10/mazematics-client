@@ -2,6 +2,7 @@
 
 ```js
 import { withReduxRouter } from '../../../utils/mock.js';
+import { METHODS } from '../../../redux/ducks/apiHelper.js';
 
 const initialState = {
     usersReducer: {
@@ -22,9 +23,12 @@ const initialState = {
             "role" : "ROLE_ADMIN"
             }
         ],
-        usersLoading: false,
-        usersFailed: false,
-        isLoading: false
+        isLoading: {
+            [METHODS.LIST]: false,
+        },
+        hasFailed: {
+            [METHODS.LIST]: false,
+        },
     }   
 }
 
@@ -33,6 +37,5 @@ withReduxRouter((
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
         <AdminPage/>
     </>
-), initialState).renderedComponent    
-
+), initialState)
 ```

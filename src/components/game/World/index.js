@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux'
 
 import Player from "../Player";
 import Map from "../Map";
 import { MAP_WIDTH, MAP_HEIGHT } from "../../../utils/constants";
 import QuestionModal from "../QuestionModal";
 import GameClock from "../GameClock";
+import { updateProgress, createOrResetProgress } from "../../../redux/ducks/progress";
 
 /**
  * This component displays the world in the game for the user. It renders the player and map.
@@ -33,6 +35,13 @@ class World extends Component {
     }
 
     componentDidMount() {
+        const {
+            createOrResetProgress,
+            levelId
+        } = this.props;
+        
+        const progress = this.getCurrentProgress(false);
+        createOrResetProgress(levelId, progress);
         this.mapRef.focus();
         this.addTimerEvent();
     }
@@ -47,14 +56,14 @@ class World extends Component {
         });
     }
 
-    addTimerEvent = isPenalty => {
+    addPenalty = penaltyCount =>  {
         // Add a penalty for every incorrect answer
-        if (isPenalty) {
-            this.setState({
-                penaltyCount: this.state.penaltyCount + 1,
-            });
-        }
+        this.setState({
+            penaltyCount: this.state.penaltyCount + penaltyCount,
+        });
+    }
 
+    addTimerEvent = () => {
         this.setState({
             timingEvents: [...this.state.timingEvents, new Date()],
         });
@@ -87,7 +96,7 @@ class World extends Component {
     }
 
     handleEncounterObstacle = pos => {
-        this.addTimerEvent(false); //pause the timer
+        this.addTimerEvent(); //pause the timer
         const y = pos[1];
         const x = pos[0];
 
@@ -104,15 +113,26 @@ class World extends Component {
         });
     };
 
-    handleQuestionModalClose = correctAnswer => {
-        this.mapRef.focus();
+    handleCompleteGame = () => {
+        const {
+            updateProgress,
+            levelId
+        } = this.props;
+        const progress = this.getCurrentProgress(true);
+        updateProgress(levelId, progress);
 
+        this.props.onCompleteGame();
+    }
+
+    handleQuestionModalClose = correctAnswer => {
         this.setState({
             questionModal: {
                 ...this.state.questionModal,
                 isVisible: false,
             },
         });
+
+        this.mapRef.focus();
 
         if (correctAnswer) {
             const pos = this.state.questionModal.pos;
@@ -124,9 +144,22 @@ class World extends Component {
             this.setState({
                 tiles: newTiles,
             });
+            
         }
 
-        this.addTimerEvent(false); //add a time event to resume the timer
+        // Resume the timer
+        this.addTimerEvent();
+    };
+
+    getCurrentProgress(isComplete) {
+        return {
+            position: {
+                "x": this.state.position[0],
+                "y": this.state.position[1],
+            },
+            timeTaken: this.getTimings().totalTime,
+            complete: isComplete,
+        };
     };
 
     render() {
@@ -160,8 +193,9 @@ class World extends Component {
                     ref={playerRef => this.playerRef = playerRef}
                     tiles={tiles}
                     showPopup={questionModal.isVisible}
-                    handleEncounterObstacle={this.handleEncounterObstacle}
+                    onEncounterObstacle={this.handleEncounterObstacle}
                     onChangePosition={this.handleChangePosition}
+                    onCompleteGame={this.handleCompleteGame}
                     position={position}
                 />
                 <GameClock elapsedTime={timings.elapsedTime} penaltyTime={timings.penaltyTime} />
@@ -169,7 +203,7 @@ class World extends Component {
                     question={questionModal.question}
                     isVisible={questionModal.isVisible}
                     onClose={this.handleQuestionModalClose}
-                    onIncorrectAnswer={() => this.addTimerEvent(true)}
+                    addPenalty={this.addPenalty}
                     levelId={levelId}
                 />
             </div>
@@ -177,4 +211,9 @@ class World extends Component {
     }
 }
 
-export default World;
+const dispatchers = {
+    createOrResetProgress,
+    updateProgress,
+};
+
+export default connect(() => ({}), dispatchers)(World);

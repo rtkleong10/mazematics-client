@@ -40,13 +40,14 @@ export class LevelPage extends Component {
         
         // Display learning materials if there's no existing progress
         const viewedBefore = progress !== null;
+        const completedBefore = progress !== null && progress.complete === true;
 
         return (
             <div className="container">
                 <Link className="btn btn-light mb-2" to={`/topics/${level.topic}/`}>
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Topic Page
                 </Link>
-                <h1>{level.title}</h1>
+                <h1>{level.title}{completedBefore && (<>&nbsp;<span className="badge badge-success">Completed</span></>)}</h1>
                 <p>{level.description}</p>
                 <div className="mb-4">
                     <Link className="btn btn-primary" to={`/topics/${level.topic}/levels/${level.id}/leaderboard`}>
@@ -69,9 +70,12 @@ export class LevelPage extends Component {
                             <LearningMaterialList levelId={level.id} editable={false} />
                         </div>
                 }
-                <Link className="btn btn-primary mb-4" to={`/topics/${level.topic}/levels/${level.id}/game`}>
-                    Play Game
-                </Link>
+                {
+                    !completedBefore &&
+                        <Link className="btn btn-primary mb-4" to={`/topics/${level.topic}/levels/${level.id}/game`}>
+                            Play Game
+                        </Link>
+                }
             </div>
         );
     }

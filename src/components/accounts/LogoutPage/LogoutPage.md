@@ -3,5 +3,5 @@
 ```js
 import { withReduxRouter } from '../../../utils/mock.js';
 
-withReduxRouter(<LogoutPage/>).renderedComponent
+withReduxRouter(<LogoutPage/>)
 ```

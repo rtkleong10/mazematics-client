@@ -39,5 +39,5 @@ const initialState = {
     }
 }
 
-withReduxRouter(<LearningHomePage />, initialState).renderedComponent
+withReduxRouter(<LearningHomePage />, initialState)
 ```
