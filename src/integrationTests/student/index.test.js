@@ -153,25 +153,6 @@ describe('Integration test for students', () => {
         done();
     });
 
-    it('should be able to play game', async done => {
-        axiosMock.get.mockImplementation(url => {
-            if (/topics/.test(url))
-                return Promise.resolve(levelJson);
-            else if (/questions/.test(url))
-                return Promise.resolve(questionsJson);
-        });
-
-        const { getByText } = container;
-
-        fireEvent.click(getByText(/play game/i).closest('a'));
-
-        const game = await waitForElement(() => getByText(/game/i));
-
-        expect(game).toBeVisible();
-        expect(axiosMock.get).toHaveBeenCalledTimes(2);
-        done();
-    });
-
     it('should be able to logout', async done => {
         axiosMock.delete.mockResolvedValueOnce({});
 
