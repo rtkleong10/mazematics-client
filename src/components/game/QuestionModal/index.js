@@ -24,7 +24,6 @@ export class QuestionModal extends Component {
             isVisible,
             onClose,
             answerResult,
-            resumeTimer,
         } = this.props;
 
         const isCorrect = (answerResult.question === question.id) ? answerResult.isCorrect : null;
@@ -34,7 +33,7 @@ export class QuestionModal extends Component {
                 <Modal
                     title="Correct Answer"
                     isVisible={isVisible}
-                    onClose={() => {onClose(true); resumeTimer();}}>
+                    onClose={() => onClose(true)}>
                         <button className="btn btn-success" onClick={() => onClose(true)}>Return to Maze</button>
                 </Modal>
             )
@@ -44,7 +43,7 @@ export class QuestionModal extends Component {
             <Modal
                 title={question.questionText}
                 isVisible={isVisible}
-                onClose={() => {onClose(false); resumeTimer();}}>
+                onClose={() => onClose(false)}>
                     {isCorrect === false && <p className="text-danger">Incorrect Answer</p>}
                     <QuestionForm
                         options={question.options}
@@ -62,7 +61,6 @@ QuestionModal.propTypes = {
     question: PropTypes.object.isRequired,
     isVisible: PropTypes.bool.isRequired,
     onIncorrectAnswer: PropTypes.func.isRequired,
-    resumeTimer: PropTypes.func.isRequired,
 
     answerResultFailed: PropTypes.bool,
     answerResult: PropTypes.object,

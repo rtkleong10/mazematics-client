@@ -125,14 +125,14 @@ class World extends Component {
     }
 
     handleQuestionModalClose = correctAnswer => {
-        this.mapRef.focus();
-
         this.setState({
             questionModal: {
                 ...this.state.questionModal,
                 isVisible: false,
             },
         });
+
+        this.mapRef.focus();
 
         if (correctAnswer) {
             const pos = this.state.questionModal.pos;
@@ -146,6 +146,9 @@ class World extends Component {
             });
             
         }
+
+        // Resume the timer
+        this.addTimerEvent();
     };
 
     getCurrentProgress(isComplete) {
@@ -202,7 +205,6 @@ class World extends Component {
                     onClose={this.handleQuestionModalClose}
                     onIncorrectAnswer={this.handleIncorrectAnswer}
                     levelId={levelId}
-                    resumeTimer={this.addTimerEvent}
                 />
             </div>
         );
