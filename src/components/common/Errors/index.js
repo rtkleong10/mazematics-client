@@ -40,7 +40,9 @@ export class Errors extends Component {
 
 Errors.propTypes = {
     /** An object containing all errors*/
-    errors: PropTypes.object.isRequired,  
+    errors: PropTypes.array.isRequired,
+    /** A function for closing a particular error*/
+    closeError: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({

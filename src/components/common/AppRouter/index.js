@@ -16,6 +16,7 @@ import accountsRoutes from '../../accounts/accountsRoutes';
 import LogoutPage from '../../accounts/LogoutPage';
 import NotFoundPage from '../NotFoundPage';
 import Loader from '../Loader';
+
 /** This component handles the routing for the app */
 class AppRouter extends Component {
     componentDidMount() {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Modal from '../Modal';
+
 /** This component displays a pop-up form based on Modal*/
 export class ModalForm extends Component {
     handleSubmit = (...args) => {
