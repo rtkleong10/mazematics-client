@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should take a snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class="form"
+  >
+    <p>
+      <strong>
+        Options
+      </strong>
+    </p>
+    <div
+      class="form-check"
+    >
+      <input
+        class="form-check-input"
+        id="option-0"
+        name="radio"
+        type="radio"
+      />
+      <label
+        class="form-check-label"
+        for="option-0"
+      >
+        1
+      </label>
+    </div>
+    <div
+      class="form-check"
+    >
+      <input
+        class="form-check-input"
+        id="option-1"
+        name="radio"
+        type="radio"
+      />
+      <label
+        class="form-check-label"
+        for="option-1"
+      >
+        2
+      </label>
+    </div>
+    <div
+      class="form-group mt-4"
+    >
+      <button
+        class="btn btn-primary"
+        type="submit"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</DocumentFragment>
+`;

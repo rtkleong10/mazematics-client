@@ -1,17 +1,28 @@
 import React from "react";
-import Player from "../Player";
-import Popup from "../Popup";
-import Map from "../Map";
+import { cleanup } from "@testing-library/react";
+import axiosMock from "axios";
+
 import { tiles } from "../../../utils/data/maps/1";
 import World from "./index.js";
-import ReactDOM from "react-dom";
-import { cleanup } from "@testing-library/react";
 import { renderWithRedux } from "../../../utils/tests";
 
+jest.mock('axios');
 
-afterEach(cleanup);
+beforeEach(() => {
+    axiosMock.get.mockRejectedValueOnce({
+        response: {
+            status: 404,
+        }
+    });
+
+    axiosMock.post.mockResolvedValueOnce({});
+});
+
+afterEach(() => {
+    cleanup();
+    jest.clearAllMocks();
+});
 
 it('renders without crashing', async () => {
-    renderWithRedux(<World tiles={tiles} question={[]} levelId={1} />);
+    renderWithRedux(<World levelId={1} tiles={tiles} questions={[]} onCompleteGame={() => {}} />);
 })
-

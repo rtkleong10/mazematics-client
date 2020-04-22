@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
 
 import Player from "../Player";
 import Map from "../Map";
@@ -19,7 +20,7 @@ class World extends Component {
             question: {
                 id: null,
                 questionText: "",
-                options: [],
+                options: {},
             },
             pos: null,
         },
@@ -192,11 +193,10 @@ class World extends Component {
                 <Player
                     ref={playerRef => this.playerRef = playerRef}
                     tiles={tiles}
-                    showPopup={questionModal.isVisible}
+                    position={position}
                     onEncounterObstacle={this.handleEncounterObstacle}
                     onChangePosition={this.handleChangePosition}
                     onCompleteGame={this.handleCompleteGame}
-                    position={position}
                 />
                 <GameClock elapsedTime={timings.elapsedTime} penaltyTime={timings.penaltyTime} />
                 <QuestionModal
@@ -209,6 +209,22 @@ class World extends Component {
             </div>
         );
     }
+}
+
+World.propTypes = {
+    /** The ID of the level */
+    levelId: PropTypes.number.isRequired,
+    /** The tiles to be displayed on the map */
+    tiles: PropTypes.array.isRequired,
+    /** The questions to ask the student */
+    questions: PropTypes.array.isRequired,
+    /** The function to call when the game is complete */
+    onCompleteGame: PropTypes.func.isRequired,
+
+    /** This function will create a new progress if there isn't any or delete and create one if there is an existing progress */
+    createOrResetProgress: PropTypes.func.isRequired,
+    /** This function will update the current progress */
+    updateProgress: PropTypes.func.isRequired,
 }
 
 const dispatchers = {

@@ -11,8 +11,6 @@ import { retrieveLevel, selectPlayableLevel, selectLevelLoading, selectLevelFail
 import { listQuestions, selectQuestions, selectQuestionsFailed, selectQuestionsLoading } from '../../../redux/ducks/questions';
 import { generateTiles } from "../../../utils/maze";
 
-// import ReactPlayer from "react-player";
-// import Timer from "../src/components/timer/"
 /**
  * This component displays the GamePage for user. It contains the world component.
  */
@@ -56,14 +54,18 @@ export class GamePage extends Component {
                     <FontAwesomeIcon icon={faChevronLeft}/> Back to Level Page
                 </Link>
                 <h1>Game</h1>
+                <div className="card">
+                    <h2 className="card-header">How to Play</h2>
+                    <div className="card-body">
+                        <ul>
+                            <li>Goal: Reach the house in the shortest amount of time</li>
+                            <li>Use the arrow keys to move around.</li>
+                            <li>To get rid of a blocking Pokemon, press spacebar when facing it and answer the question. There's a 10s penalty for every incorrect answer.</li>
+                            <li>To complete the game, navigate to the house and press spacebar when facing it.</li>
+                        </ul>
+                    </div>
+                </div>
                 <World levelId={level.id} tiles={tiles} questions={questions} onCompleteGame={this.handleCompleteGame} />
-                {/* <Timer/> */}
-                    {/* <ReactPlayer
-                width="0%"
-                height="0%"
-                url="https://www.youtube.com/watch?v=5O3a5opHbY4&t=18s"
-                playing
-                /> */}
             </div>
         )
     }

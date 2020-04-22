@@ -1,13 +1,9 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types'
+
 import { SPRITE_SIZE, MAP_WIDTH, MAP_HEIGHT } from "../../../utils/constants";
 import "./styles.css";
 
-/**
- * This component creates the tiles of the map based on numbers given for different obstacles.
- * This component creates the rows of the map based on the tiles created.
- * This component displays the map of the game based on the rows created.
- */
-//action
 function getTileSprite(type) {
     switch (type) {
         case 0:
@@ -54,7 +50,6 @@ function getTileSprite(type) {
     }
 }
 
-//action
 function MapTile(props) {
     return (
         <div
@@ -69,7 +64,6 @@ function MapTile(props) {
     );
 }
 
-//action
 function MapRow(props) {
     return (
         <div
@@ -84,13 +78,22 @@ function MapRow(props) {
     );
 }
 
-//action
+/**
+ * This component creates the tiles of the map based on numbers given for different obstacles.
+ * This component creates the rows of the map based on the tiles created.
+ * This component displays the map of the game based on the rows created.
+ */
 class Map extends Component {
     focus() {
         this.mapRef.focus();
     }
 
     render() {
+        const {
+            tiles,
+            onKeyDown,
+        } = this.props;
+
         return (
             <div
                 style={{
@@ -102,16 +105,23 @@ class Map extends Component {
                     outline: 0,
                 }}
                 ref={mapRef => this.mapRef = mapRef}
-                onKeyDown={this.props.onKeyDown}
+                onKeyDown={onKeyDown}
                 tabIndex="0"
                 id="map"
                 >
-                {this.props.tiles.map((row, i) => (
+                {tiles.map((row, i) => (
                     <MapRow key={i} tiles={row} />
                 ))}
             </div>
         );
     }
+}
+
+Map.propTypes = {
+    /** The tiles to be displayed on the map. */
+    tiles: PropTypes.array.isRequired,
+    /** This function is called when every a key is pressed. */
+    onKeyDown: PropTypes.func.isRequired,
 }
 
 export default Map;
