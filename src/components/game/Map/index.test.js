@@ -7,10 +7,10 @@ import { renderWithRedux } from "../../../utils/tests";
 afterEach(cleanup);
 
 it("render maps without crashing", () => {
-  renderWithRedux(<Map tiles={tiles} />);
+    renderWithRedux(<Map tiles={tiles} onKeyDown={() => {}} />);
 });
 
 it("map matches snapshot", async () => {
-  const { asFragment } = render(<Map tiles={tiles} />);
-  expect(asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<Map tiles={tiles} onKeyDown={() => {}} />);
+    expect(asFragment()).toMatchSnapshot();
 });

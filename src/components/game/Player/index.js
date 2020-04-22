@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import walkSprite from "./pokemonPlayer.png";
 import { SPRITE_SIZE, MAP_WIDTH, MAP_HEIGHT } from "../../../utils/constants";
-// import { PropTypes } from 'prop-types';
+import { PropTypes } from 'prop-types';
+
 /**
  * This component defines the player for the user.
  */
@@ -137,8 +138,7 @@ class Player extends Component {
         const oldPos = this.props.position;
         const newPos = this.getNewPosition(oldPos, direction);
 
-        //TODO: Don't allow player to move if quiz-in-progress aka props.showPopup is true
-        if (this.observeBoundaries(oldPos, newPos) && this.observeImpassable(oldPos, newPos) && !this.props.showPopup)
+        if (this.observeBoundaries(oldPos, newPos) && this.observeImpassable(oldPos, newPos))
             this.dispatchMove(direction, newPos);
         else
             this.changeDirection(direction);
@@ -184,6 +184,19 @@ class Player extends Component {
         );
     }
 
+}
+
+Player.propTypes = {
+    /** The map tiles */
+    tiles: PropTypes.array.isRequired,
+    /** The current position of the player (1st element is the x position, 2nd element is the y position) */
+    position: PropTypes.array.isRequired,
+    /** The function to call when the player encounters an obstacle (i.e. a Pokemon) */
+    onEncounterObstacle: PropTypes.func.isRequired,
+    /** The function to call when the player changes position */
+    onChangePosition: PropTypes.func.isRequired,
+    /** The function to call when the player completes the game */
+    onCompleteGame: PropTypes.func.isRequired,
 }
 
 export default Player;
