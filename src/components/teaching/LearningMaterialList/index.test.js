@@ -21,7 +21,7 @@ beforeEach(() => {
                     id: 2,
                     title: 'Basic Subtraction',
                     description: 'This is an interesting video',
-                    link: 'https://www.youtube.com/embed/AQ7THUKx6Es',
+                    link: 'https://www.youtube.com/embed/ug0gs8kLE48',
                 },
             ]
         }

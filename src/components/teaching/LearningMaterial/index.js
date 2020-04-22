@@ -6,6 +6,7 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import './styles.css';
 import { YOUTUBE_LINK_PATTERN } from '../../../utils/constants';
 
+/** This component displays a learning material*/
 export default function LearningMaterial(props) {
     const {
         classes,
@@ -55,9 +56,15 @@ export default function LearningMaterial(props) {
 }
 
 LearningMaterial.propTypes = {
+    /** A string storing the html to be included in the component */
     classes: PropTypes.string,
+    /** A boolean to determine if the learning material object is editable or not (true: editable, false: cannot be edited) */
     editable: PropTypes.bool.isRequired,
+    /** A learning material object containing the title, description, and link */
     learningMaterial: PropTypes.object.isRequired,
+
+    /** An action creator for handling learning material update request */
     handleUpdate: PropTypes.func,
+    /** An action creator for handling learning material deletion request */
     handleDelete: PropTypes.func,
 };

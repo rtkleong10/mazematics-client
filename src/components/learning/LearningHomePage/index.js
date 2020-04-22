@@ -56,7 +56,7 @@ LearningHomePage.propTypes = {
     topicsLoading: PropTypes.bool.isRequired,
     /** A boolean to determine if the topics failed to be loaded by the `listTopics` action creator (true: still loading or failed to load, false: successful load) */
     topicsFailed: PropTypes.bool,
-    /** An array of topic objects loaded by the `listTopics` action creaor */
+    /** An array of topic objects loaded by the `listTopics` action creator */
     topics: PropTypes.array.isRequired,
     /** An action creator for listing topics */
     listTopics: PropTypes.func.isRequired

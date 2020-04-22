@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { EMPTY } from '../../../utils/constants';
-
+/**This component displays a basic form */
 export class BasicForm extends Component {
     emptyState = {
         title: '',

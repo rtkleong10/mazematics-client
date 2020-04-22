@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
@@ -35,6 +36,11 @@ export class Errors extends Component {
             </div>
         )
     }
+}
+
+Errors.propTypes = {
+    /** An object containing all errors*/
+    errors: PropTypes.object.isRequired,  
 }
 
 const mapStateToProps = state => ({

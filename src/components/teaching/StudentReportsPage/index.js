@@ -120,11 +120,13 @@ export class StudentReportsPage extends Component {
 StudentReportsPage.propTypes = {
     /** An object containing the topic ID and level ID based on which data is displayed */
    match: PropTypes.object.isRequired,
-
+   /** A boolean to determine if the report is still being loaded by the `fetchReport` action creator (true: still loading, false: fully loaded)*/
    reportLoading: PropTypes.bool.isRequired,
+   /** A boolean to determine if the report is still being loaded by the `fetchReport` action creator (true: still loading or failed to load, false: successful load) */
    reportFailed: PropTypes.bool,
+   /** An array of report rows loaded by the `fetchReport` action creator */
    report: PropTypes.array.isRequired,
-
+   /** An action creator for listing report rows */
    fetchReport: PropTypes.func.isRequired,
 };
 
