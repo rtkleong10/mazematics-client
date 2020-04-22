@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 
 import { EMPTY } from '../../../utils/constants';
 
+/**
+ * This component displays the Question interface in the Popup
+ */
+
 export class QuestionForm extends Component {
     emptyState = {
         answer: null,

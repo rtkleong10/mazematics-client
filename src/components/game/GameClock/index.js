@@ -4,6 +4,11 @@ import formatDuration from "format-duration";
 import PokemonClock from "./pokemonClock.png";
 import "./styles.css";
 
+/**
+ * This component creates the function of the game's timer which is used to rank players based on completion time for a level.
+ * This component displays a game clock
+ */
+
 export default function GameClock(props) {
     const {
         elapsedTime,
