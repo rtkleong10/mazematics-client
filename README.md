@@ -8,7 +8,10 @@
 	- Documentation of the API endpoints can be found in backend_docs.pdf
 -  This is a school project I did for CZ3003 Software Systems Analysis and Design
     -  My group mates are Chulpaibul Jiraporn, Elroy Liang Bo Jun, Ip Hei Man, Li Yan, Rajeswari Bose, Sin Chong Wen Bryan, Song Qiu Xuan and Su Voon Hou
-    - The documentation is available at https://rtkleong10.github.io/mazematics-client/.
+
+## Documentation
+- The documentation of the React components is available at https://rtkleong10.github.io/mazematics-client/
+- Lab deliverables can be found in the `deliverables/` folder
 
 ## Directory Structure
 ### Subsystems
