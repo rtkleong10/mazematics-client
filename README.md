@@ -1,4 +1,5 @@
 # Mazematics Client
+![game](screenshots/game.png)
 - This is the frontend ReactJS web app of Mazematics
 - Mazematics is a web app that has 3 platforms
 	- Teaching Platform: For teachers to manage topics, levels, questions and learning materials
