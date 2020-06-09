@@ -2,6 +2,8 @@
 - This is the frontend ReactJS web app of Mazematics
 - The backend was developed separately
 	- Documentation of the API endpoints can be found in backend_docs.pdf
+-  This is a school project I did for CZ3003 Software Systems Analysis and Design
+    -  My group mates are Chulpaibul Jiraporn, Elroy Liang Bo Jun, Ip Hei Man, Li Yan, Rajeswari Bose, Sin Chong Wen Bryan, Song Qiu Xuan and Su Voon Hou
 
 ## Directory Structure
 ### Subsystems

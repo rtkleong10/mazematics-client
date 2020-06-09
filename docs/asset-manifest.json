@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.67c551d3.chunk.css",
+    "main.js": "/build/main.a1a8c9fd.js",
+    "runtime-main.js": "/build/bundle.89ac15f6.js",
+    "static/css/2.89f067aa.chunk.css": "/static/css/2.89f067aa.chunk.css",
+    "build/2.e1fc4819.js": "/build/2.e1fc4819.js",
+    "build/2.e1fc4819.js.LICENSE.txt": "/build/2.e1fc4819.js.LICENSE.txt",
+    "index.html": "/index.html",
+    "precache-manifest.f2086a494f3ee58ee3813498bc865fc0.js": "/precache-manifest.f2086a494f3ee58ee3813498bc865fc0.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.89f067aa.chunk.css.map": "/static/css/2.89f067aa.chunk.css.map",
+    "static/css/main.67c551d3.chunk.css.map": "/static/css/main.67c551d3.chunk.css.map",
+    "static/media/mazematicsIcon.png": "/static/media/mazematicsIcon.d547aa9b.png",
+    "static/media/pokemonClock.png": "/static/media/pokemonClock.7726bc52.png",
+    "static/media/pokemonIcon.png": "/static/media/pokemonIcon.0def0ed7.png",
+    "static/media/pokemonPlayer.png": "/static/media/pokemonPlayer.f276d72e.png"
+  },
+  "entrypoints": [
+    "build/bundle.89ac15f6.js",
+    "static/css/2.89f067aa.chunk.css",
+    "build/2.e1fc4819.js",
+    "static/css/main.67c551d3.chunk.css",
+    "build/main.a1a8c9fd.js"
+  ]
+}
