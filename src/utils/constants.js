@@ -1,4 +1,4 @@
-export const API_URL = 'http://172.21.148.167:8080/eduamp/api';
+export const API_URL = 'http://127.0.0.1:8080/eduamp/api';
 
 export const USER_ROLES = {
     STUDENT: 'ROLE_STUDENT',
