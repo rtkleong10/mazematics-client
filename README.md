@@ -1,9 +1,7 @@
-# It-Worked-on-my-machine Frontend
+# Mazematics Client
 - This is the frontend ReactJS web app of Mazematics
-
-## How to View
-- Web App: http://172.21.148.167/
-- Docs: http://172.21.148.167/docs
+- The backend was developed separately
+	- Documentation of the API endpoints can be found in backend_docs.pdf
 
 ## Directory Structure
 ### Subsystems
