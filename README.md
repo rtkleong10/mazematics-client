@@ -1,5 +1,9 @@
 # Mazematics Client
 - This is the frontend ReactJS web app of Mazematics
+- Mazematics is a web app that has 3 platforms
+	- Teaching Platform: For teachers to manage topics, levels, questions and learning materials
+	- Learning Platform: For students to read through learning materials and play a maze game where they answer questions
+	- Account Management System: For system admins to manage the user accounts
 - The backend was developed separately
 	- Documentation of the API endpoints can be found in backend_docs.pdf
 -  This is a school project I did for CZ3003 Software Systems Analysis and Design
