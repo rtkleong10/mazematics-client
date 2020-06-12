@@ -58,7 +58,7 @@ export function createApiReducer(entityName, id="id") {
                         [actionMethod]: true
                     },
                     hasFailed: {
-                        ...state.isLoading,
+                        ...state.hasFailed,
                         [actionMethod]: false
                     },
                 };
@@ -128,7 +128,7 @@ export function createApiReducer(entityName, id="id") {
                         [actionMethod]: false
                     },
                     hasFailed: {
-                        ...state.isLoading,
+                        ...state.hasFailed,
                         [actionMethod]: true
                     },
                 };
